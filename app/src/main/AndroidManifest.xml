@@ -26,11 +26,13 @@
         </activity>
         <activity
             android:name=".ui.UserInfoActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_user_info"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".ui.ArsenalDetailActivity">
+        </activity>
+        <activity android:name=".ui.TagSearchActivity">
         </activity>
     </application>
 

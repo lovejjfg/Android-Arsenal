@@ -58,10 +58,10 @@ public class UserDetailListInfoFragment extends SupportFragment implements Adapt
 
     @Override
     public void onItemClick(View itemView, int position) {
-        ArsenalListInfo.ListInfo info = listInfoAdapter.list.get(position);
-        Intent intent = new Intent(getContext(), UserInfoActivity.class);
-        intent.putExtra("id", info.getUserDetailUrl());
-        startActivity(intent);
+//        ArsenalListInfo.ListInfo info = listInfoAdapter.list.get(position);
+//        Intent intent = new Intent(getContext(), UserInfoActivity.class);
+//        intent.putExtra("id", info.getUserDetailUrl());
+//        startActivity(intent);
         Log.e(TAG, "onItemClick: " + position);
     }
 }

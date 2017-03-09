@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Explode;
 import android.view.View;
+import android.view.Window;
 
 import com.lovejjfg.arsenal.ui.LoadingDialog;
 import com.lovejjfg.arsenal.utils.FragmentsUtil;
@@ -40,6 +42,11 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+            getWindow().setEnterTransition(new Explode());
+            getWindow().setExitTransition(new Explode());
+        }
         super.onCreate(savedInstanceState);
         setContentView(initLayoutRes());
         shakeHelper = ShakeHelper.initShakeHelper(this);
@@ -108,7 +115,7 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
     @Override
     public void onBackPressed() {
 //        if (!finishSelf()) {
-        super.onBackPressed();
+        finish();
 //        }
     }
 

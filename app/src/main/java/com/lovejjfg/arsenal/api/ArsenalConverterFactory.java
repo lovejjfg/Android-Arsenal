@@ -122,7 +122,7 @@ public class ArsenalConverterFactory extends Converter.Factory {
                         Elements select1 = tittle.select("a.tags");
                         if (!select1.isEmpty()) {
                             tag = select1.text();
-                            tagUrl = getHref(select1);
+                            tagUrl = select1.attr("href");
                         }
                     }
                 }

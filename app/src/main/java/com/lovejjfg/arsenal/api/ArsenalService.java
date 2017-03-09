@@ -4,8 +4,6 @@ import com.lovejjfg.arsenal.api.mode.ArsenalDetailInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
 
-import java.util.List;
-
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Url;
@@ -31,7 +29,7 @@ public interface ArsenalService {
     Observable<ArsenalDetailInfo> getArsenalDetailInfo(@Path("detail") String user);
 
     @GET()
-    Observable<ArsenalDetailInfo> search(@Url() String path);
+    Observable<ArsenalListInfo> search(@Url() String path);
 
 
 }

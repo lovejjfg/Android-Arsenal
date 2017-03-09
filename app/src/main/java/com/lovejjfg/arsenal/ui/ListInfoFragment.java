@@ -1,6 +1,5 @@
 package com.lovejjfg.arsenal.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,10 +8,14 @@ import android.util.Log;
 import android.view.View;
 
 import com.lovejjfg.arsenal.R;
-import com.lovejjfg.arsenal.api.BaseDataManager;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
-import com.lovejjfg.arsenal.base.SupportFragment;
+import com.lovejjfg.arsenal.base.BaseFragment;
+import com.lovejjfg.arsenal.ui.contract.HomeListInfoPresenter;
+import com.lovejjfg.arsenal.ui.contract.ListInfoContract;
+import com.lovejjfg.arsenal.ui.contract.SearchListInfoPresenter;
+import com.lovejjfg.arsenal.ui.contract.TagSearchListInfoPresenter;
+import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.powerrecycle.AdapterLoader;
 import com.lovejjfg.powerrecycle.PowerRecyclerView;
 
@@ -20,20 +23,22 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.functions.Action0;
-import rx.functions.Action1;
 
 /**
  * Created by Joe on 2017/3/9.
  * Email lovejjfg@gmail.com
  */
 
-public class ListInfoFragment extends SupportFragment implements AdapterLoader.OnItemClickListener, PowerRecyclerView.OnRefreshLoadMoreListener {
+public class ListInfoFragment extends BaseFragment<ListInfoContract.Presenter> implements AdapterLoader.OnItemClickListener, PowerRecyclerView.OnRefreshLoadMoreListener, ListInfoContract.View {
     public static final String ARSENAL_LIST_INFO = "ARSENAL_LIST_INFO";
+    public static final String TYPE_NAME = "TYPE_NAME";
+    public static final String KEY = "KEY";
+    public static final int TYPE_HOME = 0;
+    public static final int TYPE_SEARCH = 1;
+    public static final int TYPE_SEARCH_TAG = 2;
     @Bind(R.id.power_recycle_view)
     PowerRecyclerView mRecyclerView;
     private ArsenalListInfoAdapter listInfoAdapter;
-    private String hasMore;
 
     @Override
     public void handleFinish() {
@@ -48,6 +53,7 @@ public class ListInfoFragment extends SupportFragment implements AdapterLoader.O
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ArrayList<ArsenalListInfo.ListInfo> beans = getArguments().getParcelableArrayList(ARSENAL_LIST_INFO);
+        String key = getArguments().getString("KEY");
         ButterKnife.bind(this, view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         listInfoAdapter = new ArsenalListInfoAdapter();
@@ -57,93 +63,68 @@ public class ListInfoFragment extends SupportFragment implements AdapterLoader.O
         mRecyclerView.setOnRefreshListener(this);
         if (beans != null) {
             listInfoAdapter.setList(beans);
+        } else if (!TextUtils.isEmpty(key)) {
+            mPresenter.startSearch(key);
         } else {
-            mRecyclerView.setRefresh(true);
-            onRefresh();
+            mPresenter.onRefresh();
         }
 
     }
 
     @Override
     public void onItemClick(View itemView, int position) {
-        ArsenalListInfo.ListInfo info = listInfoAdapter.list.get(position);
-        BaseDataManager.handleNormalService(BaseDataManager.getArsenalApi().getArsenalUserInfo(info.getUserDetailUrl()), new Action1<ArsenalUserInfo>() {
-            @Override
-            public void call(final ArsenalUserInfo info) {
-                closeLoadingDialog();
-                mRecyclerView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(getContext(), UserInfoActivity.class);
-                        intent.putExtra(UserInfoActivity.USER_INFO, info);
-                        startActivity(intent);
-                    }
-                }, 200);
-
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-                Log.e(TAG, "call: ", throwable);
-                closeLoadingDialog();
-            }
-        }, new Action0() {
-            @Override
-            public void call() {
-
-            }
-        });
-
+        mPresenter.onItemClick(itemView, listInfoAdapter.getList().get(position));
         Log.e(TAG, "onItemClick: " + position);
     }
 
     @Override
     public void onRefresh() {
-        BaseDataManager.handleNormalService(BaseDataManager.getArsenalApi().getArsenalListInfo(), new Action1<ArsenalListInfo>() {
-            @Override
-            public void call(ArsenalListInfo arsenalListInfos) {
-                Log.e("TAG", "call:HaseMore:: " + arsenalListInfos.getHasMore());
-                listInfoAdapter.setList(arsenalListInfos.getInfos());
-                mRecyclerView.setRefresh(false);
-                hasMore = arsenalListInfos.getHasMore();
-
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-                mRecyclerView.setRefresh(false);
-                Log.e(TAG, "call: ", throwable);
-            }
-        }, new Action0() {
-            @Override
-            public void call() {
-            }
-        });
+        mPresenter.onRefresh();
     }
 
     @Override
     public void onLoadMore() {
-        BaseDataManager.handleNormalService(BaseDataManager.getArsenalApi().loadMoreArsenalListInfo(hasMore), new Action1<ArsenalListInfo>() {
-            @Override
-            public void call(ArsenalListInfo arsenalListInfos) {
-                hasMore = arsenalListInfos.getHasMore();
-                Log.e("TAG", "call:HaseMore:: " + arsenalListInfos.getHasMore());
-                listInfoAdapter.appendList(arsenalListInfos.getInfos());
-                if (TextUtils.isEmpty(hasMore)) {
-                    listInfoAdapter.setTotalCount(listInfoAdapter.getItemRealCount());
-                }
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-                Log.e(TAG, "call: ", throwable);
-            }
-        }, new Action0() {
-            @Override
-            public void call() {
-
-            }
-        });
-
+        mPresenter.onLoadMore();
     }
+
+    @Override
+    public void onRefresh(ArsenalListInfo info) {
+        listInfoAdapter.setList(info.getInfos());
+    }
+
+    @Override
+    public void onLoadMore(ArsenalListInfo info) {
+        listInfoAdapter.appendList(info.getInfos());
+    }
+
+    @Override
+    public void jumpToTarget(ArsenalUserInfo userInfo) {
+        JumpUtils.jumpToUserDetail(getActivity(), userInfo);
+    }
+
+    @Override
+    public void atEnd() {
+        listInfoAdapter.setTotalCount(listInfoAdapter.getItemRealCount());
+    }
+
+    @Override
+    public void onRefresh(boolean refresh) {
+        mRecyclerView.setRefresh(refresh);
+    }
+
+    @Override
+    public ListInfoContract.Presenter initPresenter() {
+        int type = getArguments().getInt(TYPE_NAME);
+        switch (type) {
+
+            case TYPE_SEARCH:
+                return new SearchListInfoPresenter(this);
+            case TYPE_SEARCH_TAG:
+                return new TagSearchListInfoPresenter(this);
+            case TYPE_HOME:
+            default:
+                return new HomeListInfoPresenter(this);
+        }
+    }
+
 }

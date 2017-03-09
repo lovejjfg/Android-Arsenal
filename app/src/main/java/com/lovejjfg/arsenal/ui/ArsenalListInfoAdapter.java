@@ -11,11 +11,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
+import com.lovejjfg.arsenal.ui.contract.ListInfoContract;
+import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.arsenal.utils.glide.CircleTransform;
 import com.lovejjfg.powerrecycle.PowerAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Joe on 2017/3/8.
@@ -59,7 +62,7 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
             ButterKnife.bind(this, itemView);
         }
 
-        public void onBind(ArsenalListInfo.ListInfo info) {
+        public void onBind(final ArsenalListInfo.ListInfo info) {
             title.setText(info.getTitle());
             tag.setText(info.getTag());
             badgeFree.setVisibility(info.isBadgeFree() ? View.VISIBLE : View.GONE);
@@ -77,6 +80,12 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
             ivAndroid.setVisibility(info.isAndroid() ? View.VISIBLE : View.GONE);
             tvUser.setText(info.getUserName());
             tvUser.setVisibility(info.isUser() ? View.VISIBLE : View.GONE);
+            tag.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    JumpUtils.jumpToTagList(tag.getContext(), info.getTagUrl());
+                }
+            });
 
 
 //            itemView.setOnTouchListener(new View.OnTouchListener() {
@@ -119,6 +128,16 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
 //                }
 //            });
 
+        }
+
+        @OnClick({R.id.tv_tag})
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.tv_tag:
+
+                    break;
+
+            }
         }
 
 

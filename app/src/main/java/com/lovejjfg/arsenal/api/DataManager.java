@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.lovejjfg.arsenal.base.App;
 import com.lovejjfg.arsenal.utils.CacheControlInterceptor;
+import com.lovejjfg.arsenal.utils.ErrorUtil;
 import com.lovejjfg.arsenal.utils.LoggingInterceptor;
 
 import java.net.CookieManager;
@@ -32,7 +33,7 @@ import rx.schedulers.Schedulers;
  * <p/>
  * 用于统一管理api请求
  */
-public class BaseDataManager {
+public class DataManager {
     private static final String TAG = "TAG";
     private static final String API = "https://android-arsenal.com/";
     private static Retrofit userApi;
@@ -71,8 +72,8 @@ public class BaseDataManager {
     }
 
 
+    public static <R> Subscription handleNormalService(Observable<R> observable, Action0 doOnSubscribe, Action1<R> callSuccess, Action1<Throwable> callError) {
 
-    public static <R> Subscription handleNormalService(Observable<R> observable, Action1<R> callSuccess, Action1<Throwable> callError, Action0 doOnSubscribe) {
         return observable
                 .subscribeOn(Schedulers.io())//事件产生在子线程
                 .doOnSubscribe(doOnSubscribe)
@@ -80,4 +81,14 @@ public class BaseDataManager {
                 .observeOn(AndroidSchedulers.mainThread())//
                 .subscribe(callSuccess, callError);
     }
+
+    public static <R> Subscription handleNormalService(Observable<R> observable, Action1<R> callSuccess, Action1<Throwable> callError) {
+        return observable
+                .subscribeOn(Schedulers.io())//事件产生在子线程
+                .observeOn(AndroidSchedulers.mainThread())//
+                .subscribe(callSuccess, callError);
+    }
+
+
+
 }
