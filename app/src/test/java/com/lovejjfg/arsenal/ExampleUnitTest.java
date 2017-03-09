@@ -177,9 +177,9 @@ public class ExampleUnitTest {
         String publicRepo;
         String publicRepoUrl;
 
-        ArrayList<ArsenalListInfo> ownProjects = new ArrayList<>();
+        ArrayList<ArsenalListInfo.ListInfo> ownProjects = new ArrayList<>();
 
-        ArrayList<ArsenalListInfo> contributions = new ArrayList<>();
+        ArrayList<ArsenalListInfo.ListInfo> contributions = new ArrayList<>();
         Document document = Jsoup.connect("https://android-arsenal.com/user/lovejjfg").get();
         Elements select = document.select("div.project-details.vcard");
         for (Element element : select) {
@@ -229,7 +229,8 @@ public class ExampleUnitTest {
                         for (Element element2 : select3) {
                             String infoUrl = element2.select("a").first().attr("href");
                             System.out.println("name:" + element2.text() + ";;href:" + infoUrl);
-                            ownProjects.add(new ArsenalListInfo(true, false, null, null, null, true, true, null, null, element2.text(), infoUrl, userInfoUrl, userName));
+                            ownProjects.add(new ArsenalListInfo.ListInfo(true, false, null, null, null, true, true, null, null, element2.text(), infoUrl, userInfoUrl, userName));
+
                         }
                     }
                 }
@@ -252,4 +253,26 @@ public class ExampleUnitTest {
             }
         }
     }
+
+    @Test
+    public void testSearch() throws IOException {
+        Document document = Jsoup.connect("https://android-arsenal.com/search?page=1&q=circle").get();
+        Elements select1 = document.select("a.after-btn");
+        if (select1.isEmpty()) {
+            System.out.println("没有更多了！");
+        } else {
+            System.out.println(select1.first().attr("href"));
+        }
+    }
+    @Test
+    public void testSearch1() throws IOException {
+        Document document = Jsoup.connect("https://android-arsenal.com/search?page=1&q=circle").get();
+        Elements select1 = document.select("a.after-btn");
+        if (select1.isEmpty()) {
+            System.out.println("没有更多了！");
+        } else {
+            System.out.println(select1.first().attr("href"));
+        }
+    }
+
 }

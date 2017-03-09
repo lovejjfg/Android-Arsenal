@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
+import com.lovejjfg.arsenal.utils.glide.CircleTransform;
 import com.lovejjfg.powerrecycle.PowerAdapter;
 
 import butterknife.Bind;
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
  * Email lovejjfg@gmail.com
  */
 
-public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo> {
+public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInfo> {
     @Override
     public RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType) {
         return new ArsenalListInfoHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_arsenal_info, parent, false));
@@ -34,7 +35,7 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo> {
 
 
     static final class ArsenalListInfoHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_name)
+        @Bind(R.id.tv_location)
         TextView title;
         @Bind(R.id.tv_tag)
         TextView tag;
@@ -58,7 +59,7 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo> {
             ButterKnife.bind(this, itemView);
         }
 
-        public void onBind(ArsenalListInfo info) {
+        public void onBind(ArsenalListInfo.ListInfo info) {
             title.setText(info.getTitle());
             tag.setText(info.getTag());
             badgeFree.setVisibility(info.isBadgeFree() ? View.VISIBLE : View.GONE);
@@ -66,7 +67,8 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo> {
             desc.setText(info.getDesc());
             if (!TextUtils.isEmpty(info.getImgUrl())) {
                 img.setVisibility(View.VISIBLE);
-                Glide.with(img.getContext()).load(info.getImgUrl())
+                Glide.with(img.getContext())
+                        .load(info.getImgUrl())
                         .into(img);
             } else {
                 img.setVisibility(View.GONE);

@@ -70,48 +70,6 @@ public class BaseDataManager {
         return createApi(ArsenalService.class);
     }
 
-    private static CookieJar initCookies() {
-        CookieManager cookieManager = new CookieManager();
-        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
-        // TODO: 2017/1/5 cookie是显示在header里面的吗
-        return new CookieJar() {
-            private final HashMap<String, List<Cookie>> cookieStore = new HashMap<>();
-
-            @Override
-            public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-                Cookie.Builder b =
-                        new Cookie.Builder()
-                                .domain("zhihu.com")
-                                .path("/")
-                                .name("testName")
-                                .value("saveFromResponse")
-                                .httpOnly()
-                                .secure();
-                cookies.add(b.build());
-                cookieStore.put(url.host(), cookies);
-                Log.e(TAG, "saveFromResponse: " + cookies.toString());
-            }
-
-            @Override
-            public List<Cookie> loadForRequest(HttpUrl url) {
-                List<Cookie> cookies = cookieStore.get(url.host());
-                if (cookies == null) {
-                    cookies = new ArrayList<>();
-                }
-                Cookie.Builder b =
-                        new Cookie.Builder()
-                                .domain("zhihu.com")
-                                .path("/")
-                                .name("testName")
-                                .value("loadForRequest");
-//                            .httpOnly()
-//                            .secure()
-                cookies.add(b.build());
-                Log.e(TAG, "loadForRequest: " + cookies.toString());
-                return cookies;
-            }
-        };
-    }
 
 
     public static <R> Subscription handleNormalService(Observable<R> observable, Action1<R> callSuccess, Action1<Throwable> callError, Action0 doOnSubscribe) {

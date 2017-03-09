@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-
+import com.lovejjfg.arsenal.ui.LoadingDialog;
 import com.lovejjfg.arsenal.utils.FragmentsUtil;
 import com.lovejjfg.arsenal.utils.KeyBoardUtil;
 import com.lovejjfg.arsenal.utils.ShakeHelper;
@@ -26,6 +26,7 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     public FragmentsUtil fragmentsUtil;
     private ShakeHelper shakeHelper;
+    LoadingDialog loadingDialog = new LoadingDialog();
 
     @Override
     public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... children) {
@@ -107,7 +108,7 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
     @Override
     public void onBackPressed() {
 //        if (!finishSelf()) {
-            super.onBackPressed();
+        super.onBackPressed();
 //        }
     }
 
@@ -123,12 +124,12 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Override
     public void showLoadingDialog(String msg) {
-
+//        loadingDialog.show(getFragmentManager(), "loading");
     }
 
     @Override
     public void closeLoadingDialog() {
-
+//        loadingDialog.finish(null);
     }
 
     @Override

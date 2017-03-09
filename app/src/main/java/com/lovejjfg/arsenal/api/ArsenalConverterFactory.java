@@ -12,6 +12,7 @@ import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -22,7 +23,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
@@ -77,15 +77,21 @@ public class ArsenalConverterFactory extends Converter.Factory {
         return new ArsenalConverterFactory();
     }
 
-    private static class ArsenalListInfoConverter implements Converter<ResponseBody, List<ArsenalListInfo>> {
+    private static class ArsenalListInfoConverter implements Converter<ResponseBody, ArsenalListInfo> {
         @Override
-        public List<ArsenalListInfo> convert(ResponseBody value) throws IOException {
+        public ArsenalListInfo convert(ResponseBody value) throws IOException {
+            Document parse = Jsoup.parse(value.string(), HOST);
             final Elements listElements =
-                    Jsoup.parse(value.string(), HOST).select("div.project-info.clearfix");
+                    parse.select("div.project-info.clearfix");
 
 
-            ArsenalListInfo info;
-            ArrayList<ArsenalListInfo> infos = new ArrayList<>();
+            ArsenalListInfo arsenalListInfo = new ArsenalListInfo();
+            ArsenalListInfo.ListInfo info;
+            ArrayList<ArsenalListInfo.ListInfo> infos = new ArrayList<>();
+            arsenalListInfo.setInfos(infos);
+            Elements hasMore = parse.select("a.after-btn");
+            arsenalListInfo.setHasMore(hasMore.isEmpty() ? null : hasMore.first().attr("href"));
+
             for (Element e : listElements) {
                 String title = null;
                 String listDetailUrl = null;
@@ -168,10 +174,11 @@ public class ArsenalConverterFactory extends Converter.Factory {
 
                     }
                 }
-                info = new ArsenalListInfo(badgeFree, badgeNew, date, desc, imgUrl, isAndroid, isUser, tag, tagUrl, title, listDetailUrl, userDetailUrl, userName);
+                info = new ArsenalListInfo.ListInfo(badgeFree, badgeNew, date, desc, imgUrl, isAndroid, isUser, tag, tagUrl, title, listDetailUrl, userDetailUrl, userName);
+
                 infos.add(info);
             }
-            return infos;
+            return arsenalListInfo;
         }
     }
 
@@ -216,16 +223,16 @@ public class ArsenalConverterFactory extends Converter.Factory {
             String publicRepo = null;
             String publicRepoUrl = null;
 
-            ArrayList<ArsenalListInfo> ownProjects = new ArrayList<>();
+            ArrayList<ArsenalListInfo.ListInfo> ownProjects = new ArrayList<>();
 
-            ArrayList<ArsenalListInfo> contributions = new ArrayList<>();
+            ArrayList<ArsenalListInfo.ListInfo> contributions = new ArrayList<>();
             final Elements select =
                     Jsoup.parse(value.string(), HOST).select("div.project-details.vcard");
             for (Element element : select) {
-                userName = element.select("a[href]").first().text();
+                userName = getText(element.select("a[href]"));
                 userInfoUrl = element.select("a").first().attr("href");
-                String attr = element.select("img").attr("src");
-                portraitUrl = attr.substring(0, attr.lastIndexOf("?"));
+                portraitUrl = element.select("img").attr("src");
+//                portraitUrl = attr.substring(0, attr.lastIndexOf("?"));
 
                 email = element.select("a.email").text();
                 site = element.select("dt:contains(Site) + dd").text();
@@ -234,14 +241,14 @@ public class ArsenalConverterFactory extends Converter.Factory {
                 String language = element.select("dt:contains(Language) + dd").first().text();
                 homepage = element.select("dt:contains(Homepage) + dd").first().text();
                 Elements select2 = element.select("dt:contains(Followers) + dd");
-                followers = select2.first().text();
-                followersUrl = select2.first().select("a").first().attr("href");
+                followers = getText(select2);
+                followersUrl = getNormalHref(select2);
                 Elements select1 = element.select("dt:contains(Following) + dd");
-                following = select1.first().text();
-                followingUrl = select1.first().select("a").first().attr("href");
-                Elements select4 = element.select("dt:contains(Public.repo(s)) + dd");
-                publicRepo = select4.first().text();
-                publicRepoUrl = select4.first().select("a").first().attr("href");
+                following = getText(select1);
+                followingUrl = getNormalHref(select1);
+                Elements select4 = element.select("dt:contains(Public repo) + dd");
+                publicRepo = getText(select4);
+                publicRepoUrl = getNormalHref(select4);
                 element.select("div.moduletable_events > ul");
                 Elements h2Tags = element.select("h2");
                 for (Element e : h2Tags) {
@@ -250,8 +257,10 @@ public class ArsenalConverterFactory extends Converter.Factory {
                         Elements select3 = element1.select("dl > ul >li");
                         if (!select3.isEmpty()) {
                             for (Element element2 : select3) {
-                                String infoUrl = element2.select("a").first().attr("href");
-                                ownProjects.add(new ArsenalListInfo(true, false, null, null, null, true, true, null, null, element2.text(), infoUrl, userInfoUrl, userName));
+                                if (element2.select("a") != null && element2.select("a").first() != null) {
+                                    String infoUrl = element2.select("a").first().attr("href");
+                                    ownProjects.add(new ArsenalListInfo.ListInfo(true, false, null, null, null, true, true, null, null, element2.text(), infoUrl, userInfoUrl, userName));
+                                }
                             }
                         }
                     }
@@ -260,8 +269,10 @@ public class ArsenalConverterFactory extends Converter.Factory {
                         Elements select3 = element1.select("dl > ul >li");
                         if (!select3.isEmpty()) {
                             for (Element element2 : select3) {
-                                String infoUrl = element2.select("a").first().attr("href");
-                                contributions.add(new ArsenalListInfo(true, false, null, null, null, true, true, null, null, element2.text(), infoUrl, userInfoUrl, userName));
+                                if (element2.select("a") != null && element2.select("a").first() != null) {
+                                    String infoUrl = element2.select("a").first().attr("href");
+                                    contributions.add(new ArsenalListInfo.ListInfo(true, false, null, null, null, true, true, null, null, element2.text(), infoUrl, userInfoUrl, userName));
+                                }
                             }
                         }
                     }
@@ -272,6 +283,23 @@ public class ArsenalConverterFactory extends Converter.Factory {
                     homepage, location, ownProjects, portraitUrl,
                     publicRepo, publicRepoUrl, site, userInfoUrl, userName);
         }
+    }
+
+    private static String getText(Elements select4) {
+        Element element3 = select4.first();
+        if (element3 != null) {
+            return element3.text();
+        }
+        return null;
+    }
+
+    private static String getNormalHref(Elements select2) {
+        if (select2 == null || select2.first() == null || select2.first().select("a") == null) {
+            return null;
+        }
+        Element a = select2.first().select("a").first();
+
+        return a != null ? a.attr("href") : null;
     }
 
 

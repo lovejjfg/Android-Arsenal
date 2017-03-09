@@ -24,6 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.UserInfoActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_user_info"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".ui.ArsenalDetailActivity">
+        </activity>
     </application>
 
 </manifest>

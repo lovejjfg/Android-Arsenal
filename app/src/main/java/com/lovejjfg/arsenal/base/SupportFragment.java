@@ -27,6 +27,7 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
     private SupportActivity activity;
     public boolean isRoot;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Log.e(TAG, "onCreate: " + tagName);

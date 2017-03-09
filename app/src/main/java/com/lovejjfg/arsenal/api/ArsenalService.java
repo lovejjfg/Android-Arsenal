@@ -8,7 +8,7 @@ import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -19,14 +19,19 @@ import rx.Observable;
 public interface ArsenalService {
 
     @GET(".")
-    Observable<List<ArsenalListInfo>> getArsenalListInfo();
+    Observable<ArsenalListInfo> getArsenalListInfo();
 
-    @GET(".")
-    Observable<List<ArsenalListInfo>> loadMoreArsenalListInfo(@Query("page") int page);
+    @GET()
+    Observable<ArsenalListInfo> loadMoreArsenalListInfo(@Url() String path);
 
     @GET("user/{username}")
     Observable<ArsenalUserInfo> getArsenalUserInfo(@Path("username") String user);
 
     @GET("details/1/{detail}")
     Observable<ArsenalDetailInfo> getArsenalDetailInfo(@Path("detail") String user);
+
+    @GET()
+    Observable<ArsenalDetailInfo> search(@Url() String path);
+
+
 }
