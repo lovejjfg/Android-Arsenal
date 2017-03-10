@@ -9,12 +9,15 @@ public class TagSearchActivity extends SupportActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ListInfoFragment listInfoFragment = new ListInfoFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(ListInfoFragment.TYPE_NAME, ListInfoFragment.TYPE_SEARCH_TAG);
-        bundle.putString(ListInfoFragment.KEY, getIntent().getStringExtra(ListInfoFragment.KEY));
-        listInfoFragment.setArguments(bundle);
-        loadRoot(R.id.activity_tag_search, listInfoFragment);
+        if (savedInstanceState == null) {
+            ListInfoFragment listInfoFragment = new ListInfoFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt(ListInfoFragment.TYPE_NAME, ListInfoFragment.TYPE_SEARCH_TAG);
+            bundle.putString(ListInfoFragment.KEY, getIntent().getStringExtra(ListInfoFragment.KEY));
+            listInfoFragment.setArguments(bundle);
+            loadRoot(R.id.activity_tag_search, listInfoFragment);
+        }
+
     }
 
     @Override

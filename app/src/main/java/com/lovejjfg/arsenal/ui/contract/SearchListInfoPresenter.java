@@ -7,7 +7,6 @@ import android.view.View;
 import com.lovejjfg.arsenal.api.DataManager;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
-import com.lovejjfg.arsenal.base.BasePresenterImpl;
 
 import rx.Subscription;
 import rx.functions.Action1;
@@ -17,11 +16,8 @@ import rx.functions.Action1;
  * Email lovejjfg@gmail.com
  */
 
-public class SearchListInfoPresenter extends BasePresenterImpl<ListInfoContract.View> implements ListInfoContract.Presenter {
+public class SearchListInfoPresenter extends BaseListInfoPresenter {
 
-
-    private String mCurrentKey;
-    private String mHasMore;
 
     public SearchListInfoPresenter(@Nullable ListInfoContract.View view) {
         super(view);
@@ -71,9 +67,4 @@ public class SearchListInfoPresenter extends BasePresenterImpl<ListInfoContract.
         subscribe(subscription);
     }
 
-    @Override
-    public void startSearch(String key) {
-        mCurrentKey = key;
-        onRefresh();
-    }
 }

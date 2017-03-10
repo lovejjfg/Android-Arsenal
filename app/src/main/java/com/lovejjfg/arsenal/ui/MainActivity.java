@@ -12,7 +12,9 @@ public class MainActivity extends SupportActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadRoot(R.id.main_container, new ListInfoFragment());
+        if (savedInstanceState == null) {
+            loadRoot(R.id.main_container, new ListInfoFragment());
+        }
     }
 
     @Override

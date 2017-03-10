@@ -1,5 +1,6 @@
 package com.lovejjfg.arsenal.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -59,6 +60,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends SupportActiv
         super.onSaveInstanceState(outState);
         mPresenter.onSaveInstanceState(outState);
 
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }
 

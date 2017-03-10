@@ -14,7 +14,6 @@ import com.lovejjfg.arsenal.base.SupportActivity;
 import com.lovejjfg.arsenal.utils.Constants;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -26,6 +25,7 @@ import rx.Subscriber;
 import rx.functions.Action1;
 
 public class WebViewActivity extends SupportActivity {
+    public static String URL = "url";
     @Bind(R.id.web_view)
     WebView mWeb;
 
@@ -34,7 +34,7 @@ public class WebViewActivity extends SupportActivity {
 
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-
+        String data = getIntent().getStringExtra(URL);
         mWeb.setVerticalScrollBarEnabled(false);
         mWeb.setHorizontalScrollBarEnabled(false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -48,6 +48,7 @@ public class WebViewActivity extends SupportActivity {
         mWeb.setFocusableInTouchMode(true);
         mWeb.setWebViewClient(new WebViewClient());
         mWeb.setWebChromeClient(new WebChromeClient());
+        mWeb.loadDataWithBaseURL(Constants.BASE_URL, data, Constants.MIME_TYPE, Constants.ENCODING, Constants.FAIL_URL);
 //        mWeb.post(new Runnable() {
 //            @Override
 //            public void run() {
@@ -58,26 +59,7 @@ public class WebViewActivity extends SupportActivity {
         Observable<String> stringObservable = Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                StringBuilder sb = new StringBuilder();
-                sb.append("<link href=\"/css/app.3d329cbe.css\" rel=\"stylesheet\" type=\"text/css\"/>");
-                Document document = null;
-                subscriber.onStart();
-                try {
-                    document = Jsoup.connect("https://android-arsenal.com/details/1/5430").get();
-                    //Elements divs = doc.select("div").not("#logo");
-                    Elements select1 = document.select("body").not("div:matches(/(?=ads)/)");
 
-                    if (select1.isEmpty()) {
-                        System.out.println("没有更多了！");
-                    } else {
-                        sb.append(select1.first().toString());
-                        subscriber.onNext(sb.toString());
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    subscriber.onError(e);
-                }
-                subscriber.onCompleted();
 
             }
         });

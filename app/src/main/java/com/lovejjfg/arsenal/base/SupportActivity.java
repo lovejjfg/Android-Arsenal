@@ -131,7 +131,11 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
     @Override
     public void onBackPressed() {
 //        if (!finishSelf()) {
-        finish();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAfterTransition();
+        } else {
+            finish();
+        }
 //        }
     }
 

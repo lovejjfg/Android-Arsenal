@@ -49,10 +49,12 @@ public class UserInfoActivity extends SupportActivity {
         circleTransform = new CircleTransform(this);
         setSupportActionBar(toolbar);
         ArsenalUserInfo info = getIntent().getParcelableExtra(USER_INFO);
-        if (info == null) {
-            finish();
-        } else {
-            refreshUI(info);
+        if (savedInstanceState == null) {
+            if (info == null) {
+                finish();
+            } else {
+                refreshUI(info);
+            }
         }
 
     }

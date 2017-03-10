@@ -1,5 +1,6 @@
 package com.lovejjfg.arsenal.base;
 
+import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.view.View;

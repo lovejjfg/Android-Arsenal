@@ -6,7 +6,6 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.lovejjfg.arsenal.api.mode.ArsenalDetailInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
 
@@ -31,6 +30,7 @@ import retrofit2.Retrofit;
 public class ArsenalConverterFactory extends Converter.Factory {
     private static final ArsenalListInfoConverter ARSENAL_LIST_INFO_CONVERTER = new ArsenalListInfoConverter();
     private static final ArsenalUserInfoConverter ARSENAL_USER_INFO_CONVERTER = new ArsenalUserInfoConverter();
+    private static final ArsenalDetaiInfoConverter ARSENAL_DETAI_INFO_CONVERTER = new ArsenalDetaiInfoConverter();
 
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type,
@@ -43,6 +43,9 @@ public class ArsenalConverterFactory extends Converter.Factory {
         }
         if (aClass.isAssignableFrom(ArsenalUserInfo.class)) {
             return ARSENAL_USER_INFO_CONVERTER;
+        }
+        if (aClass.isAssignableFrom(String.class)) {
+            return ARSENAL_DETAI_INFO_CONVERTER;
         }
         return null;
     }
@@ -115,7 +118,7 @@ public class ArsenalConverterFactory extends Converter.Factory {
                         Element first = tittle.select("a[href]").first();
                         if (first != null) {
                             title = first.text();
-                            listDetailUrl = getHref(first);
+                            listDetailUrl = first.attr("href");
                         }
 
                         Elements select1 = tittle.select("a.tags");
@@ -190,14 +193,6 @@ public class ArsenalConverterFactory extends Converter.Factory {
     }
 
     @NonNull
-    private static String getHref(Element first) {
-        String listDetailUrl;
-        String href = first.attr("href");
-        listDetailUrl = href.substring(href.lastIndexOf("/") + 1);
-        return listDetailUrl;
-    }
-
-    @NonNull
     private static String getHref(Elements select1) {
         String tagUrl;
         String href = select1.attr("href");
@@ -205,9 +200,26 @@ public class ArsenalConverterFactory extends Converter.Factory {
         return tagUrl;
     }
 
-    private static final class ArsenalDetaiInfoConverter implements Converter<ResponseBody, ArsenalDetailInfo> {
+    private static final class ArsenalDetaiInfoConverter implements Converter<ResponseBody, String> {
         @Override
-        public ArsenalDetailInfo convert(ResponseBody value) throws IOException {
+        public String convert(ResponseBody value) throws IOException {
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("<link href=\"/css/app.3d329cbe.css\" rel=\"stylesheet\" type=\"text/css\"/>");
+            Document document = null;
+            try {
+                document = Jsoup.parse(value.string(), HOST);
+                //Elements divs = doc.select("div").not("#logo");
+                // TODO: 2017/3/10 remove ads
+                Elements select1 = document.select("body").not("div:matches(/(?=ads)/)");
+                if (!select1.isEmpty()) {
+                    sb.append(select1.first().toString());
+                    return sb.toString();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
             return null;
         }
     }

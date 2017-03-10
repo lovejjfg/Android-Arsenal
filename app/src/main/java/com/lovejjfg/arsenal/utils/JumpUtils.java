@@ -10,6 +10,7 @@ import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
 import com.lovejjfg.arsenal.ui.ListInfoFragment;
 import com.lovejjfg.arsenal.ui.TagSearchActivity;
 import com.lovejjfg.arsenal.ui.UserInfoActivity;
+import com.lovejjfg.arsenal.ui.WebViewActivity;
 
 /**
  * Created by 张俊 on 2016/3/18.
@@ -25,6 +26,13 @@ public class JumpUtils {
     public static void jumpToTagList(Context context, String tagKey) {
         Intent intent = new Intent(context, TagSearchActivity.class);
         intent.putExtra(ListInfoFragment.KEY, tagKey);
+        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context));
+        ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
+    }
+
+    public static void jumpToDetail(Context context, String detailUrl) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtra(WebViewActivity.URL, detailUrl);
         ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context));
         ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
     }

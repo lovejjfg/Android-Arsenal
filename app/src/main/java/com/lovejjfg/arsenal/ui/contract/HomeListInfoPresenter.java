@@ -2,13 +2,21 @@ package com.lovejjfg.arsenal.ui.contract;
 
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.lovejjfg.arsenal.api.DataManager;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
-import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
-import com.lovejjfg.arsenal.base.BasePresenterImpl;
+import com.lovejjfg.arsenal.utils.JumpUtils;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+
+import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action1;
 
@@ -17,20 +25,21 @@ import rx.functions.Action1;
  * Email lovejjfg@gmail.com
  */
 
-public class HomeListInfoPresenter extends BasePresenterImpl<ListInfoContract.View> implements ListInfoContract.Presenter {
+public class HomeListInfoPresenter extends BaseListInfoPresenter {
 
-    private String mHasMore;
 
     public HomeListInfoPresenter(@Nullable ListInfoContract.View view) {
         super(view);
     }
 
     @Override
-    public void onItemClick(View itemView, ArsenalListInfo.ListInfo info) {
-        DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalUserInfo(info.getUserDetailUrl()), new Action1<ArsenalUserInfo>() {
+    public void onItemClick(View itemView, final ArsenalListInfo.ListInfo info) {
+
+        DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalDetailInfo(info.getListDetailUrl()), new Action1<String>() {
             @Override
-            public void call(ArsenalUserInfo info) {
-                mView.jumpToTarget(info);
+            public void call(String data) {
+                Log.e("TAG", "call: " + data);
+                JumpUtils.jumpToDetail(mView.getContext(), data);
             }
         }, this);
     }
@@ -70,14 +79,5 @@ public class HomeListInfoPresenter extends BasePresenterImpl<ListInfoContract.Vi
 
     }
 
-    @Override
-    public void startSearch(String key) {
-        //do nothing
-    }
 
-    @Override
-    public void call(Throwable throwable) {
-        mView.onRefresh(false);
-        super.call(throwable);
-    }
 }

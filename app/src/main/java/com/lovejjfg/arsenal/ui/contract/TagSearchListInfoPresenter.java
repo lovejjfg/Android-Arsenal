@@ -1,5 +1,6 @@
 package com.lovejjfg.arsenal.ui.contract;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,14 +19,23 @@ import rx.functions.Action1;
  * Email lovejjfg@gmail.com
  */
 
-public class TagSearchListInfoPresenter extends BasePresenterImpl<ListInfoContract.View> implements ListInfoContract.Presenter {
+public class TagSearchListInfoPresenter extends BaseListInfoPresenter {
 
 
-    private String mCurrentKey;
-    private String mHasMore;
 
     public TagSearchListInfoPresenter(@Nullable ListInfoContract.View view) {
         super(view);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -74,11 +84,6 @@ public class TagSearchListInfoPresenter extends BasePresenterImpl<ListInfoContra
 
     }
 
-    @Override
-    public void startSearch(String key) {
-        mCurrentKey = key;
-        onRefresh();
-    }
 
     @Override
     public void call(Throwable throwable) {
