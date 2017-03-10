@@ -1,5 +1,6 @@
 package com.lovejjfg.arsenal.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,7 +37,7 @@ public class ListInfoFragment extends BaseFragment<ListInfoContract.Presenter> i
     public static final int TYPE_HOME = 0;
     public static final int TYPE_SEARCH = 1;
     public static final int TYPE_SEARCH_TAG = 2;
-    @Bind(R.id.power_recycle_view)
+    @Bind(R.id.recycler_view)
     PowerRecyclerView mRecyclerView;
     private ArsenalListInfoAdapter listInfoAdapter;
 
@@ -73,7 +74,10 @@ public class ListInfoFragment extends BaseFragment<ListInfoContract.Presenter> i
 
     @Override
     public void onItemClick(View itemView, int position) {
-        mPresenter.onItemClick(itemView, listInfoAdapter.getList().get(position));
+        Intent intent = new Intent(getContext(), WebViewActivity.class);
+        startActivity(intent);
+//        mPresenter.onItemClick(itemView, listInfoAdapter.getList().get(position));
+
         Log.e(TAG, "onItemClick: " + position);
     }
 

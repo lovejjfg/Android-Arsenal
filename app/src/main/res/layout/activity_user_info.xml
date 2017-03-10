@@ -23,7 +23,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways|enterAlwaysCollapsed"
             app:titleEnabled="false">
 
             <RelativeLayout
@@ -49,7 +49,7 @@
                     tools:text="lovejjfg.giyhub.com"/>
 
                 <TextView
-                    android:id="@+id/tv_location"
+                    android:id="@+id/tv_name"
                     style="@style/Text.Title"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_site"
@@ -61,7 +61,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_location">
+                    android:layout_below="@id/tv_name">
 
                     <LinearLayout
                         android:layout_width="0dp"

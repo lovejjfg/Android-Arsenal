@@ -15,10 +15,10 @@ import com.lovejjfg.arsenal.ui.UserInfoActivity;
  * Created by 张俊 on 2016/3/18.
  */
 public class JumpUtils {
-    public static void jumpToUserDetail(Activity context, ArsenalUserInfo info) {
+    public static void jumpToUserDetail(Context context, ArsenalUserInfo info) {
         Intent intent = new Intent(context, UserInfoActivity.class);
         intent.putExtra(UserInfoActivity.USER_INFO, info);
-        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(context);
+        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context));
         ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
     }
 

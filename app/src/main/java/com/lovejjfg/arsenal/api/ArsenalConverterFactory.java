@@ -3,7 +3,6 @@ package com.lovejjfg.arsenal.api;
 
 import android.support.annotation.NonNull;
 import android.text.Html;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -134,22 +133,30 @@ public class ArsenalConverterFactory extends Converter.Factory {
 
                 Elements select11 = e.select("div.desc");
                 String text = select11.first().toString();
-                Spanned spanned = Html.fromHtml(text);
-                Log.e("TAG", "convert: " + spanned.toString());
+                // TODO: 2017/3/10 带属性的标签解析
+                StringBuilder sb = new StringBuilder();
+                sb.append("<html>\n" +
+                        "<head>\n" +
+                        "<style>\n" +
+                        "code{color:#c7254e;background-color:#f9f2f4}\n" +
+                        "</style>\n" +
+                        "</head>\n" +
+                        "<body>");
+                sb.append(text);
+                sb.append("</body>\n" +
+                        "</html>");
+                desc = Html.fromHtml(text).toString();
+
+                Log.e("TAG", "convert: " + desc);
                 Elements select1 = e.select("div.desc > p");
                 if (!select1.isEmpty()) {
-                    StringBuilder sb = new StringBuilder();
                     for (Element element : select1) {
 //                    Element p1 = element.select("p").first();
-
                         Element img = element.select("img").first();
                         if (img != null) {
                             imgUrl = img.attr("data-layzr");
-                        } else {
-                            sb.append(element.text());
                         }
                     }
-                    desc = sb.toString();
                 }
 
                 //日期

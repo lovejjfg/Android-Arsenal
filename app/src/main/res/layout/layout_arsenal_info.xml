@@ -2,61 +2,67 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="8dp"
+    android:clipChildren="false"
     android:foreground="?attr/selectableItemBackground"
     card_view:cardCornerRadius="8dp"
-    android:clipChildren="false"
     card_view:cardElevation="3dp"
     card_view:contentPadding="10dp">
 
     <RelativeLayout
-        android:clipChildren="false"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+      >
 
         <TextView
-            android:id="@+id/tv_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="name"
+            android:id="@+id/tv_name"
+            android:textAllCaps="false"
+            android:layout_toLeftOf="@+id/ll_tag"
+            style="@style/Text.ListName"
+            android:background="?selectableItemBackground"
+            tools:text="lovejjfg"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_alignBottom="@+id/ll_tag"
             />
 
         <TextView
             android:id="@+id/tv_tag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_location"
+            style="@style/Text.ListTag"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="@dimen/normal_margin_padding"
+            android:background="?selectableItemBackground"
             tools:text="tag"/>
 
         <LinearLayout
+            android:id="@+id/ll_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:gravity="center">
 
-            <ImageView
-                android:id="@+id/iv_free"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:src="@mipmap/ic_launcher"
+            <Button
+                android:id="@+id/tv_free"
+                android:textAllCaps="false"
+                style="@style/Text_Tag"
+                android:background="@drawable/tag_back_ground_free"
+                android:text="Free"/>
 
-                />
-
-            <ImageView
-                android:id="@+id/iv_new"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/ic_launcher"
-                />
+            <Button
+                android:id="@+id/tv_new"
+                style="@style/Text_Tag"
+                android:textAllCaps="false"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/tag_back_ground_new"
+                android:text="New"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_des"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/Text.ListContent"
             android:layout_below="@+id/tv_tag"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
@@ -65,41 +71,45 @@
 
         <ImageView
             android:id="@+id/iv_img"
-            android:layout_centerInParent="true"
             android:layout_width="200dp"
             android:layout_height="300dp"
-            android:layout_below="@+id/tv_des"/>
+            android:layout_below="@+id/tv_des"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/Text.ListTag"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/iv_img"
+            android:drawableLeft="@drawable/ic_calender_24dp"
             tools:text="2016 01 01"
             />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_alignParentRight="true"
             android:layout_below="@id/iv_img"
+            android:background="?selectableItemBackground"
             android:clipChildren="false"
             >
 
             <ImageView
                 android:id="@+id/iv_android"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:src="@mipmap/ic_launcher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_android_24dp"
                 android:visibility="visible"
                 />
 
             <TextView
                 android:id="@+id/tv_user"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:drawableLeft="@mipmap/ic_launcher"
+                style="@style/Text.ListTag"
+                android:drawableLeft="@drawable/ic_user_24dp"
                 tools:text="lovejjfg"
                 />
 

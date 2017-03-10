@@ -1,6 +1,5 @@
 package com.lovejjfg.arsenal.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +24,7 @@ import butterknife.ButterKnife;
 
 public class UserDetailListInfoFragment extends SupportFragment implements AdapterLoader.OnItemClickListener {
     public static final String ARSENAL_LIST_INFO = "ARSENAL_LIST_INFO";
-    @Bind(R.id.power_recycle_view)
+    @Bind(R.id.recycler_view)
     PowerRecyclerView mRecyclerView;
     private ArsenalListInfoAdapter listInfoAdapter;
     private int currentPage;

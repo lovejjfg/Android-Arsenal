@@ -26,7 +26,7 @@ public class UserInfoActivity extends SupportActivity {
     public static final String USER_INFO = "UserInfo";
     @Bind(R.id.iv_img)
     ImageView mIvPortrait;
-    @Bind(R.id.tv_location)
+    @Bind(R.id.tv_name)
     TextView mTvLocation;
     @Bind(R.id.tv_flowers)
     TextView mTvFlowers;

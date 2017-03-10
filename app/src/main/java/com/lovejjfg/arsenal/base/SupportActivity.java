@@ -25,19 +25,23 @@ import java.util.List;
  */
 
 public abstract class SupportActivity extends AppCompatActivity implements ISupportFragment {
-
+    @Nullable
     public FragmentsUtil fragmentsUtil;
     private ShakeHelper shakeHelper;
     LoadingDialog loadingDialog = new LoadingDialog();
 
     @Override
     public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... children) {
-        fragmentsUtil.addToParent(containerViewId, parent, pos, children);
+        if (fragmentsUtil != null) {
+            fragmentsUtil.addToParent(containerViewId, parent, pos, children);
+        }
     }
 
     @Override
     public void replaceToParent(int containerViewId, @NonNull SupportFragment parent, SupportFragment... children) {
-        fragmentsUtil.replaceToParent(containerViewId, parent, children);
+        if (fragmentsUtil != null) {
+            fragmentsUtil.replaceToParent(containerViewId, parent, children);
+        }
     }
 
     @Override
@@ -48,9 +52,10 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
             getWindow().setExitTransition(new Explode());
         }
         super.onCreate(savedInstanceState);
-        setContentView(initLayoutRes());
         shakeHelper = ShakeHelper.initShakeHelper(this);
         fragmentsUtil = new FragmentsUtil(getSupportFragmentManager());
+        setContentView(initLayoutRes());
+
     }
 
     @Override
@@ -72,43 +77,54 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Override
     public void initFragments(Bundle savedInstanceState, SupportFragment fragment) {
-        fragmentsUtil.initFragments(savedInstanceState, fragment);
+        if (fragmentsUtil != null) {
+            fragmentsUtil.initFragments(savedInstanceState, fragment);
+        }
     }
 
     @Nullable
     @Override
     public List<Fragment> getTopFragment() {
-        return fragmentsUtil.getTopFragments();
+        return fragmentsUtil != null ? fragmentsUtil.getTopFragments() : null;
     }
 
     @Nullable
     @Override
     public SupportFragment findFragment(String className) {
-        return fragmentsUtil.findFragment(className);
+        return fragmentsUtil != null ? fragmentsUtil.findFragment(className) : null;
     }
 
     @Override
     public void loadRoot(int containerViewId, SupportFragment... root) {
-        fragmentsUtil.loadRoot(containerViewId, 0, root);
+        if (fragmentsUtil != null) {
+            fragmentsUtil.loadRoot(containerViewId, 0, root);
+        }
     }
 
     @Override
     public void addToShow(SupportFragment from, SupportFragment to) {
-        fragmentsUtil.addToShow(from, to);
+        if (fragmentsUtil != null) {
+            fragmentsUtil.addToShow(from, to);
+        }
     }
 
     @Override
     public boolean popTo(Class<? extends SupportFragment> target, boolean includeSelf) {
-        return fragmentsUtil.popTo(target, includeSelf);
+        if (fragmentsUtil != null) {
+            return fragmentsUtil.popTo(target, includeSelf);
+        }
+        return false;
     }
 
     public boolean popSelf() {
-        return fragmentsUtil.popSelf();
+        return fragmentsUtil != null && fragmentsUtil.popSelf();
     }
 
     @Override
     public void replaceToShow(SupportFragment from, SupportFragment to) {
-        fragmentsUtil.replaceToShow(from, to);
+        if (fragmentsUtil != null) {
+            fragmentsUtil.replaceToShow(from, to);
+        }
     }
 
 

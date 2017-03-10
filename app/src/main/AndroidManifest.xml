@@ -34,6 +34,8 @@
         </activity>
         <activity android:name=".ui.TagSearchActivity">
         </activity>
+        <activity android:name=".ui.WebViewActivity">
+        </activity>
     </application>
 
 </manifest>

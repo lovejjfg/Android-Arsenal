@@ -11,14 +11,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
-import com.lovejjfg.arsenal.ui.contract.ListInfoContract;
 import com.lovejjfg.arsenal.utils.JumpUtils;
-import com.lovejjfg.arsenal.utils.glide.CircleTransform;
 import com.lovejjfg.powerrecycle.PowerAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Joe on 2017/3/8.
@@ -38,14 +35,14 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
 
 
     static final class ArsenalListInfoHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_location)
+        @Bind(R.id.tv_name)
         TextView title;
         @Bind(R.id.tv_tag)
         TextView tag;
-        @Bind(R.id.iv_free)
-        ImageView badgeFree;
-        @Bind(R.id.iv_new)
-        ImageView badgeNew;
+        @Bind(R.id.tv_free)
+        TextView badgeFree;
+        @Bind(R.id.tv_new)
+        TextView badgeNew;
         @Bind(R.id.tv_des)
         TextView desc;
         @Bind(R.id.iv_img)
@@ -67,8 +64,10 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
             tag.setText(info.getTag());
             badgeFree.setVisibility(info.isBadgeFree() ? View.VISIBLE : View.GONE);
             badgeNew.setVisibility(info.isBadgeNew() ? View.VISIBLE : View.GONE);
-            desc.setText(info.getDesc());
+            desc.setText(info.getDesc(), TextView.BufferType.SPANNABLE);
+
             if (!TextUtils.isEmpty(info.getImgUrl())) {
+                // TODO: 2017/3/10 resize image
                 img.setVisibility(View.VISIBLE);
                 Glide.with(img.getContext())
                         .load(info.getImgUrl())
@@ -84,6 +83,12 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
                 @Override
                 public void onClick(View v) {
                     JumpUtils.jumpToTagList(tag.getContext(), info.getTagUrl());
+                }
+            });
+            tvUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    JumpUtils.jumpToUserDetail(tvUser.getContext(), );
                 }
             });
 
@@ -129,18 +134,6 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
 //            });
 
         }
-
-        @OnClick({R.id.tv_tag})
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.tv_tag:
-
-                    break;
-
-            }
-        }
-
-
     }
 }
 

@@ -274,5 +274,21 @@ public class ExampleUnitTest {
             System.out.println(select1.first().attr("href"));
         }
     }
+    @Test
+    public void testDetail() throws IOException {
+        Document document = Jsoup.connect("https://android-arsenal.com/details/1/5430").get();
+        Elements select1 = document.select("div#projectDesc");
+        if (select1.isEmpty()) {
+            System.out.println("没有更多了！");
+        } else {
+            System.out.println(select1.first().text());
+        }
+    }
+    @Test
+    public void testRe() throws IOException {
+        String text = "xxadsxx";
+        boolean matches = text.matches("(?!ads).*$");
+        System.out.println("是否匹配：" + matches);
+    }
 
 }

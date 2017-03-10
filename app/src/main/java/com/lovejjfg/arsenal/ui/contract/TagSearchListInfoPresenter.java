@@ -59,9 +59,10 @@ public class TagSearchListInfoPresenter extends BasePresenterImpl<ListInfoContra
     @Override
     public void onLoadMore() {
         unSubscribe();
-        Subscription subscription = DataManager.handleNormalService(DataManager.getArsenalApi().search( mHasMore), new Action1<ArsenalListInfo>() {
+        Subscription subscription = DataManager.handleNormalService(DataManager.getArsenalApi().search(mCurrentKey + mHasMore), new Action1<ArsenalListInfo>() {
             @Override
             public void call(ArsenalListInfo info) {
+                // TODO: 2017/3/9 404 ERROE
                 mHasMore = info.getHasMore();
                 mView.onLoadMore(info);
                 if (TextUtils.isEmpty(mHasMore)) {
