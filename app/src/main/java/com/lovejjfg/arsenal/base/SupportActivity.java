@@ -90,7 +90,7 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Nullable
     @Override
-    public SupportFragment findFragment(String className) {
+    public <F extends SupportFragment> F findFragment(Class<F> className) {
         return fragmentsUtil != null ? fragmentsUtil.findFragment(className) : null;
     }
 

@@ -1,12 +1,8 @@
 package com.lovejjfg.arsenal;
 
-import android.text.Html;
-import android.text.Spanned;
-
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 
 import org.jsoup.Jsoup;
-import org.jsoup.examples.HtmlToPlainText;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -14,6 +10,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 
@@ -264,6 +261,7 @@ public class ExampleUnitTest {
             System.out.println(select1.first().attr("href"));
         }
     }
+
     @Test
     public void testSearch1() throws IOException {
         Document document = Jsoup.connect("https://android-arsenal.com/search?page=1&q=circle").get();
@@ -274,6 +272,7 @@ public class ExampleUnitTest {
             System.out.println(select1.first().attr("href"));
         }
     }
+
     @Test
     public void testDetail() throws IOException {
         Document document = Jsoup.connect("https://android-arsenal.com/details/1/5430").get();
@@ -284,11 +283,64 @@ public class ExampleUnitTest {
             System.out.println(select1.first().text());
         }
     }
+
     @Test
     public void testRe() throws IOException {
         String text = "xxadsxx";
         boolean matches = text.matches("(?!ads).*$");
         System.out.println("是否匹配：" + matches);
+    }
+
+    @Test
+    public void testGetJs() throws IOException {
+        Document document = Jsoup.connect("https://android-arsenal.com").get();
+//        Elements select = document.select("div.container.content");
+        final Elements script =
+                document.select("script");
+        for (Element ee : script) {
+            String text = ee.data();
+            if (text != null && text.contains("ALL_TAGS")) {
+                int end = text.indexOf("},");
+                int start = text.indexOf("ALL_TAGS={");
+                text = (String) text.subSequence(start + "ALL_TAGS={".length(), end);
+                System.out.println();
+                String[] split = text.split(",");
+                HashMap<String, String> hashMap = new HashMap<>();
+                for (int i = 0; i < split.length; i++) {
+                    String[] library = split[i].split(":");
+                    hashMap.put(library[0], library[1]);
+                }
+                System.out.println(split.length);
+
+            }
+
+        }
+    }
+
+    @Test
+    public void testAds() throws IOException {
+        // TODO: 2017/3/11 too long
+        String text = "<div class=\"header\">\n" +
+                "    <div class=\"title\">\n" +
+                "     <a href=\"/details/1/5428\">DateTimeTemplate</a>\n" +
+                "     <a class=\"tags\" href=\"/tag/196\">Text Formatting</a>\n" +
+                "    </div>\n" +
+                "    <a class=\"badge free\" href=\"/free\">Free</a>\n" +
+                "    <a class=\"badge new\" href=\"/recent\">New</a>\n" +
+                "   </div>";
+        Document document = Jsoup.connect("https://android-arsenal.com/details/1/5415").get();
+//        Document document = Jsoup.parse(text);
+
+//        Elements select1 = document.body().select("ul#tabs");//.not("div[class*=ads]");
+        Elements select1 = document.body().select("div.tab-content");//.not("div[class*=ads]");
+//        Elements select1 =  document.chi().not(".title");//.not("div[class*=ads]");
+        for (Element e : select1) {
+            System.out.println(".....");
+            System.out.println(e.toString());
+
+        }
+//            System.out.println(select1.first().toString());
+
     }
 
 }

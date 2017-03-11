@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import com.lovejjfg.arsenal.R;
@@ -41,6 +43,7 @@ public class ListInfoFragment extends BaseFragment<ListInfoContract.Presenter> i
     @Bind(R.id.recycler_view)
     PowerRecyclerView mRecyclerView;
     private ArsenalListInfoAdapter listInfoAdapter;
+    private ArsenalListInfo mArsenalListInfo;
 
     @Override
     public void handleFinish() {
@@ -96,6 +99,7 @@ public class ListInfoFragment extends BaseFragment<ListInfoContract.Presenter> i
     @Override
     public void onRefresh(ArsenalListInfo info) {
         listInfoAdapter.setList(info.getInfos());
+        mArsenalListInfo = info;
     }
 
     @Override
@@ -138,4 +142,9 @@ public class ListInfoFragment extends BaseFragment<ListInfoContract.Presenter> i
         outState.putParcelableArrayList(ARSENAL_LIST_INFO, (ArrayList<ArsenalListInfo.ListInfo>) listInfoAdapter.getList());
         super.onSaveInstanceState(outState);
     }
+
+    public ArsenalListInfo getArsenalInfo() {
+        return mArsenalListInfo;
+    }
+
 }

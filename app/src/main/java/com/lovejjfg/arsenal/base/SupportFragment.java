@@ -163,7 +163,7 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
 
     @Nullable
     @Override
-    public SupportFragment findFragment(String className) {
+    public <F extends SupportFragment> F findFragment(Class<F> className) {
         if (activity != null) {
             return activity.findFragment(className);
         }

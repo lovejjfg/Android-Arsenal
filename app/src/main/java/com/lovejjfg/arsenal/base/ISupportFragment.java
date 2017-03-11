@@ -20,7 +20,7 @@ public interface ISupportFragment extends ISupportView {
     List<Fragment> getTopFragment();
 
     @Nullable
-    SupportFragment findFragment(String className);
+    <F extends SupportFragment> F findFragment(Class<F> className);
 
     void loadRoot(int containerViewId, SupportFragment... root);
 

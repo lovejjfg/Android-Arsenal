@@ -21,6 +21,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
@@ -85,7 +86,23 @@ public class ArsenalConverterFactory extends Converter.Factory {
             Document parse = Jsoup.parse(value.string(), HOST);
             final Elements listElements =
                     parse.select("div.project-info.clearfix");
-
+            final Elements script =
+                    parse.select("script");
+            HashMap<String, String> hashMap = null;
+            for (Element ee : script) {
+                String text = ee.data();
+                if (!TextUtils.isEmpty(text) && text.contains("ALL_TAGS")) {
+                    hashMap = new HashMap<>();
+                    int end = text.indexOf("},");
+                    int start = text.indexOf("ALL_TAGS={");
+                    text = (String) text.subSequence(start + "ALL_TAGS={".length(), end);
+                    String[] split = text.split(",");
+                    for (String aSplit : split) {
+                        String[] library = aSplit.split(":");
+                        hashMap.put(library[0].substring(1, library[0].length() - 1), library[1]);
+                    }
+                }
+            }
 
             ArsenalListInfo arsenalListInfo = new ArsenalListInfo();
             ArsenalListInfo.ListInfo info;
@@ -93,6 +110,7 @@ public class ArsenalConverterFactory extends Converter.Factory {
             arsenalListInfo.setInfos(infos);
             Elements hasMore = parse.select("a.after-btn");
             arsenalListInfo.setHasMore(hasMore.isEmpty() ? null : hasMore.first().attr("href"));
+            arsenalListInfo.setTags(hashMap);
 
             for (Element e : listElements) {
                 String title = null;
@@ -206,14 +224,19 @@ public class ArsenalConverterFactory extends Converter.Factory {
 
             StringBuilder sb = new StringBuilder();
             sb.append("<link href=\"/css/app.3d329cbe.css\" rel=\"stylesheet\" type=\"text/css\"/>");
+            sb.append("  <div class=\"row\"> ");
             Document document = null;
             try {
                 document = Jsoup.parse(value.string(), HOST);
                 //Elements divs = doc.select("div").not("#logo");
                 // TODO: 2017/3/10 remove ads
-                Elements select1 = document.select("body").not("div:matches(/(?=ads)/)");
+                //div:matches((?i)login)ad
+//                Elements select1 = document.select("body").not("div:matches(/(?=ads)/)");
+                Elements select1 = document.body().select("div.tab-content");//.not("div[class*=ads]");
+//                Elements select1 = document.body().not(".:matches(/(?=ads)/)");
                 if (!select1.isEmpty()) {
                     sb.append(select1.first().toString());
+                    sb.append("  </div> ");
                     return sb.toString();
                 }
             } catch (IOException e) {

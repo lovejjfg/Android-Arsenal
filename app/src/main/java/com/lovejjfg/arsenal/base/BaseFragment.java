@@ -15,6 +15,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends SupportFragm
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mPresenter = initPresenter();
         mPresenter.onCreate(savedInstanceState);
     }

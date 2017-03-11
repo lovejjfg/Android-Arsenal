@@ -82,7 +82,7 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
             tag.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    JumpUtils.jumpToTagList(tag.getContext(), info.getTagUrl());
+                    JumpUtils.jumpToTagList(tag.getContext(), info.getTagUrl(), ListInfoFragment.TYPE_SEARCH_TAG);
                 }
             });
             tvUser.setOnClickListener(new View.OnClickListener() {

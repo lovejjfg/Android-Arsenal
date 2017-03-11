@@ -8,7 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
 import com.lovejjfg.arsenal.ui.ListInfoFragment;
-import com.lovejjfg.arsenal.ui.TagSearchActivity;
+import com.lovejjfg.arsenal.ui.SearchActivity;
 import com.lovejjfg.arsenal.ui.UserInfoActivity;
 import com.lovejjfg.arsenal.ui.WebViewActivity;
 
@@ -23,9 +23,10 @@ public class JumpUtils {
         ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
     }
 
-    public static void jumpToTagList(Context context, String tagKey) {
-        Intent intent = new Intent(context, TagSearchActivity.class);
+    public static void jumpToTagList(Context context, String tagKey, int type) {
+        Intent intent = new Intent(context, SearchActivity.class);
         intent.putExtra(ListInfoFragment.KEY, tagKey);
+        intent.putExtra(ListInfoFragment.TYPE_NAME, type);
         ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context));
         ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
     }

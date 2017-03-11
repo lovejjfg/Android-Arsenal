@@ -28,11 +28,11 @@
             android:name=".ui.UserInfoActivity"
             android:label="@string/title_activity_user_info"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.TransparentStatusBar">
         </activity>
         <activity android:name=".ui.ArsenalDetailActivity">
         </activity>
-        <activity android:name=".ui.TagSearchActivity">
+        <activity android:name=".ui.SearchActivity">
         </activity>
         <activity android:name=".ui.WebViewActivity">
         </activity>

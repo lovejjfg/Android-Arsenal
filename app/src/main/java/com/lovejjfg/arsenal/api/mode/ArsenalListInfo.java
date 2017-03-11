@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Joe on 2017/3/7.
@@ -31,6 +32,15 @@ public class ArsenalListInfo implements Parcelable {
 
     private String hasMore;
     private ArrayList<ListInfo> infos;
+    private HashMap<String, String> tags;
+
+    public HashMap<String, String> getTags() {
+        return tags;
+    }
+
+    public void setTags(HashMap<String, String> tags) {
+        this.tags = tags;
+    }
 
     public static class ListInfo implements Parcelable {
 
@@ -176,6 +186,9 @@ public class ArsenalListInfo implements Parcelable {
     }
 
 
+    public ArsenalListInfo() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -185,14 +198,13 @@ public class ArsenalListInfo implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.hasMore);
         dest.writeTypedList(this.infos);
-    }
-
-    public ArsenalListInfo() {
+        dest.writeSerializable(this.tags);
     }
 
     protected ArsenalListInfo(Parcel in) {
         this.hasMore = in.readString();
         this.infos = in.createTypedArrayList(ListInfo.CREATOR);
+        this.tags = (HashMap<String, String>) in.readSerializable();
     }
 
     public static final Creator<ArsenalListInfo> CREATOR = new Creator<ArsenalListInfo>() {

@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-
 import com.lovejjfg.arsenal.base.SupportFragment;
 
 import java.util.ArrayList;
@@ -135,13 +134,13 @@ public class FragmentsUtil {
         return manager.popBackStackImmediate();
     }
 
-    @Nullable
-    public SupportFragment findFragment(@NonNull String className) {
-        Fragment tagFragment = manager.findFragmentByTag(className);
-        if (tagFragment instanceof SupportFragment) {
-            return (SupportFragment) tagFragment;
+    public <T extends SupportFragment> T findFragment(@NonNull Class<T> className) {
+        Fragment tagFragment = manager.findFragmentByTag(className.getSimpleName());
+        try {
+            return (T) tagFragment;
+        } catch (Exception e) {
+            return null;
         }
-        return null;
     }
 
     @Nullable

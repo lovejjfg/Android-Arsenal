@@ -1,8 +1,12 @@
 package com.lovejjfg.arsenal.ui;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
+import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -40,12 +44,16 @@ public class WebViewActivity extends SupportActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
-
         WebSettings webSettings = mWeb.getSettings();
         webSettings.setJavaScriptEnabled(true);
-
+//        webSettings.setUseWideViewPort(true);
+//        webSettings.setLoadWithOverviewMode(true);
         mWeb.setClickable(true);
-        mWeb.setFocusableInTouchMode(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setLoadsImagesAutomatically(true);
+        webSettings.setLoadsImagesAutomatically(true);
+        webSettings.setBuiltInZoomControls(true);
+        // TODO: 2017/3/11 not show img
         mWeb.setWebViewClient(new WebViewClient());
         mWeb.setWebChromeClient(new WebChromeClient());
         mWeb.loadDataWithBaseURL(Constants.BASE_URL, data, Constants.MIME_TYPE, Constants.ENCODING, Constants.FAIL_URL);
@@ -84,4 +92,5 @@ public class WebViewActivity extends SupportActivity {
     public int initLayoutRes() {
         return R.layout.activity_web_view;
     }
+
 }
