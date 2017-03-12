@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
@@ -44,7 +45,6 @@ public class ArsenalHomeActivity extends SupportActivity {
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-
                 ArsenalListInfo arsenalInfo = listInfoFragment.getArsenalInfo();
                 if (arsenalInfo != null && arsenalInfo.getTags() != null) {
                     final HashMap<String, String> tags = arsenalInfo.getTags();
@@ -56,6 +56,7 @@ public class ArsenalHomeActivity extends SupportActivity {
                         public void onItemClick(String title) {
                             String s = tags.get(title);
                             JumpUtils.jumpToTagList(searchView.getContext(), "/tag/" + s, ArsenalListInfoFragment.TYPE_SEARCH_TAG);
+                            searchView.closeSearch();
                         }
                     });
                 }
@@ -65,6 +66,12 @@ public class ArsenalHomeActivity extends SupportActivity {
             @Override
             public void onSearchViewClosed() {
                 //Do some magic
+                mToolbar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onSearchViewAnimationStart() {
+                mToolbar.setVisibility(View.GONE);
             }
         });
 
@@ -96,7 +103,6 @@ public class ArsenalHomeActivity extends SupportActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
-
         final MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
         searchView.setMenuItem(myActionMenuItem);
         return true;

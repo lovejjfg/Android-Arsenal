@@ -22,8 +22,8 @@ public interface ArsenalService {
     @GET()
     Observable<ArsenalListInfo> loadMoreArsenalListInfo(@Url() String path);
 
-    @GET("user/{username}")
-    Observable<ArsenalUserInfo> getArsenalUserInfo(@Path("username") String user);
+    @GET()
+    Observable<ArsenalUserInfo> getArsenalUserInfo(@Url() String user);
 
     @GET()
     Observable<ArsenalDetailInfo> getArsenalDetailInfo(@Url String detailUrl);

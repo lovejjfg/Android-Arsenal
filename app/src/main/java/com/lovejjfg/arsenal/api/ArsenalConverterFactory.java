@@ -196,7 +196,7 @@ public class ArsenalConverterFactory extends Converter.Factory {
                             Elements a = element.select("a");
                             if (!a.isEmpty()) {
                                 userName = a.text();
-                                userDetailUrl = getHref(a);
+                                userDetailUrl = a.attr("href");
                             }
                         }
 

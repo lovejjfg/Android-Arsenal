@@ -27,14 +27,17 @@
         <activity
             android:name=".ui.ArsenalUserInfoActivity"
             android:label="@string/title_activity_user_info"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransparentStatusBar">
         </activity>
-        <activity android:name=".ui.ArsenalDetailActivity">
+        <activity android:name=".ui.ArsenalSearchActivity"
+            android:launchMode="singleTask"
+            >
         </activity>
-        <activity android:name=".ui.ArsenalSearchActivity">
-        </activity>
-        <activity android:name=".ui.ArsenalDetailInfoActivity">
+        <activity
+            android:name=".ui.ArsenalDetailInfoActivity"
+            android:launchMode="singleTask">
         </activity>
     </application>
 
