@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
+import com.lovejjfg.arsenal.ui.contract.ListInfoContract;
 import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.powerrecycle.PowerAdapter;
 
@@ -23,9 +25,17 @@ import butterknife.ButterKnife;
  */
 
 public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInfo> {
+
+    private  ListInfoContract.Presenter mPresenter;
+
+    public ArsenalListInfoAdapter(ListInfoContract.Presenter mPresenter) {
+        this.mPresenter = mPresenter;
+    }
+
     @Override
     public RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType) {
-        return new ArsenalListInfoHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_arsenal_info, parent, false));
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_arsenal_info, parent, false);
+        return new ArsenalListInfoHolder(view, mPresenter);
     }
 
     @Override
@@ -47,25 +57,30 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
         TextView desc;
         @Bind(R.id.iv_img)
         ImageView img;
+        @Bind(R.id.ll_container)
+        LinearLayout mContainer;
         @Bind(R.id.tv_date)
         TextView registeredDate;
         @Bind(R.id.iv_android)
         ImageView ivAndroid;
         @Bind(R.id.tv_user)
         TextView tvUser;
-
-        public ArsenalListInfoHolder(View itemView) {
+        private  ListInfoContract.Presenter mPresenter;
+        private ArsenalListInfo.ListInfo mListInfo;
+        public ArsenalListInfoHolder(View itemView, ListInfoContract.Presenter mPresenter) {
             super(itemView);
+            this.mPresenter = mPresenter;
             ButterKnife.bind(this, itemView);
         }
 
         public void onBind(final ArsenalListInfo.ListInfo info) {
+            mListInfo = info;
             title.setText(info.getTitle());
             tag.setText(info.getTag());
             badgeFree.setVisibility(info.isBadgeFree() ? View.VISIBLE : View.GONE);
             badgeNew.setVisibility(info.isBadgeNew() ? View.VISIBLE : View.GONE);
-            desc.setText(info.getDesc(), TextView.BufferType.SPANNABLE);
-
+            String infoDesc = info.getDesc();
+            initView(desc, infoDesc);
             if (!TextUtils.isEmpty(info.getImgUrl())) {
                 // TODO: 2017/3/10 resize image
                 img.setVisibility(View.VISIBLE);
@@ -75,20 +90,21 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
             } else {
                 img.setVisibility(View.GONE);
             }
-            registeredDate.setText(info.getRegisteredDate());
+            initView(registeredDate,info.getRegisteredDate());
             ivAndroid.setVisibility(info.isAndroid() ? View.VISIBLE : View.GONE);
             tvUser.setText(info.getUserName());
             tvUser.setVisibility(info.isUser() ? View.VISIBLE : View.GONE);
             tag.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    JumpUtils.jumpToTagList(tag.getContext(), info.getTagUrl(), ListInfoFragment.TYPE_SEARCH_TAG);
+                    JumpUtils.jumpToTagList(tag.getContext(), info.getTagUrl(), ArsenalListInfoFragment.TYPE_SEARCH_TAG);
                 }
             });
-            tvUser.setOnClickListener(new View.OnClickListener() {
+            mContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                    JumpUtils.jumpToUserDetail(tvUser.getContext(), );
+                    mPresenter.onItemClick(mListInfo.getUserDetailUrl());
                 }
             });
 
@@ -133,6 +149,15 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
 //                }
 //            });
 
+        }
+
+        private static void initView(TextView view, String infoDesc) {
+            if (TextUtils.isEmpty(infoDesc)) {
+                view.setVisibility(View.GONE);
+            } else {
+                view.setVisibility(View.VISIBLE);
+                view.setText(infoDesc, TextView.BufferType.SPANNABLE);
+            }
         }
     }
 }

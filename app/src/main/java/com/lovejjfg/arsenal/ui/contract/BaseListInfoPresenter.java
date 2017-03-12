@@ -2,8 +2,17 @@ package com.lovejjfg.arsenal.ui.contract;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.View;
 
+import com.lovejjfg.arsenal.api.DataManager;
+import com.lovejjfg.arsenal.api.mode.ArsenalDetailInfo;
+import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
+import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
 import com.lovejjfg.arsenal.base.BasePresenterImpl;
+import com.lovejjfg.arsenal.utils.JumpUtils;
+
+import rx.functions.Action1;
 
 /**
  * Created by Joe on 2017/3/9.
@@ -31,6 +40,27 @@ public abstract class BaseListInfoPresenter extends BasePresenterImpl<ListInfoCo
     }
 
     @Override
+    public void onItemClick(View itemView, ArsenalListInfo.ListInfo info) {
+        DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalDetailInfo(info.getListDetailUrl()), new Action1<ArsenalDetailInfo>() {
+            @Override
+            public void call(ArsenalDetailInfo data) {
+                Log.e("TAG", "call: " + data);
+                JumpUtils.jumpToDetail(mView.getContext(), data);
+            }
+        }, this);
+    }
+
+    @Override
+    public void onItemClick(String user) {
+        DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalUserInfo(user), new Action1<ArsenalUserInfo>() {
+            @Override
+            public void call(ArsenalUserInfo info) {
+                mView.jumpToTarget(info);
+            }
+        }, this);
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(CURRENT_KEY, mCurrentKey);
         outState.putString(HAS_MORE, mHasMore);
@@ -48,5 +78,10 @@ public abstract class BaseListInfoPresenter extends BasePresenterImpl<ListInfoCo
     public void call(Throwable throwable) {
         mView.onRefresh(false);
         super.call(throwable);
+    }
+
+    @Override
+    public void onViewPrepared() {
+
     }
 }

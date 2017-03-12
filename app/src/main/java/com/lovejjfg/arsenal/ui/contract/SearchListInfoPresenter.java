@@ -23,15 +23,6 @@ public class SearchListInfoPresenter extends BaseListInfoPresenter {
         super(view);
     }
 
-    @Override
-    public void onItemClick(View itemView, ArsenalListInfo.ListInfo info) {
-        DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalUserInfo(info.getUserDetailUrl()), new Action1<ArsenalUserInfo>() {
-            @Override
-            public void call(ArsenalUserInfo info) {
-                mView.jumpToTarget(info);
-            }
-        }, this);
-    }
 
     @Override
     public void onRefresh() {

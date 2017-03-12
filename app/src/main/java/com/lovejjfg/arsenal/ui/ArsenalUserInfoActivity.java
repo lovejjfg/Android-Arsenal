@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class UserInfoActivity extends SupportActivity {
-    private static final String TAG = UserInfoActivity.class.getSimpleName();
+public class ArsenalUserInfoActivity extends SupportActivity {
+    private static final String TAG = ArsenalUserInfoActivity.class.getSimpleName();
     public static final String USER_INFO = "UserInfo";
     @Bind(R.id.iv_img)
     ImageView mIvPortrait;
@@ -61,7 +61,7 @@ public class UserInfoActivity extends SupportActivity {
 
     private void refreshUI(ArsenalUserInfo info) {
         Log.e(TAG, "refreshUI: " + info.getPortraitUrl());
-        Glide.with(UserInfoActivity.this).load(info.getPortraitUrl()).transform(circleTransform).into(mIvPortrait);
+        Glide.with(ArsenalUserInfoActivity.this).load(info.getPortraitUrl()).transform(circleTransform).into(mIvPortrait);
         getSupportActionBar().setTitle(info.getUserName());
         mTvFlowers.setText(info.getFollowers());
         mTvFlowing.setText(info.getFollowing());
@@ -72,13 +72,15 @@ public class UserInfoActivity extends SupportActivity {
         ArrayList<ArsenalListInfo.ListInfo> contributions = info.getContributions();
         ArrayList<ArsenalListInfo.ListInfo> ownProjects = info.getOwnProjects();
         Bundle contribution = new Bundle();
-        contribution.putParcelableArrayList(UserDetailListInfoFragment.ARSENAL_LIST_INFO, contributions);
+        contribution.putParcelableArrayList(ArsenalListInfoFragment.ARSENAL_LIST_INFO, contributions);
+        contribution.putInt(ArsenalListInfoFragment.TYPE_NAME, ArsenalListInfoFragment.TYPE_USER_DETAIL);
         Bundle ownProject = new Bundle();
-        ownProject.putParcelableArrayList(UserDetailListInfoFragment.ARSENAL_LIST_INFO, ownProjects);
+        ownProject.putParcelableArrayList(ArsenalListInfoFragment.ARSENAL_LIST_INFO, ownProjects);
+        ownProject.putInt(ArsenalListInfoFragment.TYPE_NAME, ArsenalListInfoFragment.TYPE_USER_DETAIL);
         ArrayList<SupportFragment> fragments = new ArrayList<>();
-        UserDetailListInfoFragment ownProFragment = new UserDetailListInfoFragment();
+        ArsenalListInfoFragment ownProFragment = new ArsenalListInfoFragment();
         ownProFragment.setArguments(ownProject);
-        UserDetailListInfoFragment contributionFragment = new UserDetailListInfoFragment();
+        ArsenalListInfoFragment contributionFragment = new ArsenalListInfoFragment();
         contributionFragment.setArguments(contribution);
 
         fragments.add(ownProFragment);

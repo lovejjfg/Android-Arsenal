@@ -23,7 +23,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways|enterAlwaysCollapsed"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|snap"
             app:titleEnabled="false">
 
             <RelativeLayout
@@ -46,15 +46,17 @@
                     style="@style/Text.Content"
                     android:layout_below="@id/iv_img"
                     android:layout_centerHorizontal="true"
+                    android:paddingTop="@dimen/normal_margin_padding"
+                    android:paddingBottom="@dimen/normal_margin_padding"
                     tools:text="lovejjfg.giyhub.com"/>
 
                 <TextView
                     android:id="@+id/tv_name"
-                    style="@style/Text.Title"
+                    style="@style/Text.Content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_site"
                     android:layout_centerHorizontal="true"
-                    android:drawableLeft="@mipmap/icon_location"
+                    android:drawableLeft="@drawable/ic_location_24dp"
                     android:drawablePadding="8dp"
                     tools:text="Shanghai"/>
 
@@ -63,6 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_name">
 
+
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -71,15 +74,31 @@
                         android:gravity="center">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Flowers "
+                            style="@style/Text.Content.Hint"
+                            android:text="Repository "
                             />
 
                         <TextView
+                            android:id="@+id/tv_repo"
+                            style="@style/Text.Content"
+                            android:text=" 20"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normal_margin_padding"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <TextView
+                            style="@style/Text.Content.Hint"
+                            android:text="Flowers "
+                            android:id="@+id/textView"/>
+
+                        <TextView
                             android:id="@+id/tv_flowers"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/Text.Content"
                             android:text="20"
                             />
                     </LinearLayout>
@@ -92,39 +111,17 @@
                         android:gravity="center">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/Text.Content.Hint"
                             android:text="Flowing "
                             />
 
                         <TextView
                             android:id="@+id/tv_flowing"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/Text.Content"
                             android:text="20"
                             />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/normal_margin_padding"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Repositories "
-                            />
-
-                        <TextView
-                            android:id="@+id/tv_repo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" 20"
-                            />
-                    </LinearLayout>
                 </LinearLayout>
 
 
@@ -141,7 +138,7 @@
                 app:titleMarginTop="16dp"
                 app:collapseIcon="@mipmap/ic_launcher"
                 app:layout_collapseMode="pin"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:layout_scrollFlags="scroll|enterAlways|snap|enterAlwaysCollapsed"
                 app:navigationIcon="?homeAsUpIndicator"
                 app:title="lovejjfg"
                 />
@@ -158,6 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:layout_gravity="bottom"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
                 />
 
         </android.support.design.widget.CollapsingToolbarLayout>

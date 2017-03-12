@@ -6,6 +6,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.lovejjfg.arsenal.api.mode.ArsenalDetailInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
 
@@ -45,7 +46,7 @@ public class ArsenalConverterFactory extends Converter.Factory {
         if (aClass.isAssignableFrom(ArsenalUserInfo.class)) {
             return ARSENAL_USER_INFO_CONVERTER;
         }
-        if (aClass.isAssignableFrom(String.class)) {
+        if (aClass.isAssignableFrom(ArsenalDetailInfo.class)) {
             return ARSENAL_DETAI_INFO_CONVERTER;
         }
         return null;
@@ -154,7 +155,6 @@ public class ArsenalConverterFactory extends Converter.Factory {
 
                 Elements select11 = e.select("div.desc");
                 String text = select11.first().toString();
-                // TODO: 2017/3/10 带属性的标签解析
                 StringBuilder sb = new StringBuilder();
                 sb.append("<html>\n" +
                         "<head>\n" +
@@ -218,32 +218,80 @@ public class ArsenalConverterFactory extends Converter.Factory {
         return tagUrl;
     }
 
-    private static final class ArsenalDetaiInfoConverter implements Converter<ResponseBody, String> {
+    private static final class ArsenalDetaiInfoConverter implements Converter<ResponseBody, ArsenalDetailInfo> {
         @Override
-        public String convert(ResponseBody value) throws IOException {
+        public ArsenalDetailInfo convert(ResponseBody value) throws IOException {
 
             StringBuilder sb = new StringBuilder();
             sb.append("<link href=\"/css/app.3d329cbe.css\" rel=\"stylesheet\" type=\"text/css\"/>");
-            sb.append("  <div class=\"row\"> ");
+            sb.append("<script type=\"text/javascript\" src=\"/js/app.b5fc5773.js\" async defer></script>");
+            sb.append("  <div class=\"tab-content\"> \n" +
+                    " <div class=\"tab-pane active\" id=\"description\"> \n" +
+                    "  <div class=\"row\"> \n" +
+                    "   <div class=\"col-md-12\"> ");
             Document document = null;
             try {
                 document = Jsoup.parse(value.string(), HOST);
-                //Elements divs = doc.select("div").not("#logo");
-                // TODO: 2017/3/10 remove ads
-                //div:matches((?i)login)ad
-//                Elements select1 = document.select("body").not("div:matches(/(?=ads)/)");
-                Elements select1 = document.body().select("div.tab-content");//.not("div[class*=ads]");
-//                Elements select1 = document.body().not(".:matches(/(?=ads)/)");
+                ArsenalDetailInfo info = new ArsenalDetailInfo();
+
+                Element h1 = document.select("h1").first();
+                Element ssa = h1.select("a#favoriteButton").first();
+                Element element = ssa.nextElementSibling();
+                String title = element.text();
+                String href = element.attr("href");
+                info.setTitle(title);
+                info.setTitleUrl(href);
+                Element first = document.select("div.col-md-2.contributor").first();
+                if (first != null) {
+                    String userDetail = first.select("a[href]").attr("href");
+                    info.setOwnerUrl(userDetail);
+                    String portraitUrl = first.select("img[src]").attr("src");
+                    info.setPortraitUrl(portraitUrl);
+
+                }
+                Element fav = document.select("dd#afavCount").first();
+                String facConut = fav.text();
+                String link = fav.nextElementSibling().nextElementSibling().text();
+                info.setLink(link);
+                info.setFavoritesCount(facConut);
+                Elements h2Tags = document.select("h2");
+                for (Element e : h2Tags) {
+                    if (e.text().contains("Additional")) {
+                        Element element1 = e.nextElementSibling();
+                        Elements select3 = element1.select("dl > dt ");
+                        if (!select3.isEmpty()) {
+                            for (Element element2 : select3) {
+                                if ("Language".equals(element2.text())) {
+                                    String language = element2.nextElementSibling().text();
+                                    info.setLanguage(language);
+                                }
+                                if ("Updated".equals(element2.text())) {
+                                    String updated = element2.nextElementSibling().text();
+                                    info.setUpdatedDate(updated);
+                                }
+                                if ("Owner".equals(element2.text())) {
+                                    String owner = element2.nextElementSibling().text();
+                                    info.setOwner(owner);
+                                }
+                            }
+                        }
+                    }
+                }
+                Elements select1 = document.body().select("div#projectDesc");//.not("div[class*=ads]");
                 if (!select1.isEmpty()) {
                     sb.append(select1.first().toString());
-                    sb.append("  </div> ");
-                    return sb.toString();
+                    sb.append("    </div> \n" +
+                            "   </div> \n" +
+                            "  </div> \n" +
+                            " </div> ");
+                    info.setDesc(sb.toString());
                 }
+                return info;
+
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;
             }
-            return null;
         }
     }
 

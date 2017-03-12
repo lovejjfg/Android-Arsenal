@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.lovejjfg.arsenal.api.DataManager;
+import com.lovejjfg.arsenal.api.mode.ArsenalDetailInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.utils.JumpUtils;
 
@@ -30,18 +31,6 @@ public class HomeListInfoPresenter extends BaseListInfoPresenter {
 
     public HomeListInfoPresenter(@Nullable ListInfoContract.View view) {
         super(view);
-    }
-
-    @Override
-    public void onItemClick(View itemView, final ArsenalListInfo.ListInfo info) {
-
-        DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalDetailInfo(info.getListDetailUrl()), new Action1<String>() {
-            @Override
-            public void call(String data) {
-                Log.e("TAG", "call: " + data);
-                JumpUtils.jumpToDetail(mView.getContext(), data);
-            }
-        }, this);
     }
 
     @Override

@@ -1,14 +1,10 @@
 package com.lovejjfg.arsenal.ui;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 
 import com.lovejjfg.arsenal.R;
@@ -19,6 +15,7 @@ import com.lovejjfg.arsenal.ui.contract.HomeListInfoPresenter;
 import com.lovejjfg.arsenal.ui.contract.ListInfoContract;
 import com.lovejjfg.arsenal.ui.contract.SearchListInfoPresenter;
 import com.lovejjfg.arsenal.ui.contract.TagSearchListInfoPresenter;
+import com.lovejjfg.arsenal.ui.contract.UserDetailListInfoPresenter;
 import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.powerrecycle.AdapterLoader;
 import com.lovejjfg.powerrecycle.PowerRecyclerView;
@@ -33,13 +30,14 @@ import butterknife.ButterKnife;
  * Email lovejjfg@gmail.com
  */
 
-public class ListInfoFragment extends BaseFragment<ListInfoContract.Presenter> implements AdapterLoader.OnItemClickListener, PowerRecyclerView.OnRefreshLoadMoreListener, ListInfoContract.View {
+public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Presenter> implements AdapterLoader.OnItemClickListener, PowerRecyclerView.OnRefreshLoadMoreListener, ListInfoContract.View {
     public static final String ARSENAL_LIST_INFO = "ARSENAL_LIST_INFO";
     public static final String TYPE_NAME = "TYPE_NAME";
     public static final String KEY = "KEY";
     public static final int TYPE_HOME = 0;
     public static final int TYPE_SEARCH = 1;
     public static final int TYPE_SEARCH_TAG = 2;
+    public static final int TYPE_USER_DETAIL = 3;
     @Bind(R.id.recycler_view)
     PowerRecyclerView mRecyclerView;
     private ArsenalListInfoAdapter listInfoAdapter;
@@ -57,19 +55,21 @@ public class ListInfoFragment extends BaseFragment<ListInfoContract.Presenter> i
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        ButterKnife.bind(this, view);
         ArrayList<ArsenalListInfo.ListInfo> beans = getArguments().getParcelableArrayList(ARSENAL_LIST_INFO);
         if (savedInstanceState != null) {
             beans = savedInstanceState.getParcelableArrayList(ARSENAL_LIST_INFO);
         }
         String key = getArguments().getString("KEY");
-        ButterKnife.bind(this, view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        listInfoAdapter = new ArsenalListInfoAdapter();
+        listInfoAdapter = new ArsenalListInfoAdapter(mPresenter);
         listInfoAdapter.setTotalCount(100);
         mRecyclerView.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         mRecyclerView.setAdapter(listInfoAdapter);
         mRecyclerView.setOnItemClickListener(this);
         mRecyclerView.setOnRefreshListener(this);
+
+        mPresenter.onViewPrepared();
         if (beans != null) {
             listInfoAdapter.setList(beans);
         } else if (!TextUtils.isEmpty(key)) {
@@ -123,6 +123,11 @@ public class ListInfoFragment extends BaseFragment<ListInfoContract.Presenter> i
     }
 
     @Override
+    public void setPullRefreshEnable(boolean enable) {
+        mRecyclerView.setPullRefreshEnable(false);
+    }
+
+    @Override
     public ListInfoContract.Presenter initPresenter() {
         int type = getArguments().getInt(TYPE_NAME);
         switch (type) {
@@ -131,6 +136,8 @@ public class ListInfoFragment extends BaseFragment<ListInfoContract.Presenter> i
                 return new SearchListInfoPresenter(this);
             case TYPE_SEARCH_TAG:
                 return new TagSearchListInfoPresenter(this);
+            case TYPE_USER_DETAIL:
+                return new UserDetailListInfoPresenter(this);
             case TYPE_HOME:
             default:
                 return new HomeListInfoPresenter(this);
@@ -143,6 +150,7 @@ public class ListInfoFragment extends BaseFragment<ListInfoContract.Presenter> i
         super.onSaveInstanceState(outState);
     }
 
+    @Nullable
     public ArsenalListInfo getArsenalInfo() {
         return mArsenalListInfo;
     }

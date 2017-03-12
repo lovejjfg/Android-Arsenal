@@ -1,5 +1,6 @@
 package com.lovejjfg.arsenal;
 
+import com.lovejjfg.arsenal.api.mode.ArsenalDetailInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 
 import org.jsoup.Jsoup;
@@ -319,7 +320,6 @@ public class ExampleUnitTest {
 
     @Test
     public void testAds() throws IOException {
-        // TODO: 2017/3/11 too long
         String text = "<div class=\"header\">\n" +
                 "    <div class=\"title\">\n" +
                 "     <a href=\"/details/1/5428\">DateTimeTemplate</a>\n" +
@@ -340,6 +340,64 @@ public class ExampleUnitTest {
 
         }
 //            System.out.println(select1.first().toString());
+
+    }
+
+    @Test
+    public void testDetailInfo() throws IOException {
+
+        ArsenalDetailInfo info = new ArsenalDetailInfo();
+        //
+        Document document = Jsoup.connect("https://android-arsenal.com/details/1/5415").get();
+        Element first = document.select("div.col-md-2.contributor").first();
+        Element h1 = document.select("h1").first();
+        Element ssa = h1.select("a#favoriteButton").first();
+        Element element = ssa.nextElementSibling();
+        String title = element.text();
+        String href = element.attr("href");
+        System.out.println("title:" + title);
+        System.out.println("href:" + href);
+        if (first != null) {
+            String userDetail = first.select("a[href]").attr("href");
+            System.out.println(userDetail);
+            String portraitUrl = first.select("img[src]").attr("src");
+            System.out.println(portraitUrl);
+        }
+        Element fav = document.select("dd#afavCount").first();
+        String facConut = fav.text();
+        String link = fav.nextElementSibling().nextElementSibling().text();
+        System.out.println("linkk::"+link);
+        System.out.println(facConut);
+//        Additional
+        Elements h2Tags = document.select("h2");
+        for (Element e : h2Tags) {
+
+            if (e.text().contains("General")) {
+                Element element1 = e.nextElementSibling();
+                Elements select3 = element1.select("dl > dt ");
+
+            }
+            if (e.text().contains("Additional")) {
+                Element element1 = e.nextElementSibling();
+                Elements select3 = element1.select("dl > dt ");
+                if (!select3.isEmpty()) {
+                    for (Element element2 : select3) {
+                        if ("Language".equals(element2.text())) {
+                            String language = element2.nextElementSibling().text();
+                            info.setLanguage(language);
+                        }
+                        if ("Updated".equals(element2.text())) {
+                            String updated = element2.nextElementSibling().text();
+                            info.setUpdatedDate(updated);
+                        }
+                        if ("Owner".equals(element2.text())) {
+                            String owner = element2.nextElementSibling().text();
+                            info.setUpdatedDate(owner);
+                        }
+                    }
+                }
+            }
+        }
 
     }
 

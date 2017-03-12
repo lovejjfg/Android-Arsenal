@@ -33,7 +33,9 @@
             android:id="@+id/tv_tag"
             style="@style/Text.ListTag"
             android:layout_below="@+id/tv_name"
-            android:layout_marginTop="@dimen/normal_margin_padding"
+            android:paddingTop="@dimen/normal_margin_padding"
+            android:paddingBottom="@dimen/normal_margin_padding"
+            android:paddingRight="@dimen/normal_margin_padding"
             android:background="?selectableItemBackground"
             tools:text="tag"/>
 
@@ -65,7 +67,6 @@
             style="@style/Text.ListContent"
             android:layout_below="@+id/tv_tag"
             android:paddingBottom="16dp"
-            android:paddingTop="16dp"
             tools:text="@string/des"
             />
 
@@ -79,7 +80,8 @@
 
         <TextView
             android:id="@+id/tv_date"
-            style="@style/Text.ListTag"
+            style="@style/Text.calendar"
+            android:paddingTop="@dimen/normal_margin_padding"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/iv_img"
             android:drawableLeft="@drawable/ic_calender_24dp"
@@ -87,21 +89,24 @@
             />
 
         <LinearLayout
+            android:id="@+id/ll_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:clickable="true"
             android:focusable="true"
             android:layout_alignParentRight="true"
             android:layout_below="@id/iv_img"
             android:background="?selectableItemBackground"
-            android:clipChildren="false"
+            android:paddingTop="@dimen/normal_margin_padding"
+            android:paddingBottom="@dimen/normal_margin_padding"
+            android:paddingLeft="@dimen/normal_margin_padding"
             >
 
             <ImageView
                 android:id="@+id/iv_android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:src="@drawable/ic_android_24dp"
                 android:visibility="visible"
                 />

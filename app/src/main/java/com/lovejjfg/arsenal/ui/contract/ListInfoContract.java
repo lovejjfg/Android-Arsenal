@@ -21,10 +21,14 @@ public interface ListInfoContract {
         void atEnd();
 
         void onRefresh(boolean refresh);
+
+        void setPullRefreshEnable(boolean enable);
     }
 
     interface Presenter extends BasePresenter {
         void onItemClick(android.view.View itemView, ArsenalListInfo.ListInfo info);
+
+        void onItemClick(String user);
 
         void onRefresh();
 

@@ -70,6 +70,147 @@ public class ArsenalDetailInfo implements Parcelable {
 
     private String desc;
 
+    private String language;
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getPortraitUrl() {
+
+        return portraitUrl;
+    }
+
+    public void setPortraitUrl(String portraitUrl) {
+        this.portraitUrl = portraitUrl;
+    }
+
+    private String portraitUrl;
+
+
+    public ArrayList<ArsenalListInfo> getAssociated() {
+        return associated;
+    }
+
+    public void setAssociated(ArrayList<ArsenalListInfo> associated) {
+        this.associated = associated;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public ArrayList<ArsenalUserInfo> getContributors() {
+        return contributors;
+    }
+
+    public void setContributors(ArrayList<ArsenalUserInfo> contributors) {
+        this.contributors = contributors;
+    }
+
+    public static Creator<ArsenalDetailInfo> getCREATOR() {
+        return CREATOR;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getFavoritesCount() {
+        return favoritesCount;
+    }
+
+    public void setFavoritesCount(String favoritesCount) {
+        this.favoritesCount = favoritesCount;
+    }
+
+    public String getLicense() {
+        return license;
+    }
+
+    public void setLicense(String license) {
+        this.license = license;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getOwner() {
+        return Owner;
+    }
+
+    public void setOwner(String owner) {
+        Owner = owner;
+    }
+
+    public String getOwnerUrl() {
+        return OwnerUrl;
+    }
+
+    public void setOwnerUrl(String ownerUrl) {
+        OwnerUrl = ownerUrl;
+    }
+
+    public String getRegisteredDate() {
+        return registeredDate;
+    }
+
+    public void setRegisteredDate(String registeredDate) {
+        this.registeredDate = registeredDate;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitleUrl() {
+        return titleUrl;
+    }
+
+    public void setTitleUrl(String titleUrl) {
+        this.titleUrl = titleUrl;
+    }
+
+    public String getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(String updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public ArsenalDetailInfo() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -86,14 +227,13 @@ public class ArsenalDetailInfo implements Parcelable {
         dest.writeString(this.favoritesCount);
         dest.writeString(this.link);
         dest.writeTypedList(this.associated);
-        dest.writeList(this.contributors);
+        dest.writeTypedList(this.contributors);
         dest.writeString(this.updatedDate);
         dest.writeString(this.Owner);
         dest.writeString(this.OwnerUrl);
         dest.writeString(this.desc);
-    }
-
-    public ArsenalDetailInfo() {
+        dest.writeString(this.language);
+        dest.writeString(this.portraitUrl);
     }
 
     protected ArsenalDetailInfo(Parcel in) {
@@ -106,15 +246,16 @@ public class ArsenalDetailInfo implements Parcelable {
         this.favoritesCount = in.readString();
         this.link = in.readString();
         this.associated = in.createTypedArrayList(ArsenalListInfo.CREATOR);
-        this.contributors = new ArrayList<ArsenalUserInfo>();
-        in.readList(this.contributors, ArsenalUserInfo.class.getClassLoader());
+        this.contributors = in.createTypedArrayList(ArsenalUserInfo.CREATOR);
         this.updatedDate = in.readString();
         this.Owner = in.readString();
         this.OwnerUrl = in.readString();
         this.desc = in.readString();
+        this.language = in.readString();
+        this.portraitUrl = in.readString();
     }
 
-    public static final Parcelable.Creator<ArsenalDetailInfo> CREATOR = new Parcelable.Creator<ArsenalDetailInfo>() {
+    public static final Creator<ArsenalDetailInfo> CREATOR = new Creator<ArsenalDetailInfo>() {
         @Override
         public ArsenalDetailInfo createFromParcel(Parcel source) {
             return new ArsenalDetailInfo(source);

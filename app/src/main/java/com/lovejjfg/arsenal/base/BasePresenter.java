@@ -29,4 +29,6 @@ public interface BasePresenter {
     void onRestart();
 
     void onSaveInstanceState(Bundle outState);
+
+    void onViewPrepared();
 }
