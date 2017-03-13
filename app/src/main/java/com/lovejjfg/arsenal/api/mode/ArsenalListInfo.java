@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2017.  Joe
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
 package com.lovejjfg.arsenal.api.mode;
 
 import android.os.Parcel;
@@ -62,7 +79,12 @@ public class ArsenalListInfo implements Parcelable {
         private String userName;
         private String userDetailUrl;
 
-        public ListInfo(boolean badgeFree, boolean badgeNew, String date, String desc, String imgUrl, boolean isAndroid, boolean isUser, String tag, String tagUrl, String title, String listDetailUrl, String userDetailUrl, String userName) {
+        public ListInfo(boolean badgeFree, boolean badgeNew,
+                        String date, String desc, String imgUrl,
+                        boolean isAndroid, boolean isUser,
+                        String tag, String tagUrl,
+                        String title, String listDetailUrl,
+                        String userDetailUrl, String userName) {
             this.userName = userName;
             this.badgeFree = badgeFree;
             this.badgeNew = badgeNew;
@@ -156,7 +178,7 @@ public class ArsenalListInfo implements Parcelable {
         public ListInfo() {
         }
 
-        protected ListInfo(Parcel in) {
+        ListInfo(Parcel in) {
             this.title = in.readString();
             this.listDetailUrl = in.readString();
             this.tagUrl = in.readString();

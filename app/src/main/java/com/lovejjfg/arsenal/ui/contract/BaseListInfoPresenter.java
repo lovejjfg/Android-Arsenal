@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2017.  Joe
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
 package com.lovejjfg.arsenal.ui.contract;
 
 import android.os.Bundle;
@@ -12,13 +29,8 @@ import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
 import com.lovejjfg.arsenal.base.BasePresenterImpl;
 import com.lovejjfg.arsenal.utils.JumpUtils;
-import com.lovejjfg.arsenal.utils.rxbus.RxBus;
-import com.lovejjfg.arsenal.utils.rxbus.SearchEvent;
 
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Joe on 2017/3/9.
@@ -29,10 +41,10 @@ public abstract class BaseListInfoPresenter extends BasePresenterImpl<ListInfoCo
 
     private static final String CURRENT_KEY = "currentKey";
     private static final String HAS_MORE = "hasMore";
-    public String mCurrentKey;
-    public String mHasMore;
+    String mCurrentKey;
+    String mHasMore;
 
-    public BaseListInfoPresenter(@Nullable ListInfoContract.View view) {
+    BaseListInfoPresenter(@Nullable ListInfoContract.View view) {
         super(view);
     }
 

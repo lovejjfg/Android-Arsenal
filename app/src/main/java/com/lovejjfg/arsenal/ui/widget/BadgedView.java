@@ -1,17 +1,18 @@
 /*
- * Copyright 2015 Google Inc.
+ *  Copyright (c) 2017.  Joe
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
  */
 
 package com.lovejjfg.arsenal.ui.widget;
@@ -34,17 +35,14 @@ import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.widget.ImageView;
 
-import com.lovejjfg.arsenal.R;
-
 
 /**
  * A view group that draws a badge drawable on top of it's contents.
  */
 public class BadgedView extends ImageView {
 
-    private Drawable badge;
+    private final Drawable badge;
     private boolean drawBadge;
-    private boolean badgeBoundsSet = false;
     private int badgeGravity;
     private int badgePadding;
 
@@ -64,7 +62,7 @@ public class BadgedView extends ImageView {
         drawBadge = show;
     }
 
-    public void setBadgeColor(@ColorInt int color) {
+    private void setBadgeColor(@ColorInt int color) {
         badge.setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }
 
@@ -95,7 +93,7 @@ public class BadgedView extends ImageView {
                 badgePadding,
                 badgeBounds);
         badge.setBounds(badgeBounds);
-        badgeBoundsSet = true;
+        boolean badgeBoundsSet = true;
     }
 
     /**

@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2017.  Joe
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
 package com.lovejjfg.arsenal.utils;
 
 import android.content.Context;
@@ -5,8 +22,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 
-public class SharedPrefsUtil {
-    public static String SharePresName = "SharedPreferences";
+class SharedPrefsUtil {
+    private static final String SHARE_PRESNAME = "SharedPreferences";
 
     /**
      * 向SharedPreferences中写入int类型数据
@@ -89,8 +106,7 @@ public class SharedPrefsUtil {
     public static int getValue(Context context, String key,
                                int defValue) {
         SharedPreferences sp = getSharedPreferences(context);
-        int value = sp.getInt(key, defValue);
-        return value;
+        return sp.getInt(key, defValue);
     }
 
     /**
@@ -103,8 +119,7 @@ public class SharedPrefsUtil {
     public static boolean getValue(Context context, String key,
                                    boolean defValue) {
         SharedPreferences sp = getSharedPreferences(context);
-        boolean value = sp.getBoolean(key, defValue);
-        return value;
+        return sp.getBoolean(key, defValue);
     }
 
     /**
@@ -118,8 +133,7 @@ public class SharedPrefsUtil {
     public static String getValue(Context context, String key,
                                   String defValue) {
         SharedPreferences sp = getSharedPreferences(context);
-        String value = sp.getString(key, defValue);
-        return value;
+        return sp.getString(key, defValue);
     }
 
     /**
@@ -133,8 +147,7 @@ public class SharedPrefsUtil {
     public static float getValue(Context context, String key,
                                  float defValue) {
         SharedPreferences sp = getSharedPreferences(context);
-        float value = sp.getFloat(key, defValue);
-        return value;
+        return sp.getFloat(key, defValue);
     }
 
     /**
@@ -148,8 +161,7 @@ public class SharedPrefsUtil {
     public static long getValue(Context context, String key,
                                 long defValue) {
         SharedPreferences sp = getSharedPreferences(context);
-        long value = sp.getLong(key, defValue);
-        return value;
+        return sp.getLong(key, defValue);
     }
 
     //获取Editor实例
@@ -159,7 +171,7 @@ public class SharedPrefsUtil {
 
     //获取SharedPreferences实例
     private static SharedPreferences getSharedPreferences(Context context) {
-        return context.getSharedPreferences(SharePresName, Context.MODE_PRIVATE);
+        return context.getSharedPreferences(SHARE_PRESNAME, Context.MODE_PRIVATE);
     }
 
     /**

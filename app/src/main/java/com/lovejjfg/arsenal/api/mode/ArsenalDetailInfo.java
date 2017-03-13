@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2017.  Joe
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
 package com.lovejjfg.arsenal.api.mode;
 
 import android.os.Parcel;
@@ -43,7 +60,7 @@ public class ArsenalDetailInfo implements Parcelable {
      * Apr 3, 2016
      * Updated
      * Mar 2, 2017
-     * Owner
+     * owner
      * joe (lovejjfg)
      * Contributor
      * joe (lovejjfg)Activity
@@ -65,8 +82,8 @@ public class ArsenalDetailInfo implements Parcelable {
     private ArrayList<ArsenalListInfo> associated;
     private ArrayList<ArsenalUserInfo> contributors;
     private String updatedDate;
-    private String Owner;
-    private String OwnerUrl;
+    private String owner;
+    private String ownerurl;
 
     private String desc;
 
@@ -153,19 +170,19 @@ public class ArsenalDetailInfo implements Parcelable {
     }
 
     public String getOwner() {
-        return Owner;
+        return owner;
     }
 
     public void setOwner(String owner) {
-        Owner = owner;
+        this.owner = owner;
     }
 
-    public String getOwnerUrl() {
-        return OwnerUrl;
+    public String getOwnerurl() {
+        return ownerurl;
     }
 
-    public void setOwnerUrl(String ownerUrl) {
-        OwnerUrl = ownerUrl;
+    public void setOwnerurl(String ownerurl) {
+        this.ownerurl = ownerurl;
     }
 
     public String getRegisteredDate() {
@@ -229,8 +246,8 @@ public class ArsenalDetailInfo implements Parcelable {
         dest.writeTypedList(this.associated);
         dest.writeTypedList(this.contributors);
         dest.writeString(this.updatedDate);
-        dest.writeString(this.Owner);
-        dest.writeString(this.OwnerUrl);
+        dest.writeString(this.owner);
+        dest.writeString(this.ownerurl);
         dest.writeString(this.desc);
         dest.writeString(this.language);
         dest.writeString(this.portraitUrl);
@@ -248,8 +265,8 @@ public class ArsenalDetailInfo implements Parcelable {
         this.associated = in.createTypedArrayList(ArsenalListInfo.CREATOR);
         this.contributors = in.createTypedArrayList(ArsenalUserInfo.CREATOR);
         this.updatedDate = in.readString();
-        this.Owner = in.readString();
-        this.OwnerUrl = in.readString();
+        this.owner = in.readString();
+        this.ownerurl = in.readString();
         this.desc = in.readString();
         this.language = in.readString();
         this.portraitUrl = in.readString();

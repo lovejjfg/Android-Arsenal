@@ -1,10 +1,26 @@
 
+/*
+ *  Copyright (c) 2017.  Joe
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
 package com.lovejjfg.arsenal.api;
 
 import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.lovejjfg.arsenal.api.mode.ArsenalDetailInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
@@ -29,7 +45,7 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 
 
-public class ArsenalConverterFactory extends Converter.Factory {
+class ArsenalConverterFactory extends Converter.Factory {
     private static final ArsenalListInfoConverter ARSENAL_LIST_INFO_CONVERTER = new ArsenalListInfoConverter();
     private static final ArsenalUserInfoConverter ARSENAL_USER_INFO_CONVERTER = new ArsenalUserInfoConverter();
     private static final ArsenalDetaiInfoConverter ARSENAL_DETAI_INFO_CONVERTER = new ArsenalDetaiInfoConverter();
@@ -39,7 +55,7 @@ public class ArsenalConverterFactory extends Converter.Factory {
                                                             Annotation[] annotations,
                                                             Retrofit retrofit) {
 
-        Class aClass = getClass(type, 0);
+        Class aClass = getClass(type);
         if (aClass.isAssignableFrom(ArsenalListInfo.class)) {
             return ARSENAL_LIST_INFO_CONVERTER;
         }
@@ -52,11 +68,11 @@ public class ArsenalConverterFactory extends Converter.Factory {
         return null;
     }
 
-    private static Class getClass(Type type, int i) {
+    private static Class getClass(Type type) {
         if (type instanceof ParameterizedType) {
-            return getGenericClass((ParameterizedType) type, i);
+            return getGenericClass((ParameterizedType) type, 0);
         } else if (type instanceof TypeVariable) {
-            return getClass(((TypeVariable) type).getBounds()[0], 0);
+            return getClass(((TypeVariable) type).getBounds()[0]);
         } else {
             return (Class) type;
         }
@@ -69,7 +85,7 @@ public class ArsenalConverterFactory extends Converter.Factory {
         } else if (genericClass instanceof GenericArrayType) {
             return (Class) ((GenericArrayType) genericClass).getGenericComponentType();
         } else if (genericClass instanceof TypeVariable) {
-            return getClass(((TypeVariable) genericClass).getBounds()[0], 0);
+            return getClass(((TypeVariable) genericClass).getBounds()[0]);
         } else {
             return (Class) genericClass;
         }
@@ -209,12 +225,12 @@ public class ArsenalConverterFactory extends Converter.Factory {
         public ArsenalDetailInfo convert(ResponseBody value) throws IOException {
 
             StringBuilder sb = new StringBuilder();
-            sb.append("<link href=\"/css/app.3d329cbe.css\" rel=\"stylesheet\" type=\"text/css\"/>");
-            sb.append("<script type=\"text/javascript\" src=\"/js/app.b5fc5773.js\" async defer></script>");
-            sb.append("  <div class=\"tab-content\"> \n" +
-                    " <div class=\"tab-pane active\" id=\"description\"> \n" +
-                    "  <div class=\"row\"> \n" +
-                    "   <div class=\"col-md-12\"> ");
+            sb.append("<link href=\"/css/app.3d329cbe.css\" rel=\"stylesheet\" type=\"text/css\"/>")
+                    .append("<script type=\"text/javascript\" src=\"/js/app.b5fc5773.js\" async defer></script>")
+                    .append("  <div class=\"tab-content\"> \n")
+                    .append(" <div class=\"tab-pane active\" id=\"description\"> \n")
+                    .append("  <div class=\"row\"> \n")
+                    .append("   <div class=\"col-md-12\"> ");
             Document document = null;
             try {
                 document = Jsoup.parse(value.string(), HOST);
@@ -230,7 +246,7 @@ public class ArsenalConverterFactory extends Converter.Factory {
                 Element first = document.select("div.col-md-2.contributor").first();
                 if (first != null) {
                     String userDetail = first.select("a[href]").attr("href");
-                    info.setOwnerUrl(userDetail);
+                    info.setOwnerurl(userDetail);
                     String portraitUrl = first.select("img[src]").attr("src");
                     info.setPortraitUrl(portraitUrl);
 
@@ -263,13 +279,13 @@ public class ArsenalConverterFactory extends Converter.Factory {
                         }
                     }
                 }
-                Elements select1 = document.body().select("div#projectDesc");//.not("div[class*=ads]");
+                Elements select1 = document.body().select("div#projectDesc");
                 if (!select1.isEmpty()) {
                     sb.append(select1.first().toString());
-                    sb.append("    </div> \n" +
-                            "   </div> \n" +
-                            "  </div> \n" +
-                            " </div> ");
+                    sb.append("</div> \n")
+                            .append("   </div> \n")
+                            .append("  </div> \n")
+                            .append(" </div> ");
                     info.setDesc(sb.toString());
                 }
                 return info;

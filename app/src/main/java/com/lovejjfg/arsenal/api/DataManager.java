@@ -1,23 +1,29 @@
-package com.lovejjfg.arsenal.api;
+/*
+ *  Copyright (c) 2017.  Joe
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
 
-import android.util.Log;
+package com.lovejjfg.arsenal.api;
 
 import com.lovejjfg.arsenal.base.App;
 import com.lovejjfg.arsenal.utils.CacheControlInterceptor;
-import com.lovejjfg.arsenal.utils.ErrorUtil;
 import com.lovejjfg.arsenal.utils.LoggingInterceptor;
 
-import java.net.CookieManager;
-import java.net.CookiePolicy;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
-import okhttp3.Cookie;
-import okhttp3.CookieJar;
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -36,14 +42,14 @@ import rx.schedulers.Schedulers;
 public class DataManager {
     private static final String TAG = "TAG";
     private static final String API = "https://android-arsenal.com/";
-    private static Retrofit userApi;
+    private static Retrofit USER_API;
 
     private static <T> T createApi(Class<T> clazz) {
-        if (userApi == null) {
-            int cacheSize = 10 * 1024 * 1024;// 10 MiB
-            Cache cache = new Cache(App.CacheDirectory, cacheSize);
+        if (USER_API == null) {
+            int cacheSize = 10 * 1024 * 1024;
+            Cache cache = new Cache(App.CACHE_DIRECTORY, cacheSize);
 //            CookieJar cookieJar = initCookies();
-            userApi = new Retrofit.Builder()
+            USER_API = new Retrofit.Builder()
                     .baseUrl(API)
                     .addConverterFactory(ArsenalConverterFactory.create())
 //                    .addConverterFactory(GsonConverterFactory.create())
@@ -62,9 +68,9 @@ public class DataManager {
                     .build();
 
 
-            return userApi.create(clazz);
+            return USER_API.create(clazz);
         }
-        return userApi.create(clazz);
+        return USER_API.create(clazz);
     }
 
     public static ArsenalService getArsenalApi() {
@@ -75,20 +81,21 @@ public class DataManager {
     public static <R> Subscription handleNormalService(Observable<R> observable, Action0 doOnSubscribe, Action1<R> callSuccess, Action1<Throwable> callError) {
 
         return observable
-                .subscribeOn(Schedulers.io())//事件产生在子线程
+                //事件产生在子线程
+                .subscribeOn(Schedulers.io())
                 .doOnSubscribe(doOnSubscribe)
-                .subscribeOn(AndroidSchedulers.mainThread())//doOnSubscribe产生在主线程
-                .observeOn(AndroidSchedulers.mainThread())//
+                //doOnSubscribe产生在主线程
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(callSuccess, callError);
     }
 
     public static <R> Subscription handleNormalService(Observable<R> observable, Action1<R> callSuccess, Action1<Throwable> callError) {
         return observable
-                .subscribeOn(Schedulers.io())//事件产生在子线程
-                .observeOn(AndroidSchedulers.mainThread())//
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(callSuccess, callError);
     }
-
 
 
 }

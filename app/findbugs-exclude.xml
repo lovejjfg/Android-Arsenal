@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~  Copyright (c) 2017.  Joe
   ~
@@ -16,15 +15,21 @@
   ~
   -->
 
-<resources>
-    <color name="colorPrimary">#008bb9</color>
-    <color name="colorPrimaryDark">#008bb9</color>
-    <color name="colorAccent">#FF4081</color>
+<FindBugsFilter>
 
-    <color name="text_primary_dark">#2c2c2f</color>
-    <color name="text_tertiary_dark">#cd000000</color>
-    <color name="text_primary_light">#ffffffff</color>
-    <color name="text_secondary_light">#ffdbdbdb</color>
-    <color name="tag_free">#66cb66</color>
-    <color name="tag_new">#fde77c</color>
-</resources>
+    <Match>
+        <Class name="~.*R\$.*"/>
+    </Match>
+    <Match>
+        <Class name="~.*Manifest\$.*"/>
+    </Match>
+    <!-- We make a best effort attempt to acquire the cpu count from a fixed path -->
+    <Match>
+        <Class name="com.lovejjfg.swiperefreshrecycleview.model.PickedBean"/>
+        <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD"/>
+    </Match>
+    <!--<Match>-->
+    <!--<Bug pattern="SF_SWITCH_NO_DEFAULT"/>-->
+    <!--</Match>-->
+
+</FindBugsFilter>

@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2017.  Joe
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
 package com.lovejjfg.arsenal.ui;
 
 import android.content.Intent;
@@ -60,7 +77,7 @@ public class ArsenalSearchActivity extends SupportActivity implements View.OnCli
                         @Override
                         public void onItemClick(String title) {
                             String s = TagUtils.getTagValue(title);
-                            JumpUtils.jumpToSearchList(searchView.getContext(), title, "/tag/" + s, ArsenalListInfoFragment.TYPE_SEARCH_TAG);
+                            JumpUtils.jumpToSearchList(searchView.getContext(), title, "/tag/" + s);
                             searchView.closeSearch();
                         }
                     });
@@ -89,7 +106,7 @@ public class ArsenalSearchActivity extends SupportActivity implements View.OnCli
             public boolean onQueryTextSubmit(String query) {
                 Log.e(TAG, "onQueryTextSubmit: " + query);
                 searchView.closeSearch();
-                JumpUtils.jumpToSearchList(ArsenalSearchActivity.this, query, ArsenalListInfoFragment.TYPE_SEARCH);
+                JumpUtils.jumpToSearchList(ArsenalSearchActivity.this, query);
                 return false;
             }
 
