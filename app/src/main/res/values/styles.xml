@@ -45,7 +45,8 @@
     <style name="Text.ListContent">
         <item name="android:textColor">@color/text_primary_dark</item>
         <item name="android:textSize">@dimen/text_small</item>
-        <item name="android:maxLines">5</item>
+        <item name="android:maxLines">15</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:gravity">left</item>
     </style>
 

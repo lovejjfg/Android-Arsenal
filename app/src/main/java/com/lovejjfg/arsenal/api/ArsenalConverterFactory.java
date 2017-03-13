@@ -154,25 +154,11 @@ public class ArsenalConverterFactory extends Converter.Factory {
                 badgeNew = !TextUtils.isEmpty(newDes);
 
                 Elements select11 = e.select("div.desc");
-                String text = select11.first().toString();
-                StringBuilder sb = new StringBuilder();
-                sb.append("<html>\n" +
-                        "<head>\n" +
-                        "<style>\n" +
-                        "code{color:#c7254e;background-color:#f9f2f4}\n" +
-                        "</style>\n" +
-                        "</head>\n" +
-                        "<body>");
-                sb.append(text);
-                sb.append("</body>\n" +
-                        "</html>");
+                String text = select11.first().text();
                 desc = Html.fromHtml(text).toString();
-
-//                Log.e("TAG", "convert: " + desc);
                 Elements select1 = e.select("div.desc > p");
                 if (!select1.isEmpty()) {
                     for (Element element : select1) {
-//                    Element p1 = element.select("p").first();
                         Element img = element.select("img").first();
                         if (img != null) {
                             imgUrl = img.attr("data-layzr");

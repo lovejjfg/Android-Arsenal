@@ -14,6 +14,7 @@ import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.ui.contract.ListInfoContract;
 import com.lovejjfg.arsenal.utils.JumpUtils;
+import com.lovejjfg.arsenal.utils.glide.ImageTarget;
 import com.lovejjfg.powerrecycle.PowerAdapter;
 
 import butterknife.Bind;
@@ -67,11 +68,13 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
         TextView tvUser;
         private ListInfoContract.Presenter mPresenter;
         private ArsenalListInfo.ListInfo mListInfo;
+        private ImageTarget mTarget;
 
         public ArsenalListInfoHolder(View itemView, ListInfoContract.Presenter mPresenter) {
             super(itemView);
             this.mPresenter = mPresenter;
             ButterKnife.bind(this, itemView);
+            mTarget = new ImageTarget(img);
         }
 
         public void onBind(final ArsenalListInfo.ListInfo info) {
@@ -83,11 +86,10 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
             String infoDesc = info.getDesc();
             initView(desc, infoDesc);
             if (!TextUtils.isEmpty(info.getImgUrl())) {
-                // TODO: 2017/3/10 resize image
                 img.setVisibility(View.VISIBLE);
                 Glide.with(img.getContext())
                         .load(info.getImgUrl())
-                        .into(img);
+                        .into(mTarget);
             } else {
                 img.setVisibility(View.GONE);
             }
@@ -104,52 +106,9 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
             mContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    JumpUtils.jumpToUserDetail(tvUser.getContext(), );
                     mPresenter.onItemClick(mListInfo.getUserDetailUrl());
                 }
             });
-
-
-//            itemView.setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    // check if it's an event we care about, else bail fast
-//                    final int action = event.getAction();
-//                    if (!(action == MotionEvent.ACTION_DOWN
-//                            || action == MotionEvent.ACTION_UP
-//                            || action == MotionEvent.ACTION_CANCEL)) return false;
-//
-//                    // get the image and check if it's an animated GIF
-//                    final Drawable drawable = img.getDrawable();
-//                    if (drawable == null) return false;
-//                    GifDrawable gif = null;
-//                    if (drawable instanceof GifDrawable) {
-//                        gif = (GifDrawable) drawable;
-//                    } else if (drawable instanceof TransitionDrawable) {
-//                        // we fade in images on load which uses a TransitionDrawable; check its layers
-//                        TransitionDrawable fadingIn = (TransitionDrawable) drawable;
-//                        for (int i = 0; i < fadingIn.getNumberOfLayers(); i++) {
-//                            if (fadingIn.getDrawable(i) instanceof GifDrawable) {
-//                                gif = (GifDrawable) fadingIn.getDrawable(i);
-//                                break;
-//                            }
-//                        }
-//                    }
-//                    if (gif == null) return false;
-//                    // GIF found, start/stop it on press/lift
-//                    switch (action) {
-//                        case MotionEvent.ACTION_DOWN:
-//                            gif.start();
-//                            break;
-//                        case MotionEvent.ACTION_UP:
-//                        case MotionEvent.ACTION_CANCEL:
-//                            gif.stop();
-//                            break;
-//                    }
-//                    return false;
-//                }
-//            });
-
         }
 
         private static void initView(TextView view, String infoDesc) {

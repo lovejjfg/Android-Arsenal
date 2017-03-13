@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Arsenal</string>
-    <string name="des">This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc</string>
+    <string name="des">This is a desc This is a desc This is a desc This is a desc This is a desc This is a desc</string>
     <string name="title_activity_user_info">UserInfoActivity</string>
 </resources>

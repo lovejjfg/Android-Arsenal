@@ -3,14 +3,13 @@ package com.lovejjfg.arsenal.base;
 import android.app.Application;
 import android.util.Log;
 
+import com.lovejjfg.arsenal.BuildConfig;
 import com.lovejjfg.arsenal.utils.NetWorkUtils;
 import com.lovejjfg.arsenal.utils.ToastUtil;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Joe on 2016-04-05
@@ -27,7 +26,10 @@ public class App extends Application {
         super.onCreate();
 //        FreelineCore.init(this);
         LeakCanary.install(this);
-        CrashReport.initCrashReport(getApplicationContext(), "e179ce3705", true);
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
+        strategy.setAppChannel(BuildConfig.CHANNEL);
+        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY, true);
+
         CacheDirectory = new File(getApplicationContext().getCacheDir(), "responses");
         netWorkUtils = NetWorkUtils.getsInstance(this);
         ToastUtil.initToast(getApplicationContext());

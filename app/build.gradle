@@ -10,11 +10,28 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "BUGLY", '"e179ce3705"'
+
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        dev {
+            buildConfigField "String", "CHANNEL", '"dev"'
+        }
+        xiaomi {
+            buildConfigField "String", "CHANNEL", '"xiaomi"'
+        }
+        google {
+            buildConfigField "String", "CHANNEL", '"google"'
+        }
+        github {
+            buildConfigField "String", "CHANNEL", '"github"'
         }
     }
 }
