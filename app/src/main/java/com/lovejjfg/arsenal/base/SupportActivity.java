@@ -6,14 +6,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 
 import com.lovejjfg.arsenal.ui.LoadingDialog;
 import com.lovejjfg.arsenal.utils.FragmentsUtil;
 import com.lovejjfg.arsenal.utils.KeyBoardUtil;
-import com.lovejjfg.arsenal.utils.ShakeHelper;
 import com.lovejjfg.arsenal.utils.ToastUtil;
 
 import java.util.List;
@@ -27,7 +28,6 @@ import java.util.List;
 public abstract class SupportActivity extends AppCompatActivity implements ISupportFragment {
     @Nullable
     public FragmentsUtil fragmentsUtil;
-    private ShakeHelper shakeHelper;
     LoadingDialog loadingDialog = new LoadingDialog();
 
     @Override
@@ -48,11 +48,10 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-            getWindow().setEnterTransition(new Explode());
-            getWindow().setExitTransition(new Explode());
+            getWindow().setEnterTransition(new Slide(Gravity.RIGHT));
+            getWindow().setExitTransition(new Slide(Gravity.LEFT));
         }
         super.onCreate(savedInstanceState);
-        shakeHelper = ShakeHelper.initShakeHelper(this);
         fragmentsUtil = new FragmentsUtil(getSupportFragmentManager());
         setContentView(initLayoutRes());
 
@@ -60,13 +59,11 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Override
     protected void onPause() {
-        shakeHelper.onPause();
         super.onPause();
     }
 
     @Override
     protected void onStart() {
-        shakeHelper.onStart();
         super.onStart();
     }
 

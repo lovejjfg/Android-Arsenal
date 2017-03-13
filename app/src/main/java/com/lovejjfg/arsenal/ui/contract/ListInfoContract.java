@@ -4,6 +4,7 @@ import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
 import com.lovejjfg.arsenal.base.BasePresenter;
 import com.lovejjfg.arsenal.base.IBaseView;
+import com.lovejjfg.arsenal.utils.rxbus.SearchEvent;
 
 /**
  * Created by Joe on 2017/3/9.
@@ -23,6 +24,8 @@ public interface ListInfoContract {
         void onRefresh(boolean refresh);
 
         void setPullRefreshEnable(boolean enable);
+
+        void onSearchEvent(SearchEvent event);
     }
 
     interface Presenter extends BasePresenter {

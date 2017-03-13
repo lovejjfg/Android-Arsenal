@@ -1,10 +1,13 @@
 package com.lovejjfg.arsenal.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,9 +24,11 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ArsenalUserInfoActivity extends SupportActivity {
+public class ArsenalUserInfoActivity extends SupportActivity implements View.OnClickListener {
     private static final String TAG = ArsenalUserInfoActivity.class.getSimpleName();
     public static final String USER_INFO = "UserInfo";
+    @Bind(R.id.toolbar)
+    Toolbar mToolBar;
     @Bind(R.id.iv_img)
     ImageView mIvPortrait;
     @Bind(R.id.tv_name)
@@ -45,9 +50,8 @@ public class ArsenalUserInfoActivity extends SupportActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolBar.setNavigationOnClickListener(this);
         circleTransform = new CircleTransform(this);
-        setSupportActionBar(toolbar);
         ArsenalUserInfo info = getIntent().getParcelableExtra(USER_INFO);
         if (savedInstanceState == null) {
             if (info == null) {
@@ -62,12 +66,13 @@ public class ArsenalUserInfoActivity extends SupportActivity {
     private void refreshUI(ArsenalUserInfo info) {
         Log.e(TAG, "refreshUI: " + info.getPortraitUrl());
         Glide.with(ArsenalUserInfoActivity.this).load(info.getPortraitUrl()).transform(circleTransform).into(mIvPortrait);
-        getSupportActionBar().setTitle(info.getUserName());
+        mToolBar.setTitle(info.getUserName());
         mTvFlowers.setText(info.getFollowers());
         mTvFlowing.setText(info.getFollowing());
         mTvRepo.setText(info.getPublicRepo());
         mTvLocation.setText(info.getLocation());
         mTvSite.setText(info.getSite());
+        mTvSite.setOnClickListener(this);
 
         ArrayList<ArsenalListInfo.ListInfo> contributions = info.getContributions();
         ArrayList<ArsenalListInfo.ListInfo> ownProjects = info.getOwnProjects();
@@ -97,5 +102,20 @@ public class ArsenalUserInfoActivity extends SupportActivity {
     @Override
     public int initLayoutRes() {
         return R.layout.activity_user_info;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_site:
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                String uriString = mTvSite.getText().toString();
+                Uri uri = Uri.parse(uriString);
+                intent.setData(uri);
+                startActivity(Intent.createChooser(intent, uriString));
+                return;
+        }
+        onBackPressed();
     }
 }

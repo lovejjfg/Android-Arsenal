@@ -46,14 +46,14 @@
             android:layout_alignParentRight="true"
             android:gravity="center">
 
-            <Button
+            <TextView
                 android:id="@+id/tv_free"
                 android:textAllCaps="false"
                 style="@style/Text_Tag"
                 android:background="@drawable/tag_back_ground_free"
                 android:text="Free"/>
 
-            <Button
+            <TextView
                 android:id="@+id/tv_new"
                 style="@style/Text_Tag"
                 android:textAllCaps="false"

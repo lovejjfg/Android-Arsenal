@@ -6,4 +6,5 @@ public interface IBaseView<P extends BasePresenter> extends ISupportView {
     P initPresenter();
 
     Context getContext();
+
 }

@@ -46,6 +46,7 @@ public class ErrorUtil {
             return;
         }
         view.showToast("未处理的异常：" + throwable.toString());
+        Log.e("unHandle", "handleError: "+ throwable.toString());
 
     }
 }

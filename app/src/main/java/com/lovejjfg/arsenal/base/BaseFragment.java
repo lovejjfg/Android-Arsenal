@@ -3,6 +3,9 @@ package com.lovejjfg.arsenal.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.lovejjfg.arsenal.utils.rxbus.RxBus;
+import com.lovejjfg.arsenal.utils.rxbus.SearchEvent;
+
 /**
  * Created by Joe on 2016/12/28.
  * Email lovejjfg@gmail.com

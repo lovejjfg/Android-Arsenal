@@ -15,6 +15,9 @@ import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -591,11 +594,13 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
         if (!isSearchOpen()) {
             return;
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            TransitionManager.beginDelayedTransition(this);
 
+        }
         mSearchSrcTextView.setText(null);
         dismissSuggestions();
         clearFocus();
-
         mSearchLayout.setVisibility(GONE);
         if (mSearchViewListener != null) {
             mSearchViewListener.onSearchViewClosed();

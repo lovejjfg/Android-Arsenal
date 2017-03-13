@@ -1,16 +1,20 @@
 package com.lovejjfg.arsenal.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.base.SupportActivity;
 import com.lovejjfg.arsenal.utils.JumpUtils;
+import com.lovejjfg.arsenal.utils.TagUtils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.HashMap;
@@ -26,7 +30,6 @@ public class ArsenalHomeActivity extends SupportActivity {
     Toolbar mToolbar;
     @Bind(R.id.search_view)
     MaterialSearchView searchView;
-    private String[] stringArray;
     private ArsenalListInfoFragment listInfoFragment;
 
     @Override
@@ -45,18 +48,15 @@ public class ArsenalHomeActivity extends SupportActivity {
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-                ArsenalListInfo arsenalInfo = listInfoFragment.getArsenalInfo();
-                if (arsenalInfo != null && arsenalInfo.getTags() != null) {
-                    final HashMap<String, String> tags = arsenalInfo.getTags();
-                    Set<String> strings = tags.keySet();
-                    stringArray = strings.toArray(new String[strings.size()]);
+                String[] strings = TagUtils.getTagArray();
+                if (strings !=null) {
 //                String[] stringArray = MainActivity.this.getResources().getStringArray(R.array.query_suggestions);
-                    searchView.setSuggestions(stringArray, new MaterialSearchView.SuggestionsListCallBack() {
+                    searchView.setSuggestions(strings, new MaterialSearchView.SuggestionsListCallBack() {
                         @Override
                         public void onItemClick(String title) {
-                            String s = tags.get(title);
-                            JumpUtils.jumpToTagList(searchView.getContext(), "/tag/" + s, ArsenalListInfoFragment.TYPE_SEARCH_TAG);
                             searchView.closeSearch();
+                            String s = TagUtils.getTagValue(title);
+                            JumpUtils.jumpToSearchList(searchView.getContext(),title, "/tag/" + s, ArsenalListInfoFragment.TYPE_SEARCH_TAG);
                         }
                     });
                 }
@@ -65,6 +65,9 @@ public class ArsenalHomeActivity extends SupportActivity {
 
             @Override
             public void onSearchViewClosed() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    TransitionManager.beginDelayedTransition((ViewGroup) mToolbar.getParent());
+                }
                 //Do some magic
                 mToolbar.setVisibility(View.VISIBLE);
             }
@@ -81,7 +84,8 @@ public class ArsenalHomeActivity extends SupportActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.e(TAG, "onQueryTextSubmit: " + query);
-                JumpUtils.jumpToTagList(ArsenalHomeActivity.this, query, ArsenalListInfoFragment.TYPE_SEARCH);
+                searchView.closeSearch();
+                JumpUtils.jumpToSearchList(ArsenalHomeActivity.this, query, ArsenalListInfoFragment.TYPE_SEARCH);
                 return false;
             }
 

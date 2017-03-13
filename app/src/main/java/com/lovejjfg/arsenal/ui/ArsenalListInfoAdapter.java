@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInfo> {
 
-    private  ListInfoContract.Presenter mPresenter;
+    private ListInfoContract.Presenter mPresenter;
 
     public ArsenalListInfoAdapter(ListInfoContract.Presenter mPresenter) {
         this.mPresenter = mPresenter;
@@ -65,8 +65,9 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
         ImageView ivAndroid;
         @Bind(R.id.tv_user)
         TextView tvUser;
-        private  ListInfoContract.Presenter mPresenter;
+        private ListInfoContract.Presenter mPresenter;
         private ArsenalListInfo.ListInfo mListInfo;
+
         public ArsenalListInfoHolder(View itemView, ListInfoContract.Presenter mPresenter) {
             super(itemView);
             this.mPresenter = mPresenter;
@@ -90,14 +91,14 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
             } else {
                 img.setVisibility(View.GONE);
             }
-            initView(registeredDate,info.getRegisteredDate());
+            initView(registeredDate, info.getRegisteredDate());
             ivAndroid.setVisibility(info.isAndroid() ? View.VISIBLE : View.GONE);
             tvUser.setText(info.getUserName());
             tvUser.setVisibility(info.isUser() ? View.VISIBLE : View.GONE);
             tag.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    JumpUtils.jumpToTagList(tag.getContext(), info.getTagUrl(), ArsenalListInfoFragment.TYPE_SEARCH_TAG);
+                    JumpUtils.jumpToSearchList(tag.getContext(), info.getTag(), info.getTagUrl(), ArsenalListInfoFragment.TYPE_SEARCH_TAG);
                 }
             });
             mContainer.setOnClickListener(new View.OnClickListener() {

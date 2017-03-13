@@ -2,6 +2,7 @@ package com.lovejjfg.arsenal.ui.contract;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -11,8 +12,13 @@ import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
 import com.lovejjfg.arsenal.base.BasePresenterImpl;
 import com.lovejjfg.arsenal.utils.JumpUtils;
+import com.lovejjfg.arsenal.utils.rxbus.RxBus;
+import com.lovejjfg.arsenal.utils.rxbus.SearchEvent;
 
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Joe on 2017/3/9.
@@ -70,6 +76,9 @@ public abstract class BaseListInfoPresenter extends BasePresenterImpl<ListInfoCo
 
     @Override
     public void startSearch(String key) {
+        if (TextUtils.equals(mCurrentKey, key)) {
+            return;
+        }
         mCurrentKey = key;
         onRefresh();
     }

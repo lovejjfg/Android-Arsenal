@@ -17,6 +17,9 @@ import com.lovejjfg.arsenal.ui.contract.SearchListInfoPresenter;
 import com.lovejjfg.arsenal.ui.contract.TagSearchListInfoPresenter;
 import com.lovejjfg.arsenal.ui.contract.UserDetailListInfoPresenter;
 import com.lovejjfg.arsenal.utils.JumpUtils;
+import com.lovejjfg.arsenal.utils.TagUtils;
+import com.lovejjfg.arsenal.utils.rxbus.RxBus;
+import com.lovejjfg.arsenal.utils.rxbus.SearchEvent;
 import com.lovejjfg.powerrecycle.AdapterLoader;
 import com.lovejjfg.powerrecycle.PowerRecyclerView;
 
@@ -24,6 +27,10 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Joe on 2017/3/9.
@@ -34,6 +41,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
     public static final String ARSENAL_LIST_INFO = "ARSENAL_LIST_INFO";
     public static final String TYPE_NAME = "TYPE_NAME";
     public static final String KEY = "KEY";
+    public static final String TAG_NAME = "key_name";
     public static final int TYPE_HOME = 0;
     public static final int TYPE_SEARCH = 1;
     public static final int TYPE_SEARCH_TAG = 2;
@@ -41,7 +49,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
     @Bind(R.id.recycler_view)
     PowerRecyclerView mRecyclerView;
     private ArsenalListInfoAdapter listInfoAdapter;
-    private ArsenalListInfo mArsenalListInfo;
+    private int mType;
 
     @Override
     public void handleFinish() {
@@ -54,13 +62,36 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Subscription subscription = RxBus.getInstance()
+                .toObservable(SearchEvent.class)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .distinctUntilChanged()
+                .subscribe(new Action1<SearchEvent>() {
+                    @Override
+                    public void call(SearchEvent event) {
+                        onSearchEvent(event);
+                        Log.e("TAG", "call: receive searchEvent");
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+
+                    }
+                });
+        RxBus.getInstance().addSubscription(this, subscription);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         ArrayList<ArsenalListInfo.ListInfo> beans = getArguments().getParcelableArrayList(ARSENAL_LIST_INFO);
         if (savedInstanceState != null) {
             beans = savedInstanceState.getParcelableArrayList(ARSENAL_LIST_INFO);
         }
-        String key = getArguments().getString("KEY");
+        String key = getArguments().getString(KEY);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         listInfoAdapter = new ArsenalListInfoAdapter(mPresenter);
         listInfoAdapter.setTotalCount(100);
@@ -99,7 +130,8 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
     @Override
     public void onRefresh(ArsenalListInfo info) {
         listInfoAdapter.setList(info.getInfos());
-        mArsenalListInfo = info;
+        TagUtils.initTags(info.getTags());
+//        mArsenalListInfo = info;
     }
 
     @Override
@@ -128,10 +160,31 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
     }
 
     @Override
-    public ListInfoContract.Presenter initPresenter() {
-        int type = getArguments().getInt(TYPE_NAME);
-        switch (type) {
+    public void onSearchEvent(SearchEvent event) {
+        if (mType == TYPE_HOME) {
+            return;
+        }
+        if (mType == event.type) {
+            mPresenter.startSearch(event.key);
+            return;
+        }
+        mType = event.type;
+        mPresenter.onDestroy();
+        switch (mType) {
+            case TYPE_SEARCH:
+                mPresenter = new SearchListInfoPresenter(this);
+                break;
+            case TYPE_SEARCH_TAG:
+                mPresenter = new TagSearchListInfoPresenter(this);
+                break;
+        }
+        mPresenter.startSearch(event.key);
+    }
 
+    @Override
+    public ListInfoContract.Presenter initPresenter() {
+        mType = getArguments().getInt(TYPE_NAME);
+        switch (mType) {
             case TYPE_SEARCH:
                 return new SearchListInfoPresenter(this);
             case TYPE_SEARCH_TAG:
@@ -150,9 +203,9 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
         super.onSaveInstanceState(outState);
     }
 
-    @Nullable
-    public ArsenalListInfo getArsenalInfo() {
-        return mArsenalListInfo;
+    @Override
+    public void onDestroy() {
+        RxBus.getInstance().unSubscribe(this);
+        super.onDestroy();
     }
-
 }
