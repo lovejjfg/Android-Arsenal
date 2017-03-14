@@ -127,6 +127,8 @@ public class ExampleUnitTest {
 //            Spanned spanned = Html.fromHtml(text);
 //            System.out.println("全部的描述：" + spanned);
             Elements select1 = e.select("div.desc > p");
+            String s = select1.toString();
+            System.out.println("相关的的描述：" + s);
             if (!select1.isEmpty()) {
                 for (Element element : select1) {
 //                    Element p1 = element.select("p").first();
@@ -324,8 +326,8 @@ public class ExampleUnitTest {
                 System.out.println();
                 String[] split = text.split(",");
                 HashMap<String, String> hashMap = new HashMap<>();
-                for (int i = 0; i < split.length; i++) {
-                    String[] library = split[i].split(":");
+                for (String aSplit : split) {
+                    String[] library = aSplit.split(":");
                     hashMap.put(library[0], library[1]);
                 }
                 System.out.println(split.length);

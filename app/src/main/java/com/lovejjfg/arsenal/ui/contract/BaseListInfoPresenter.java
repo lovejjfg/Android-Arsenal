@@ -59,23 +59,15 @@ public abstract class BaseListInfoPresenter extends BasePresenterImpl<ListInfoCo
 
     @Override
     public void onItemClick(View itemView, ArsenalListInfo.ListInfo info) {
-        DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalDetailInfo(info.getListDetailUrl()), new Action1<ArsenalDetailInfo>() {
-            @Override
-            public void call(ArsenalDetailInfo data) {
-                Log.e("TAG", "call: " + data);
-                JumpUtils.jumpToDetail(mView.getContext(), data);
-            }
+        DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalDetailInfo(info.getListDetailUrl()), data -> {
+            Log.e("TAG", "call: " + data);
+            JumpUtils.jumpToDetail(mView.getContext(), data);
         }, this);
     }
 
     @Override
     public void onItemClick(String user) {
-        DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalUserInfo(user), new Action1<ArsenalUserInfo>() {
-            @Override
-            public void call(ArsenalUserInfo info) {
-                mView.jumpToTarget(info);
-            }
-        }, this);
+        DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalUserInfo(user), info -> mView.jumpToTarget(info), this);
     }
 
     @Override

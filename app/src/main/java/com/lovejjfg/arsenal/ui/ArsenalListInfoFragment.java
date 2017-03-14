@@ -20,6 +20,7 @@ package com.lovejjfg.arsenal.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +36,7 @@ import com.lovejjfg.arsenal.ui.contract.TagSearchListInfoPresenter;
 import com.lovejjfg.arsenal.ui.contract.UserDetailListInfoPresenter;
 import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.arsenal.utils.TagUtils;
+import com.lovejjfg.arsenal.utils.UIUtils;
 import com.lovejjfg.arsenal.utils.rxbus.RxBus;
 import com.lovejjfg.arsenal.utils.rxbus.SearchEvent;
 import com.lovejjfg.powerrecycle.AdapterLoader;
@@ -46,7 +48,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -54,7 +55,9 @@ import rx.schedulers.Schedulers;
  * Email lovejjfg@gmail.com
  */
 
-public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Presenter> implements AdapterLoader.OnItemClickListener, PowerRecyclerView.OnRefreshLoadMoreListener, ListInfoContract.View {
+public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Presenter>
+        implements AdapterLoader.OnItemClickListener,
+        PowerRecyclerView.OnRefreshLoadMoreListener, ListInfoContract.View {
     public static final String ARSENAL_LIST_INFO = "ARSENAL_LIST_INFO";
     public static final String TYPE_NAME = "TYPE_NAME";
     public static final String KEY = "KEY";
@@ -86,17 +89,11 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .distinctUntilChanged()
-                .subscribe(new Action1<SearchEvent>() {
-                    @Override
-                    public void call(SearchEvent event) {
-                        onSearchEvent(event);
-                        Log.e("TAG", "call: receive searchEvent");
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
+                .subscribe(event -> {
+                    onSearchEvent(event);
+                    Log.e("TAG", "call: receive searchEvent");
+                }, throwable -> {
 
-                    }
                 });
         RxBus.getInstance().addSubscription(this, subscription);
     }
@@ -111,7 +108,6 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
         String key = getArguments().getString(KEY);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         listInfoAdapter = new ArsenalListInfoAdapter(mPresenter);
-        listInfoAdapter.setTotalCount(100);
         mRecyclerView.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         mRecyclerView.setAdapter(listInfoAdapter);
         mRecyclerView.setOnItemClickListener(this);
@@ -124,6 +120,16 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
             mPresenter.startSearch(key);
         } else {
             mPresenter.onRefresh();
+        }
+        if (mType != TYPE_USER_DETAIL) {
+            Toolbar toolbar = getToolbar();
+            if (toolbar != null) {
+                toolbar.setOnClickListener(v -> {
+                    if (UIUtils.doubleClick()) {
+                        mRecyclerView.getRecycle().smoothScrollToPosition(0);
+                    }
+                });
+            }
         }
 
     }
@@ -146,6 +152,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
 
     @Override
     public void onRefresh(ArsenalListInfo info) {
+        listInfoAdapter.setTotalCount(Integer.MAX_VALUE);
         listInfoAdapter.setList(info.getInfos());
         TagUtils.initTags(info.getTags());
 //        mArsenalListInfo = info;
@@ -163,7 +170,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
 
     @Override
     public void atEnd() {
-        listInfoAdapter.setTotalCount(listInfoAdapter.getItemRealCount());
+        listInfoAdapter.setTotalCount(listInfoAdapter.getItemCount());
     }
 
     @Override
@@ -199,6 +206,11 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
     }
 
     @Override
+    public void loadMoreError() {
+        listInfoAdapter.loadMoreError();
+    }
+
+    @Override
     public ListInfoContract.Presenter initPresenter() {
         mType = getArguments().getInt(TYPE_NAME);
         switch (mType) {
@@ -215,6 +227,16 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
     }
 
     @Override
+    public void showErrorView() {
+
+    }
+
+    @Override
+    public void showEmptyView() {
+
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList(ARSENAL_LIST_INFO, (ArrayList<ArsenalListInfo.ListInfo>) listInfoAdapter.getList());
         super.onSaveInstanceState(outState);
@@ -225,4 +247,6 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
         RxBus.getInstance().unSubscribe(this);
         super.onDestroy();
     }
+
+
 }

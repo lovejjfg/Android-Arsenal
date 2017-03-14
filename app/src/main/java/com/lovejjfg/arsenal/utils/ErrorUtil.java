@@ -24,6 +24,8 @@ import android.util.SparseArray;
 import com.lovejjfg.arsenal.base.ArsenalException;
 import com.lovejjfg.arsenal.base.IBaseView;
 
+import java.net.UnknownHostException;
+
 import retrofit2.adapter.rxjava.HttpException;
 
 /**
@@ -61,6 +63,10 @@ public class ErrorUtil {
                 view.showLoadingDialog(((ArsenalException) throwable).message());
             }
             return;
+        }
+        if (throwable instanceof UnknownHostException) {
+            view.showErrorView();
+            view.showEmptyView();
         }
         view.showToast("未处理的异常：" + throwable.toString());
         Log.e("unHandle", "handleError: "+ throwable.toString());

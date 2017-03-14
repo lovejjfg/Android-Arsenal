@@ -73,13 +73,10 @@ public class ArsenalSearchActivity extends SupportActivity implements View.OnCli
             public void onSearchViewShown() {
                 String[] strings = TagUtils.getTagArray();
                 if (strings != null) {
-                    searchView.setSuggestions(strings, new MaterialSearchView.SuggestionsListCallBack() {
-                        @Override
-                        public void onItemClick(String title) {
-                            String s = TagUtils.getTagValue(title);
-                            JumpUtils.jumpToSearchList(searchView.getContext(), title, "/tag/" + s);
-                            searchView.closeSearch();
-                        }
+                    searchView.setSuggestions(strings, title -> {
+                        String s = TagUtils.getTagValue(title);
+                        JumpUtils.jumpToSearchList(searchView.getContext(), title, "/tag/" + s);
+                        searchView.closeSearch();
                     });
                 }
             }

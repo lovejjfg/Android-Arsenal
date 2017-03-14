@@ -64,13 +64,10 @@ public class ArsenalHomeActivity extends SupportActivity {
                 String[] strings = TagUtils.getTagArray();
                 if (strings !=null) {
 //                String[] stringArray = MainActivity.this.getResources().getStringArray(R.array.query_suggestions);
-                    searchView.setSuggestions(strings, new MaterialSearchView.SuggestionsListCallBack() {
-                        @Override
-                        public void onItemClick(String title) {
-                            searchView.closeSearch();
-                            String s = TagUtils.getTagValue(title);
-                            JumpUtils.jumpToSearchList(searchView.getContext(),title, "/tag/" + s);
-                        }
+                    searchView.setSuggestions(strings, title -> {
+                        searchView.closeSearch();
+                        String s = TagUtils.getTagValue(title);
+                        JumpUtils.jumpToSearchList(searchView.getContext(),title, "/tag/" + s);
                     });
                 }
 
@@ -108,8 +105,6 @@ public class ArsenalHomeActivity extends SupportActivity {
                 return false;
             }
         });
-
-
     }
 
     @Override
@@ -119,10 +114,21 @@ public class ArsenalHomeActivity extends SupportActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         final MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
         searchView.setMenuItem(myActionMenuItem);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_about:
+                JumpUtils.jumpToAbout(this);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+
     }
 
     @Override

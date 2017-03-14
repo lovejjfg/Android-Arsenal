@@ -61,6 +61,12 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
         ((ArsenalListInfoHolder) holder).onBind(list.get(position));
     }
 
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        if (holder instanceof ArsenalListInfoHolder) {
+            ((ArsenalListInfoHolder) holder).img.setVisibility(View.GONE);
+        }
+    }
 
     static final class ArsenalListInfoHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.tv_name)
@@ -114,18 +120,8 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
             ivAndroid.setVisibility(info.isAndroid() ? View.VISIBLE : View.GONE);
             tvUser.setText(info.getUserName());
             tvUser.setVisibility(info.isUser() ? View.VISIBLE : View.GONE);
-            tag.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    JumpUtils.jumpToSearchList(tag.getContext(), info.getTag(), info.getTagUrl());
-                }
-            });
-            mContainer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mPresenter.onItemClick(mListInfo.getUserDetailUrl());
-                }
-            });
+            tag.setOnClickListener(v -> JumpUtils.jumpToSearchList(tag.getContext(), info.getTag(), info.getTagUrl()));
+            mContainer.setOnClickListener(v -> mPresenter.onItemClick(mListInfo.getUserDetailUrl()));
         }
 
         private static void initView(TextView view, String infoDesc) {

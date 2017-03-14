@@ -16,6 +16,7 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 apply plugin: 'checkstyle'
@@ -53,6 +54,10 @@ android {
 //        github {
 //            buildConfigField "String", "CHANNEL", '"github"'
 //        }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 

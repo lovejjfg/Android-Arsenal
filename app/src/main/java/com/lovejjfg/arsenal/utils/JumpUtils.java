@@ -20,11 +20,13 @@ package com.lovejjfg.arsenal.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 
 import com.lovejjfg.arsenal.api.mode.ArsenalDetailInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
+import com.lovejjfg.arsenal.ui.AboutActivity;
 import com.lovejjfg.arsenal.ui.ArsenalDetailInfoActivity;
 import com.lovejjfg.arsenal.ui.ArsenalListInfoFragment;
 import com.lovejjfg.arsenal.ui.ArsenalSearchActivity;
@@ -67,4 +69,17 @@ public class JumpUtils {
     }
 
 
+    public static void jumpToAbout(Context context) {
+        Intent intent = new Intent(context, AboutActivity.class);
+        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context));
+        ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
+    }
+
+    public static void jumpToWeb(Context context, String url) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse(url);
+        intent.setData(uri);
+        context.startActivity(Intent.createChooser(intent, url));
+    }
 }

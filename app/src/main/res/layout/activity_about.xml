@@ -62,95 +62,31 @@
                     android:layout_centerHorizontal="true"
                     android:paddingBottom="@dimen/normal_margin_padding"
                     android:paddingTop="@dimen/normal_margin_padding"
-                    tools:text="lovejjfg.giyhub.com"/>
+                    android:text="https://github.com/lovejjfg"/>
+
 
                 <TextView
-                    android:id="@+id/tv_name"
-                    style="@style/Text.Content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_site"
-                    android:layout_centerHorizontal="true"
-                    android:drawableLeft="@drawable/ic_location_24dp"
-                    android:drawablePadding="8dp"
-                    tools:text="Shanghai"/>
-
-                <LinearLayout
+                    android:id="@+id/tv_about"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_name">
-
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/normal_margin_padding"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                        <TextView
-                            style="@style/Text.Content.Hint"
-                            android:text="Repository "
-                            />
-
-                        <TextView
-                            android:id="@+id/tv_repo"
-                            style="@style/Text.Content"
-                            android:text=" 20"
-                            />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/normal_margin_padding"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                        <TextView
-                            style="@style/Text.Content.Hint"
-                            android:text="Flowers "
-                            />
-
-                        <TextView
-                            android:id="@+id/tv_flowers"
-                            style="@style/Text.Content"
-                            android:text="20"
-                            />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/normal_margin_padding"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                        <TextView
-                            style="@style/Text.Content.Hint"
-                            android:text="Flowing "
-                            />
-
-                        <TextView
-                            android:id="@+id/tv_flowing"
-                            style="@style/Text.Content"
-                            android:text="20"
-                            />
-                    </LinearLayout>
-
-                </LinearLayout>
+                    android:layout_below="@id/tv_site"
+                    android:gravity="center"
+                    android:paddingBottom="16dp"
+                    android:text="@string/text_about"
+                    android:textColor="@color/text_primary_light"
+                    android:textSize="@dimen/text_normal"
+                    />
 
 
             </RelativeLayout>
 
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="?actionBarSize"
                 android:layout_gravity="top"
                 android:gravity="top"
                 android:minHeight="?actionBarSize"
-                app:collapseIcon="@mipmap/ic_launcher"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways|snap|enterAlwaysCollapsed"
                 app:navigationIcon="?homeAsUpIndicator"
@@ -165,24 +101,32 @@
             <!--app:layout_collapseMode="pin"-->
             <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>-->
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:layout_gravity="bottom"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
-                />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            style="@style/Text.ListTag"
+            android:padding="@dimen/normal_margin_padding"
+            android:text="@string/libs_used"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>
-

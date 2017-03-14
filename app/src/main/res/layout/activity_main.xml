@@ -55,5 +55,12 @@
     <com.miguelcatalan.materialsearchview.MaterialSearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/text_primary_light"
+        android:textColorHint="@color/text_primary_light"
+        app:searchBackIcon="@drawable/ic_arrow_back_24dp"
+        app:searchBackground="?colorPrimary"
+        app:searchCloseIcon="@drawable/ic_close_24dp"
+        />
 </android.support.design.widget.CoordinatorLayout>

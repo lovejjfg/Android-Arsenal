@@ -15,15 +15,12 @@
   ~
   -->
 
-<resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="detail_backdrop_height">300dp</dimen>
-    <dimen name="detail_info_height">240dp</dimen>
-    <dimen name="normal_margin_padding">8dp</dimen>
-    <dimen name="text_bigger">18sp</dimen>
-    <dimen name="text_normal">16sp</dimen>
-    <dimen name="text_small">14sp</dimen>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-</resources>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="24dp"
+        android:height="24dp"
+        android:viewportWidth="24.0"
+        android:viewportHeight="24.0">
+    <path
+        android:fillColor="#ffffffff"
+        android:pathData="M20,11H7.83l5.59,-5.59L12,4l-8,8 8,8 1.41,-1.41L7.83,13H20v-2z"/>
+</vector>

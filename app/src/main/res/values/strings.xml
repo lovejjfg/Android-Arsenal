@@ -18,4 +18,11 @@
 <resources>
     <string name="app_name">Arsenal</string>
     <string name="title_activity_user_info">UserInfoActivity</string>
+    <string name="search_tag_or_name">Search Tag or Name</string>
+    <string name="about">About</string>
+    <string name="text_about">Data from Android-Arsenal \n\n
+        https://android-arsenal.com \n \n
+        This is not the official client \n
+ </string>
+    <string name="libs_used">The libs used in this project:</string>
 </resources>

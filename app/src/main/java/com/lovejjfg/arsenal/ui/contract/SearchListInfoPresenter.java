@@ -43,15 +43,12 @@ public class SearchListInfoPresenter extends BaseListInfoPresenter {
     public void onRefresh() {
         unSubscribe();
         mView.onRefresh(true);
-        Subscription subscription = DataManager.handleNormalService(DataManager.getArsenalApi().search(String.format("/search?q=%s", mCurrentKey)), new Action1<ArsenalListInfo>() {
-            @Override
-            public void call(ArsenalListInfo info) {
-                mView.onRefresh(false);
-                mHasMore = info.getHasMore();
-                mView.onRefresh(info);
-                if (TextUtils.isEmpty(mHasMore)) {
-                    mView.atEnd();
-                }
+        Subscription subscription = DataManager.handleNormalService(DataManager.getArsenalApi().search(String.format("/search?q=%s", mCurrentKey)), info -> {
+            mView.onRefresh(false);
+            mHasMore = info.getHasMore();
+            mView.onRefresh(info);
+            if (TextUtils.isEmpty(mHasMore)) {
+                mView.atEnd();
             }
         }, this);
         subscribe(subscription);
@@ -59,15 +56,16 @@ public class SearchListInfoPresenter extends BaseListInfoPresenter {
 
     @Override
     public void onLoadMore() {
+        if (TextUtils.isEmpty(mHasMore)) {
+            mView.atEnd();
+            return;
+        }
         unSubscribe();
-        Subscription subscription = DataManager.handleNormalService(DataManager.getArsenalApi().search(mHasMore), new Action1<ArsenalListInfo>() {
-            @Override
-            public void call(ArsenalListInfo info) {
-                mHasMore = info.getHasMore();
-                mView.onLoadMore(info);
-                if (TextUtils.isEmpty(mHasMore)) {
-                    mView.atEnd();
-                }
+        Subscription subscription = DataManager.handleNormalService(DataManager.getArsenalApi().search(mHasMore), info -> {
+            mHasMore = info.getHasMore();
+            mView.onLoadMore(info);
+            if (TextUtils.isEmpty(mHasMore)) {
+                mView.atEnd();
             }
         }, this);
         subscribe(subscription);

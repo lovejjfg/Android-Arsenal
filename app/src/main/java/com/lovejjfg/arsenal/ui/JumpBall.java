@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2017.  Joe
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
 package com.lovejjfg.arsenal.ui;
 
 import android.animation.Animator;
@@ -170,18 +187,15 @@ public class JumpBall extends View {
 
         pullAnimator = ValueAnimator.ofInt(0, pullRange, 0);
         pullAnimator.setDuration((long) (dropTime*0.5f));
-        pullAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mChange = (Integer) animation.getAnimatedValue();
-                if (animation.getAnimatedFraction() > 0.3) {
-                    dropAnimator.setIntValues(dropHeight, 0, dropHeight);
-                    dropAnimator.setDuration(dropTime*2);
-                    dropAnimator.start();
-                }
-                Log.e("TAG", "onAnimationUpdate: " + mChange);
-                invalidate();
+        pullAnimator.addUpdateListener(animation -> {
+            mChange = (Integer) animation.getAnimatedValue();
+            if (animation.getAnimatedFraction() > 0.3) {
+                dropAnimator.setIntValues(dropHeight, 0, dropHeight);
+                dropAnimator.setDuration(dropTime*2);
+                dropAnimator.start();
             }
+            Log.e("TAG", "onAnimationUpdate: " + mChange);
+            invalidate();
         });
 
         pullAnimator.addListener(new AnimatorListenerAdapter() {
@@ -198,12 +212,9 @@ public class JumpBall extends View {
 //        dropAnimator.setRepeatCount(20);
         dropAnimator.setDuration(dropTime);
         dropAnimator.setInterpolator(new LinearInterpolator());
-        dropAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTranslateValue = (Integer) animation.getAnimatedValue();
-                invalidate();
-            }
+        dropAnimator.addUpdateListener(animation -> {
+            mTranslateValue = (Integer) animation.getAnimatedValue();
+            invalidate();
         });
 
         dropAnimator.addListener(new AnimatorListenerAdapter() {
@@ -221,12 +232,9 @@ public class JumpBall extends View {
 //        radioAnimator.setRepeatCount(20);
         radioAnimator.setDuration(600);
         radioAnimator.setInterpolator(new LinearInterpolator());
-        radioAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mCurrentRadio = (float) animation.getAnimatedValue();
-                invalidate();
-            }
+        radioAnimator.addUpdateListener(animation -> {
+            mCurrentRadio = (float) animation.getAnimatedValue();
+            invalidate();
         });
 
         radioAnimator.addListener(new AnimatorListenerAdapter() {
