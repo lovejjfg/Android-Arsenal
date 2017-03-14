@@ -82,15 +82,15 @@ android {
         dev {
             buildConfigField "String", "CHANNEL", '"dev"'
         }
-//        xiaomi {
-//            buildConfigField "String", "CHANNEL", '"xiaomi"'
-//        }
-//        google {
-//            buildConfigField "String", "CHANNEL", '"google"'
-//        }
-//        github {
-//            buildConfigField "String", "CHANNEL", '"github"'
-//        }
+        xiaomi {
+            buildConfigField "String", "CHANNEL", '"xiaomi"'
+        }
+        google {
+            buildConfigField "String", "CHANNEL", '"google"'
+        }
+        github {
+            buildConfigField "String", "CHANNEL", '"github"'
+        }
     }
     compileOptions {
         targetCompatibility 1.8

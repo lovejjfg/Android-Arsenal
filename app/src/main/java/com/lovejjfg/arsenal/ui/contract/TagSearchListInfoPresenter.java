@@ -25,6 +25,7 @@ import com.lovejjfg.arsenal.api.DataManager;
 import com.lovejjfg.arsenal.utils.ErrorUtil;
 
 import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * Created by Joe on 2017/3/9.
@@ -72,7 +73,6 @@ public class TagSearchListInfoPresenter extends BaseListInfoPresenter {
         }
         unSubscribe();
         Subscription subscription = DataManager.handleNormalService(DataManager.getArsenalApi().search(mHasMore), info -> {
-            // TODO: 2017/3/9 404 ERROE
             mHasMore = info.getHasMore();
             mView.onLoadMore(info);
             if (TextUtils.isEmpty(mHasMore)) {

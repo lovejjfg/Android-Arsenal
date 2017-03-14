@@ -21,8 +21,10 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.lovejjfg.arsenal.api.DataManager;
+import com.lovejjfg.arsenal.utils.ErrorUtil;
 
 import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * Created by Joe on 2017/3/9.
@@ -65,7 +67,10 @@ public class SearchListInfoPresenter extends BaseListInfoPresenter {
             if (TextUtils.isEmpty(mHasMore)) {
                 mView.atEnd();
             }
-        }, this);
+        }, throwable -> {
+            mView.loadMoreError();
+            ErrorUtil.handleError(mView, throwable, true, false);
+        });
         subscribe(subscription);
     }
 

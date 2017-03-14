@@ -24,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
@@ -68,6 +69,8 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
     public static final int TYPE_USER_DETAIL = 3;
     @Bind(R.id.recycler_view)
     PowerRecyclerView mRecyclerView;
+    @Bind(R.id.iv_error)
+    ImageView mIvError;
     private ArsenalListInfoAdapter listInfoAdapter;
     private int mType;
 
@@ -152,6 +155,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
 
     @Override
     public void onRefresh(ArsenalListInfo info) {
+        mIvError.setVisibility(View.GONE);
         listInfoAdapter.setTotalCount(Integer.MAX_VALUE);
         listInfoAdapter.setList(info.getInfos());
         TagUtils.initTags(info.getTags());
@@ -228,7 +232,9 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
 
     @Override
     public void showErrorView() {
-
+        if (listInfoAdapter.getList().isEmpty()) {
+            mIvError.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
