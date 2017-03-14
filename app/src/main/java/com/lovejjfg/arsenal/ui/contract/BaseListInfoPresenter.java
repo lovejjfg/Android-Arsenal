@@ -24,13 +24,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.lovejjfg.arsenal.api.DataManager;
-import com.lovejjfg.arsenal.api.mode.ArsenalDetailInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
-import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
 import com.lovejjfg.arsenal.base.BasePresenterImpl;
 import com.lovejjfg.arsenal.utils.JumpUtils;
-
-import rx.functions.Action1;
 
 /**
  * Created by Joe on 2017/3/9.

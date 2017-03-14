@@ -24,7 +24,7 @@ package com.lovejjfg.arsenal.utils.rxbus;
 
 public class SearchEvent {
     public final String key;
-    private final String tagName;
+    public final String tagName;
     public final int type;
 
     public SearchEvent(String key, String tagName, int type) {

@@ -21,10 +21,8 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.lovejjfg.arsenal.api.DataManager;
-import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 
 import rx.Subscription;
-import rx.functions.Action1;
 
 /**
  * Created by Joe on 2017/3/9.

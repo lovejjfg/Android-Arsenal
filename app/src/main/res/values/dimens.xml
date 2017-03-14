@@ -18,6 +18,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="detail_backdrop_height">300dp</dimen>
+    <dimen name="about_height">280dp</dimen>
     <dimen name="detail_info_height">240dp</dimen>
     <dimen name="normal_margin_padding">8dp</dimen>
     <dimen name="text_bigger">18sp</dimen>

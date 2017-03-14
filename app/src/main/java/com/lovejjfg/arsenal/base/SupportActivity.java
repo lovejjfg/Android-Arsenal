@@ -132,10 +132,7 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Override
     public boolean popTo(Class<? extends SupportFragment> target, boolean includeSelf) {
-        if (fragmentsUtil != null) {
-            return fragmentsUtil.popTo(target, includeSelf);
-        }
-        return false;
+        return fragmentsUtil != null && fragmentsUtil.popTo(target, includeSelf);
     }
 
     public boolean popSelf() {

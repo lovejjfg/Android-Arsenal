@@ -20,6 +20,7 @@ package com.lovejjfg.arsenal.ui;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,8 @@ public class AboutActivity extends SupportActivity implements AdapterLoader.OnIt
 
     @Bind(R.id.tv_site)
     TextView mTvSite;
+    @Bind(R.id.toolbar)
+    Toolbar mToolBar;
     @Bind(R.id.iv_img)
     ImageView mIv;
     @Bind(R.id.recycler_view)
@@ -57,10 +60,11 @@ public class AboutActivity extends SupportActivity implements AdapterLoader.OnIt
         ButterKnife.bind(this);
         aboutAdapter = new AboutAdapter();
         initData();
+        mToolBar.setNavigationOnClickListener(v -> onBackPressed());
         mRecyclerView.setAdapter(aboutAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         aboutAdapter.setOnItemClickListener(this);
-        Glide.with(this).load("https://avatars2.githubusercontent.com/u/10557477?v=3&s=200")
+        Glide.with(this).load(R.mipmap.ic_launcher)
                 .transform(new CircleTransform(this))
                 .into(mIv);
 
@@ -84,6 +88,9 @@ public class AboutActivity extends SupportActivity implements AdapterLoader.OnIt
 
     private void initData() {
         ArrayList<Library> libraries = new ArrayList<>();
+        libraries.add(new Library("AndResGuard",
+                "proguard resource for Android by wechat team.",
+                "https://github.com/shwenzhang/AndResGuard"));
         libraries.add(new Library("Android support libraries",
                 "The Android support libraries offer a number of features that are not built into the framework.",
                 "https://developer.android.com/topic/libraries/support-library"));
@@ -93,18 +100,33 @@ public class AboutActivity extends SupportActivity implements AdapterLoader.OnIt
         libraries.add(new Library("Glide",
                 "An image loading and caching library for Android focused on smooth scrolling.",
                 "https://github.com/bumptech/glide"));
+        libraries.add(new Library("gradle-retrolambda",
+                "A gradle plugin for getting java lambda support in java 6, 7 and android.",
+                "https://github.com/evant/gradle-retrolambda"));
         libraries.add(new Library("JSoup",
                 "Java HTML Parser, with best of DOM, CSS, and jquery.",
                 "https://github.com/jhy/jsoup/"));
+        libraries.add(new Library("leakcanary",
+                "A memory leak detection library for Android and Java.",
+                "https://github.com/square/leakcanary"));
         libraries.add(new Library("MaterialSearchView",
                 "Cute library to implement SearchView in a Material Design Approach .",
                 "http://miguelcatalan.info/2015/09/23/MaterialSearchView/"));
         libraries.add(new Library("OkHttp",
                 "An HTTP & HTTP/2 client for Android and Java applications.",
                 "http://square.github.io/okhttp/"));
+        libraries.add(new Library("PowerRecyclerView",
+                "Easy for RecyclerView to pull refresh and load more.",
+                "https://github.com/lovejjfg/PowerRecyclerView"));
         libraries.add(new Library("Retrofit",
                 "A type-safe HTTP client for Android and Java.",
                 "http://square.github.io/retrofit/"));
+        libraries.add(new Library("RxAndroid",
+                "RxJava bindings for Android.",
+                "https://github.com/ReactiveX/RxAndroid"));
+        libraries.add(new Library("RxJava",
+                "RxJava – Reactive Extensions for the JVM – a library for composing asynchronous and event-based programs using observable sequences for the Java VM.",
+                "https://github.com/ReactiveX/RxJava"));
 
         aboutAdapter.setList(libraries);
 

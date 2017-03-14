@@ -95,7 +95,7 @@
                         <TextView
                             android:id="@+id/tv_repo"
                             style="@style/Text.Content"
-                            android:text=" 20"
+                            tools:text=" 20"
                             />
                     </LinearLayout>
 
@@ -114,7 +114,7 @@
                         <TextView
                             android:id="@+id/tv_flowers"
                             style="@style/Text.Content"
-                            android:text="20"
+                            tools:text="20"
                             />
                     </LinearLayout>
 
@@ -133,7 +133,7 @@
                         <TextView
                             android:id="@+id/tv_flowing"
                             style="@style/Text.Content"
-                            android:text="20"
+                            tools:text="20"
                             />
                     </LinearLayout>
 

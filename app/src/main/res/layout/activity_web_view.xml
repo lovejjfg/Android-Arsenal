@@ -89,7 +89,7 @@
                             android:id="@+id/tv_language"
                             style="@style/Text.Content"
                             android:gravity="left"
-                            android:text="Java"
+                            tools:text="Java"
                             />
                     </LinearLayout>
 
@@ -110,7 +110,7 @@
                             android:id="@+id/tv_updated"
                             style="@style/Text.Content"
                             android:gravity="left"
-                            android:text="20"
+                            tools:text="20"
                             />
                     </LinearLayout>
 
