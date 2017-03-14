@@ -34,7 +34,7 @@
     <ImageView
         android:id="@+id/iv_error"
         android:layout_gravity="center"
-        android:visibility="visible"
+        android:visibility="gone"
         android:background="@mipmap/ic_empty"
         android:scaleType="center"
         android:layout_width="wrap_content"

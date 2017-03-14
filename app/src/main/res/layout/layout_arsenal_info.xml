@@ -22,10 +22,7 @@
             android:textAllCaps="false"
             android:layout_toLeftOf="@+id/ll_tag"
             style="@style/Text.ListName"
-            android:background="?selectableItemBackground"
             tools:text="lovejjfg"
-            android:clickable="true"
-            android:focusable="true"
             android:layout_alignBottom="@+id/ll_tag"
             />
 
@@ -67,7 +64,7 @@
             style="@style/Text.ListContent"
             android:layout_below="@+id/tv_tag"
             android:paddingBottom="16dp"
-            tools:text="@string/des"
+            tools:text="xxxxxxxxxxxxxxxxxxxxxxx"
             />
 
         <ImageView

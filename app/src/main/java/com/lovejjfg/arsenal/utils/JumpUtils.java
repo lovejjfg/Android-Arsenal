@@ -17,12 +17,9 @@
 
 package com.lovejjfg.arsenal.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 
 import com.lovejjfg.arsenal.api.mode.ArsenalDetailInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
@@ -40,16 +37,15 @@ public class JumpUtils {
     public static void jumpToUserDetail(Context context, ArsenalUserInfo info) {
         Intent intent = new Intent(context, ArsenalUserInfoActivity.class);
         intent.putExtra(ArsenalUserInfoActivity.USER_INFO, info);
-        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context));
-        ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
+        context.startActivity(intent);
+
     }
 
     public static void jumpToSearchList(Context context, String tagKey) {
         Intent intent = new Intent(context, ArsenalSearchActivity.class);
         intent.putExtra(ArsenalListInfoFragment.KEY, tagKey);
         intent.putExtra(ArsenalListInfoFragment.TYPE_NAME, ArsenalListInfoFragment.TYPE_SEARCH);
-        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context));
-        ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
+        context.startActivity(intent);
     }
 
     public static void jumpToSearchList(Context context, String tagName, String tagKey) {
@@ -57,22 +53,19 @@ public class JumpUtils {
         intent.putExtra(ArsenalListInfoFragment.KEY, tagKey);
         intent.putExtra(ArsenalListInfoFragment.TAG_NAME, tagName);
         intent.putExtra(ArsenalListInfoFragment.TYPE_NAME, ArsenalListInfoFragment.TYPE_SEARCH_TAG);
-        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context));
-        ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
+        context.startActivity(intent);
     }
 
     public static void jumpToDetail(Context context, ArsenalDetailInfo detailUrl) {
         Intent intent = new Intent(context, ArsenalDetailInfoActivity.class);
         intent.putExtra(ArsenalDetailInfoActivity.INFO, detailUrl);
-        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context));
-        ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
+        context.startActivity(intent);
     }
 
 
     public static void jumpToAbout(Context context) {
         Intent intent = new Intent(context, AboutActivity.class);
-        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context));
-        ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
+        context.startActivity(intent);
     }
 
     public static void jumpToWeb(Context context, String url) {

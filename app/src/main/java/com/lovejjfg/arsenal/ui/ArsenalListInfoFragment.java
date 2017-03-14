@@ -129,7 +129,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
             if (toolbar != null) {
                 toolbar.setOnClickListener(v -> {
                     if (UIUtils.doubleClick()) {
-                        mRecyclerView.getRecycle().smoothScrollToPosition(0);
+                        mRecyclerView.getRecycle().scrollToPosition(0);
                     }
                 });
             }

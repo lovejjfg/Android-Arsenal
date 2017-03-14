@@ -83,12 +83,7 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
         webSettings.setBuiltInZoomControls(true);
         webSettings.setBlockNetworkImage(false);
         webSettings.setDisplayZoomControls(false);
-        mWeb.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return true;
-            }
-        });
+        mWeb.setWebViewClient(new WebViewClient());
         mWeb.setWebChromeClient(new WebChromeClient());
         mToolBar.setNavigationOnClickListener(this);
 
