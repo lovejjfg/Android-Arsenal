@@ -117,7 +117,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
         mRecyclerView.setOnRefreshListener(this);
 
         mPresenter.onViewPrepared();
-        if (beans != null) {
+        if (beans != null && !beans.isEmpty()) {
             listInfoAdapter.setList(beans);
         } else if (!TextUtils.isEmpty(key)) {
             mPresenter.startSearch(key);

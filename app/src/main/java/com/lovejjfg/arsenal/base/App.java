@@ -45,6 +45,7 @@ public class App extends Application {
         LeakCanary.install(this);
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
         strategy.setAppChannel(BuildConfig.CHANNEL);
+        Log.e("APP", "onCreate: " + BuildConfig.CHANNEL);
         CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY, true);
 
         CACHE_DIRECTORY = new File(getApplicationContext().getCacheDir(), "responses");

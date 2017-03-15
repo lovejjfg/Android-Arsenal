@@ -83,7 +83,7 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
         webSettings.setBuiltInZoomControls(true);
         webSettings.setBlockNetworkImage(false);
         webSettings.setDisplayZoomControls(false);
-        mWeb.setWebViewClient(new WebViewClient());
+//        mWeb.setWebViewClient(new WebViewClient());
         mWeb.setWebChromeClient(new WebChromeClient());
         mToolBar.setNavigationOnClickListener(this);
 
@@ -144,6 +144,7 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
             }
 
             mWeb.stopLoading();
+            mWeb.clearCache(true);
             mWeb.getSettings().setJavaScriptEnabled(false);
             mWeb.clearHistory();
             mWeb.clearView();
