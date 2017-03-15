@@ -18,6 +18,7 @@
 package com.lovejjfg.arsenal.base;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.lovejjfg.arsenal.utils.ErrorUtil;
@@ -34,7 +35,7 @@ public abstract class BasePresenterImpl<T extends IBaseView> implements BasePres
     private CompositeSubscription mCompositeSubscription;
     protected final T mView;
 
-    protected BasePresenterImpl(@Nullable T view) {
+    protected BasePresenterImpl(@NonNull T view) {
         mView = view;
     }
 
@@ -95,6 +96,7 @@ public abstract class BasePresenterImpl<T extends IBaseView> implements BasePres
 
     @Override
     public void call(Throwable throwable) {
+        mView.closeLoadingDialog();
         ErrorUtil.handleError(mView, throwable, true, false);
     }
 }

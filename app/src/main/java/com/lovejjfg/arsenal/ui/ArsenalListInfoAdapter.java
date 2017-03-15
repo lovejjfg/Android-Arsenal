@@ -27,6 +27,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.cache.DiskCache;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.ui.contract.ListInfoContract;
@@ -112,6 +114,7 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
                 img.setVisibility(View.VISIBLE);
                 Glide.with(img.getContext())
                         .load(info.getImgUrl())
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                         .into(mTarget);
             } else {
                 img.setVisibility(View.GONE);

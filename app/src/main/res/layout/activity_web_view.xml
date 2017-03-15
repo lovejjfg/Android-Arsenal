@@ -62,6 +62,7 @@
                     style="@style/Text.Content"
                     android:layout_below="@id/tv_name"
                     android:layout_centerHorizontal="true"
+                    android:background="?selectableItemBackground"
                     android:paddingTop="@dimen/normal_margin_padding"
                     android:paddingBottom="@dimen/normal_margin_padding"
                     tools:text="lovejjfg.giyhub.com"/>

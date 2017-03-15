@@ -41,7 +41,6 @@ public class ImageTarget extends GlideDrawableImageViewTarget {
     @Override
     public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable>
             animation) {
-        super.onResourceReady(resource, animation);
         ImageView badgedImageView = getView();
         int intrinsicWidth = resource.getIntrinsicWidth();
         int intrinsicHeight = resource.getIntrinsicHeight();
@@ -71,6 +70,7 @@ public class ImageTarget extends GlideDrawableImageViewTarget {
             layoutParams.width = intrinsicWidth;
         }
         badgedImageView.setLayoutParams(layoutParams);
+        super.onResourceReady(resource, animation);
     }
 
 }

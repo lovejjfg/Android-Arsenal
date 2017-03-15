@@ -59,6 +59,7 @@
                     android:id="@+id/tv_site"
                     style="@style/Text.Content"
                     android:layout_below="@id/iv_img"
+                    android:background="?selectableItemBackground"
                     android:layout_centerHorizontal="true"
                     android:paddingBottom="@dimen/normal_margin_padding"
                     android:paddingTop="@dimen/normal_margin_padding"

@@ -17,6 +17,7 @@
 
 package com.lovejjfg.arsenal.base;
 
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,7 +31,6 @@ import android.view.View;
 import android.view.Window;
 
 import com.lovejjfg.arsenal.R;
-import com.lovejjfg.arsenal.ui.LoadingDialog;
 import com.lovejjfg.arsenal.utils.FragmentsUtil;
 import com.lovejjfg.arsenal.utils.KeyBoardUtil;
 import com.lovejjfg.arsenal.utils.ToastUtil;
@@ -46,7 +46,7 @@ import java.util.List;
 public abstract class SupportActivity extends AppCompatActivity implements ISupportFragment {
     @Nullable
     private FragmentsUtil fragmentsUtil;
-    LoadingDialog loadingDialog = new LoadingDialog();
+    ProgressDialog progressDialog;
     @Nullable
     private Toolbar mToolbar;
 
@@ -72,6 +72,7 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
             getWindow().setExitTransition(new Slide(Gravity.LEFT));
         }
         super.onCreate(savedInstanceState);
+        progressDialog = new ProgressDialog(this);
         fragmentsUtil = new FragmentsUtil(getSupportFragmentManager());
         setContentView(initLayoutRes());
         try {
@@ -170,12 +171,12 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Override
     public void showLoadingDialog(String msg) {
-//        loadingDialog.show(getFragmentManager(), "loading");
+        progressDialog.show();
     }
 
     @Override
     public void closeLoadingDialog() {
-//        loadingDialog.finish(null);
+        progressDialog.dismiss();
     }
 
     @Override

@@ -59,6 +59,7 @@
                     android:layout_centerHorizontal="true"
                     android:paddingBottom="@dimen/normal_margin_padding"
                     android:paddingTop="@dimen/normal_margin_padding"
+                    android:background="?selectableItemBackground"
                     android:text="Open Resource：https://github.com/lovejjfg/Arsenal"/>
 
 
@@ -68,6 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_site"
                     android:gravity="center"
+                    android:background="?selectableItemBackground"
                     android:paddingBottom="@dimen/normal_margin_padding"
                     android:paddingTop="@dimen/normal_margin_padding"
                     android:text="@string/text_about"
