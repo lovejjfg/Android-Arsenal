@@ -363,7 +363,7 @@ class ArsenalConverterFactory extends Converter.Factory {
                             for (Element element2 : select3) {
                                 if (element2.select("a") != null && element2.select("a").first() != null) {
                                     String infoUrl = element2.select("a").first().attr("href");
-                                    contributions.add(new ArsenalListInfo.ListInfo(true, false, null, null, null, true, true, null, null, element2.text(), infoUrl, userInfoUrl, userName));
+                                    contributions.add(new ArsenalListInfo.ListInfo(true, false, null, null, null, false, false, null, null, element2.text(), infoUrl, null, null));
                                 }
                             }
                         }

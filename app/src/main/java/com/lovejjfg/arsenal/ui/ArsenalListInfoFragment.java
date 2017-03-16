@@ -94,11 +94,10 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
                 .distinctUntilChanged()
                 .subscribe(event -> {
                     onSearchEvent(event);
-                    Log.e("TAG", "call: receive searchEvent");
                 }, throwable -> {
 
                 });
-        RxBus.getInstance().addSubscription(this, subscription);
+        RxBus.getInstance().addSubscription(getContext(), subscription);
     }
 
     @Override
@@ -140,7 +139,6 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
     @Override
     public void onItemClick(View itemView, int position) {
         mPresenter.onItemClick(itemView, listInfoAdapter.getList().get(position));
-        Log.e(TAG, "onItemClick: " + position);
     }
 
     @Override
@@ -158,6 +156,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
         mIvError.setVisibility(View.GONE);
         listInfoAdapter.setTotalCount(Integer.MAX_VALUE);
         listInfoAdapter.setList(info.getInfos());
+        mRecyclerView.getRecycle().scrollToPosition(0);
         TagUtils.initTags(info.getTags());
 //        mArsenalListInfo = info;
     }
@@ -250,7 +249,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
 
     @Override
     public void onDestroy() {
-        RxBus.getInstance().unSubscribe(this);
+        RxBus.getInstance().unSubscribe(getContext());
         super.onDestroy();
     }
 

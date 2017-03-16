@@ -93,7 +93,6 @@ public class ArsenalHomeActivity extends SupportActivity {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.e(TAG, "onQueryTextSubmit: " + query);
                 searchView.closeSearch();
                 JumpUtils.jumpToSearchList(ArsenalHomeActivity.this, query);
                 return false;

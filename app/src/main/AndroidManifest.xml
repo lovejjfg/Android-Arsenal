@@ -48,7 +48,7 @@
         </activity>
         <activity
             android:name=".ui.ArsenalSearchActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTop">
         </activity>
         <activity
             android:name=".ui.ArsenalDetailInfoActivity"

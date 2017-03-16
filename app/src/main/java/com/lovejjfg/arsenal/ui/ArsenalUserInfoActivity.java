@@ -17,11 +17,12 @@
 
 package com.lovejjfg.arsenal.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,34 +63,43 @@ public class ArsenalUserInfoActivity extends SupportActivity implements View.OnC
     @Bind(R.id.viewpager)
     ViewPager mViewpager;
     private CircleTransform circleTransform;
+    private ArsenalUserInfo mInfo;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         mToolBar.setNavigationOnClickListener(this);
         circleTransform = new CircleTransform(this);
-        ArsenalUserInfo info = getIntent().getParcelableExtra(USER_INFO);
+        mInfo = getIntent().getParcelableExtra(USER_INFO);
         if (savedInstanceState == null) {
-            if (info == null) {
+            if (mInfo == null) {
                 finish();
             } else {
-                refreshUI(info);
+                refreshUI(mInfo);
             }
         }
 
     }
 
     private void refreshUI(ArsenalUserInfo info) {
-        Log.e(TAG, "refreshUI: " + info.getPortraitUrl());
-        Glide.with(ArsenalUserInfoActivity.this).load(info.getPortraitUrl()).transform(circleTransform).into(mIvPortrait);
+        Glide.with(ArsenalUserInfoActivity.this)
+                .load(info.getPortraitUrl())
+                .error(R.mipmap.ic_launcher)
+                .transform(circleTransform)
+                .into(mIvPortrait);
         mToolBar.setTitle(info.getUserName());
         mTvFlowers.setText(info.getFollowers());
         mTvFlowing.setText(info.getFollowing());
         mTvRepo.setText(info.getPublicRepo());
         mTvLocation.setText(info.getLocation());
-        mTvSite.setText(info.getSite());
-        mTvSite.setOnClickListener(this);
 
+        String text = info.getSite();
+        mTvSite.setText(text);
+        if (!TextUtils.equals("N/A", text)) {
+            mTvSite.setOnClickListener(this);
+        } else {
+            mTvSite.setOnClickListener(null);
+        }
         ArrayList<ArsenalListInfo.ListInfo> contributions = info.getContributions();
         ArrayList<ArsenalListInfo.ListInfo> ownProjects = info.getOwnProjects();
         Bundle contribution = new Bundle();
@@ -128,5 +138,16 @@ public class ArsenalUserInfoActivity extends SupportActivity implements View.OnC
                 return;
         }
         onBackPressed();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        ArsenalUserInfo info = intent.getParcelableExtra(USER_INFO);
+        if (mInfo.equals(info)) {
+            return;
+        }
+        mInfo = info;
+        refreshUI(mInfo);
+        super.onNewIntent(intent);
     }
 }

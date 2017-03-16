@@ -36,22 +36,18 @@ public class App extends Application {
 
     public static File CACHE_DIRECTORY;
     public static NetWorkUtils NETWORK_UTILS;
-//    public BDLocationListener myListener = new MyLocationListener();
 
     @Override
     public void onCreate() {
         super.onCreate();
-//        FreelineCore.init(this);
         LeakCanary.install(this);
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
         strategy.setAppChannel(BuildConfig.CHANNEL);
-        Log.e("APP", "onCreate: " + BuildConfig.CHANNEL);
-        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY, true);
+        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY, BuildConfig.IS_DEBUG, strategy);
 
         CACHE_DIRECTORY = new File(getApplicationContext().getCacheDir(), "responses");
         NETWORK_UTILS = NetWorkUtils.getsInstance(this);
         ToastUtil.initToast(getApplicationContext());
-        Log.e("TAG", "APP:onCreate初始化。。。 ");
     }
 
 }

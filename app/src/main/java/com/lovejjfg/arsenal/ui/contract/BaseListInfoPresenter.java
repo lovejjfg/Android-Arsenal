@@ -57,7 +57,6 @@ public abstract class BaseListInfoPresenter extends BasePresenterImpl<ListInfoCo
     public void onItemClick(View itemView, ArsenalListInfo.ListInfo info) {
         mView.showLoadingDialog(null);
         DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalDetailInfo(info.getListDetailUrl()), data -> {
-            Log.e("TAG", "call: " + data);
             JumpUtils.jumpToDetail(mView.getContext(), data);
             mView.closeLoadingDialog();
         }, this);

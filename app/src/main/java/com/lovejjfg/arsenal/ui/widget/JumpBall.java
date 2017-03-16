@@ -15,7 +15,7 @@
  *
  */
 
-package com.lovejjfg.arsenal.ui;
+package com.lovejjfg.arsenal.ui.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

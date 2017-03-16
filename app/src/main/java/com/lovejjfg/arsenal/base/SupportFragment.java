@@ -48,7 +48,6 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.e(TAG, "onCreate: " + tagName);
         super.onCreate(savedInstanceState);
         initFragments(savedInstanceState, this);
     }
@@ -71,38 +70,32 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
         if (getArguments() != null) {
             tagName = getArguments().getString(ARG_SECTION_NUMBER);
         }
-        Log.e(TAG, "onAttach: " + tagName);
         super.onAttach(context);
     }
 
     @Override
     public void onAttachFragment(Fragment childFragment) {
-        Log.e(TAG, "onAttachFragment: " + tagName);
         super.onAttachFragment(childFragment);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.e(TAG, "onCreateView: " + tagName);
         return inflater.inflate(initLayoutRes(), container, false);
     }
 
     @Override
     public void onDestroy() {
-        Log.e(TAG, "onDestroy: " + tagName);
         super.onDestroy();
     }
 
     @Override
     public void onDestroyView() {
-        Log.e(TAG, "onDestroyView: " + tagName);
         super.onDestroyView();
     }
 
     @Override
     public void onDetach() {
-        Log.e(TAG, "onDetach: " + tagName);
         activity = null;
         super.onDetach();
 
@@ -110,25 +103,21 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
 
     @Override
     public void onPause() {
-        Log.e(TAG, "onPause: " + tagName);
         super.onPause();
     }
 
     @Override
     public void onResume() {
-        Log.e(TAG, "onResume: " + tagName);
         super.onResume();
     }
 
     @Override
     public void onStart() {
-        Log.e(TAG, "onStart: " + tagName);
         super.onStart();
     }
 
     @Override
     public void onStop() {
-        Log.e(TAG, "onStop: " + tagName);
         super.onStop();
     }
 
@@ -148,13 +137,11 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        Log.e(TAG, "setUserVisibleHint: " + tagName + ";isVisible:" + isVisibleToUser);
         super.setUserVisibleHint(isVisibleToUser);
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        Log.e(TAG, "onHiddenChanged: " + tagName + (hidden ? "不可见了！" : "可见了！！"));
         super.onHiddenChanged(hidden);
     }
 

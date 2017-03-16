@@ -17,10 +17,10 @@
 
 package com.lovejjfg.arsenal.utils;
 
-import android.util.Log;
 
 
 import com.lovejjfg.arsenal.base.App;
+import com.lovejjfg.arsenal.utils.logger.Logger;
 
 import java.io.IOException;
 
@@ -41,7 +41,7 @@ public class CacheControlInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         if (!App.NETWORK_UTILS.isNetworkConnected()) {
-            Log.e(TAG, "createApi: 没有网络创建带cache的request！！");
+//            Log.e(TAG, "createApi: 没有网络创建带cache的request！！");
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
@@ -52,15 +52,15 @@ public class CacheControlInterceptor implements Interceptor {
          * Unsatisfiable Request} response will be returned.
          */
         String cacheControl = request.cacheControl().toString();
-        Log.e(TAG, "intercept: " + cacheControl);
+//        Log.e(TAG, "intercept: " + cacheControl);
         if (!App.NETWORK_UTILS.isNetworkConnected()) {
-            Log.e(TAG, "createApi: 依然没有网络的response！！");
+//            Log.e(TAG, "createApi: 依然没有网络的response！！");
             originalResponse.newBuilder()
                     .removeHeader("Pragma")
                     .header("Cache-Control", cacheControl)
                     .build();
         } else {
-            Log.e(TAG, "createApi: 有网了的response！！");
+//            Log.e(TAG, "createApi: 有网了的response！！");
             originalResponse.newBuilder()
                     .removeHeader("Pragma")
                     .header("Cache-Control", cacheControl)

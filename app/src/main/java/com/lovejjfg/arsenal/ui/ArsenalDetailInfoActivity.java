@@ -21,13 +21,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,13 +60,14 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
     @Bind(R.id.tv_updated)
     TextView mTvUpdated;
     private CircleTransform mCircleTransform;
+    private ArsenalDetailInfo mDetailInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        ArsenalDetailInfo detailInfo = getIntent().getParcelableExtra(INFO);
+        mDetailInfo = getIntent().getParcelableExtra(INFO);
         mCircleTransform = new CircleTransform(this);
         mWeb.setVerticalScrollBarEnabled(false);
         mWeb.setHorizontalScrollBarEnabled(false);
@@ -87,7 +88,7 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
         mWeb.setWebChromeClient(new WebChromeClient());
         mToolBar.setNavigationOnClickListener(this);
 
-        initViews(detailInfo);
+        initViews(mDetailInfo);
     }
 
     private void initViews(ArsenalDetailInfo detailInfo) {
@@ -100,17 +101,28 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
         mTvName.setText(detailInfo.getOwner());
         mTvUpdated.setText(detailInfo.getUpdatedDate());
         mTvSite.setText(detailInfo.getLink());
-        Glide.with(this)
-                .load(detailInfo.getPortraitUrl())
-                .transform(mCircleTransform)
-                .into(mIv);
-        mIv.setOnClickListener(v ->
-                DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalUserInfo(detailInfo.getOwnerurl()),
-                        info -> JumpUtils.jumpToUserDetail(this, info), throwable -> showToast(throwable.getMessage())));
+        String portraitUrl = detailInfo.getPortraitUrl();
+        if (!TextUtils.isEmpty(portraitUrl)) {
+            Glide.with(this)
+                    .load(portraitUrl)
+                    .error(R.mipmap.ic_launcher)
+                    .transform(mCircleTransform)
+                    .into(mIv);
+            mIv.setOnClickListener(v ->
+                    DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalUserInfo(detailInfo.getOwnerurl()),
+                            info -> JumpUtils.jumpToUserDetail(this, info), throwable -> showToast(throwable.getMessage())));
+        } else {
+            mIv.setOnClickListener(null);
+        }
         mWeb.loadDataWithBaseURL(Constants.BASE_URL, detailInfo.getDesc(),
                 Constants.MIME_TYPE, Constants.ENCODING, Constants.FAIL_URL);
+        CharSequence text = mTvSite.getText();
+        if (!TextUtils.equals("N/A", text)) {
+            mTvSite.setOnClickListener(this);
+        } else {
+            mTvSite.setOnClickListener(null);
+        }
 
-        mTvSite.setOnClickListener(this);
 
     }
 
@@ -161,5 +173,16 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        ArsenalDetailInfo detailInfo = intent.getParcelableExtra(INFO);
+        if (detailInfo.equals(mDetailInfo)) {
+            return;
+        }
+        mDetailInfo = detailInfo;
+        initViews(mDetailInfo);
+        super.onNewIntent(intent);
     }
 }

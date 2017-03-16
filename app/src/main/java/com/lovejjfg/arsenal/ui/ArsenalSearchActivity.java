@@ -101,7 +101,6 @@ public class ArsenalSearchActivity extends SupportActivity implements View.OnCli
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.e(TAG, "onQueryTextSubmit: " + query);
                 searchView.closeSearch();
                 JumpUtils.jumpToSearchList(ArsenalSearchActivity.this, query);
                 return false;
