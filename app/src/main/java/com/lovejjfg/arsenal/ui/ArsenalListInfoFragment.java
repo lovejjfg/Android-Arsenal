@@ -22,7 +22,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -73,11 +72,6 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
     ImageView mIvError;
     private ArsenalListInfoAdapter listInfoAdapter;
     private int mType;
-
-    @Override
-    public void handleFinish() {
-        getActivity().finish();
-    }
 
     @Override
     public int initLayoutRes() {

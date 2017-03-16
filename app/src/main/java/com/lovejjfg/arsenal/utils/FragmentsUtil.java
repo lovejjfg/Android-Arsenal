@@ -171,15 +171,18 @@ public class FragmentsUtil {
 
     @Nullable
     public List<Fragment> getTopFragments() {
+        if (manager == null) {
+            return null;
+        }
         List<Fragment> fragments = manager.getFragments();
         List<Fragment> topFragments = new ArrayList<>();
-        if (fragments == null) {
+        if (fragments == null || fragments.isEmpty()) {
             return null;
         }
         int size = fragments.size();
         for (int i = size - 1; i >= 0; i--) {
             Fragment f = fragments.get(i);
-            if (!f.isHidden()) {
+            if (f != null && f.isAdded() && !f.isHidden() && f.getUserVisibleHint()) {
                 Fragment t = getTopFragment(f.getChildFragmentManager());//递归
                 if (t != null) {
                     topFragments.add(t);
@@ -195,13 +198,13 @@ public class FragmentsUtil {
     @Nullable
     private Fragment getTopFragment(FragmentManager manager) {
         List<Fragment> fragments = manager.getFragments();
-        if (fragments == null) {
+        if (fragments == null || fragments.isEmpty()) {
             return null;
         }
         int size = fragments.size();
         for (int i = size - 1; i >= 0; i--) {
             Fragment f = fragments.get(i);
-            if (!f.isHidden()) {
+            if (f != null && f.isAdded() && !f.isHidden() && f.getUserVisibleHint()) {
                 Fragment tTopFragment = getTopFragment(f.getChildFragmentManager());
                 return tTopFragment == null ? f : tTopFragment;
             }

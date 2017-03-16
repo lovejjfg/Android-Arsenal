@@ -23,7 +23,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,12 +34,9 @@ import java.util.List;
  * Email lovejjfg@gmail.com
  */
 
-public abstract class SupportFragment extends Fragment implements ISupportFragment {
-    private static final String ARG_SECTION_NUMBER = "section_number";
+public abstract class SupportFragment extends Fragment implements ISupportFragment, ISupportView {
     public static final String ARG_IS_HIDDEN = "ARG_IS_HIDDEN";
     public static final String ARG_CONTAINER = "ARG_CONTAINER_ID";
-    protected static final String TAG = "TAG";
-    private String tagName;
     @Nullable
     private SupportActivity activity;
     public boolean isRoot;
@@ -67,9 +63,6 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
     @Override
     public void onAttach(Context context) {
         activity = (SupportActivity) context;
-        if (getArguments() != null) {
-            tagName = getArguments().getString(ARG_SECTION_NUMBER);
-        }
         super.onAttach(context);
     }
 
@@ -253,10 +246,14 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
 
 
     @Override
-    public boolean finishSelf() {
-        return activity != null && activity.popSelf();
+    public boolean finishInner() {
+        return handleFinish() && activity != null && activity.popSelf();
     }
 
+    @Override
+    public boolean handleFinish() {
+        return false;
+    }
 
     //    @Override
 //    public void saveToSharedPrefs(String key, Object value) {
@@ -292,7 +289,7 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
     @Override
     public Toolbar getToolbar() {
         if (activity != null) {
-          return  activity.getToolbar();
+            return activity.getToolbar();
         }
         return null;
     }

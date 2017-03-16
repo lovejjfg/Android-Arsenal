@@ -43,7 +43,7 @@ import java.util.List;
  * Email lovejjfg@gmail.com
  */
 
-public abstract class SupportActivity extends AppCompatActivity implements ISupportFragment {
+public abstract class SupportActivity extends AppCompatActivity implements ISupportFragment, ISupportView {
     @Nullable
     private FragmentsUtil fragmentsUtil;
     ProgressDialog progressDialog;
@@ -150,13 +150,10 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Override
     public void onBackPressed() {
-//        if (!finishSelf()) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            finishAfterTransition();
-        } else {
-            finish();
+        if (!finishInner()) {
+            handleFinish();
         }
-//        }
+
     }
 
     @Override
@@ -196,23 +193,17 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
 
     @Override
-    public boolean finishSelf() {
+    public boolean finishInner() {
         List<Fragment> topFragments = getTopFragment();
-
+        boolean finish = false;
         if (topFragments != null && !topFragments.isEmpty()) {
             for (Fragment fragment : topFragments) {
                 if (fragment instanceof SupportFragment) {
-                    ((SupportFragment) fragment).finishSelf();
+                    finish = finish | ((SupportFragment) fragment).finishInner();
                 }
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                finishAfterTransition();
-            } else {
-                finish();
-            }
-            return true;
         }
-        return true;
+        return finish;
     }
 
     @Override
@@ -235,11 +226,12 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
     }
 
     @Override
-    public void handleFinish() {
+    public boolean handleFinish() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             finishAfterTransition();
         } else {
             finish();
         }
+        return true;
     }
 }

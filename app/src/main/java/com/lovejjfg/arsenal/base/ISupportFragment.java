@@ -31,7 +31,7 @@ import java.util.List;
  * Email lovejjfg@gmail.com
  */
 
-interface ISupportFragment extends ISupportView {
+interface ISupportFragment {
     void initFragments(Bundle savedInstanceState, SupportFragment fragment);
 
     @Nullable

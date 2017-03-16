@@ -43,12 +43,17 @@ public interface ISupportView {
 
     void closeKeyBoard();
 
-    //直接关闭当前的Activity
-    boolean finishSelf();
+    boolean finishInner();
 
-    void handleFinish();
+    /**
+     * If you want Fragment to handle the back event ,you should override this method and return true.
+     *
+     * @return true: pop the current Fragment ,false otherwise.
+     */
+    boolean handleFinish();
 
-    @LayoutRes int initLayoutRes();
+    @LayoutRes
+    int initLayoutRes();
 
 //    void saveToSharedPrefs(String key, Object value);
 //
