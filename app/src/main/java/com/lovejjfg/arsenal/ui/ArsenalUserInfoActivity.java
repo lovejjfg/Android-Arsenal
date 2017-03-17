@@ -70,13 +70,15 @@ public class ArsenalUserInfoActivity extends SupportActivity implements View.OnC
         ButterKnife.bind(this);
         mToolBar.setNavigationOnClickListener(this);
         circleTransform = new CircleTransform(this);
-        mInfo = getIntent().getParcelableExtra(USER_INFO);
         if (savedInstanceState == null) {
-            if (mInfo == null) {
-                finish();
-            } else {
-                refreshUI(mInfo);
-            }
+            mInfo = getIntent().getParcelableExtra(USER_INFO);
+        } else {
+            mInfo = savedInstanceState.getParcelable(USER_INFO);
+        }
+        if (mInfo == null) {
+            finish();
+        } else {
+            refreshUI(mInfo);
         }
 
     }
@@ -149,5 +151,11 @@ public class ArsenalUserInfoActivity extends SupportActivity implements View.OnC
         mInfo = info;
         refreshUI(mInfo);
         super.onNewIntent(intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(USER_INFO, mInfo);
+        super.onSaveInstanceState(outState);
     }
 }

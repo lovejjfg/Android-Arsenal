@@ -152,7 +152,16 @@ public class FragmentsUtil {
     }
 
     public <T extends SupportFragment> T findFragment(@NonNull Class<T> className) {
-        Fragment tagFragment = manager.findFragmentByTag(className.getSimpleName());
+        return findFragment(null, className);
+    }
+
+    public <T extends SupportFragment> T findFragment(@Nullable SupportFragment parentFragment, @NonNull Class<T> className) {
+        Fragment tagFragment;
+        if (parentFragment != null) {
+            tagFragment = parentFragment.getChildFragmentManager().findFragmentByTag(className.getSimpleName());
+        } else {
+            tagFragment = manager.findFragmentByTag(className.getSimpleName());
+        }
         try {
             return (T) tagFragment;
         } catch (Exception e) {

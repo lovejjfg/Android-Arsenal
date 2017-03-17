@@ -67,7 +67,11 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
 
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        mDetailInfo = getIntent().getParcelableExtra(INFO);
+        if (savedInstanceState == null) {
+            mDetailInfo = getIntent().getParcelableExtra(INFO);
+        } else {
+            mDetailInfo = savedInstanceState.getParcelable(INFO);
+        }
         mCircleTransform = new CircleTransform(this);
         mWeb.setVerticalScrollBarEnabled(false);
         mWeb.setHorizontalScrollBarEnabled(false);
@@ -184,5 +188,11 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
         mDetailInfo = detailInfo;
         initViews(mDetailInfo);
         super.onNewIntent(intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(INFO, mDetailInfo);
+        super.onSaveInstanceState(outState);
     }
 }

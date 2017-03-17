@@ -107,7 +107,7 @@ public class RxBus {
         if (mSubscriptionMap == null) {
             mSubscriptionMap = new HashMap<>();
         }
-        String key = o.getClass().getName();
+        String key = o.toString();
         if (mSubscriptionMap.get(key) != null) {
             mSubscriptionMap.get(key).add(subscription);
         } else {
@@ -126,7 +126,7 @@ public class RxBus {
             return;
         }
 
-        String key = o.getClass().getName();
+        String key = o.toString();
         if (!mSubscriptionMap.containsKey(key)){
             return;
         }

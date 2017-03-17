@@ -97,7 +97,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
                 }, throwable -> {
 
                 });
-        RxBus.getInstance().addSubscription(getContext(), subscription);
+        RxBus.getInstance().addSubscription(this, subscription);
     }
 
     @Override
@@ -249,7 +249,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
 
     @Override
     public void onDestroy() {
-        RxBus.getInstance().unSubscribe(getContext());
+        RxBus.getInstance().unSubscribe(this);
         super.onDestroy();
     }
 
