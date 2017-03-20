@@ -18,10 +18,8 @@
 package com.lovejjfg.arsenal.api.mode;
 
 import com.litesuits.orm.db.annotation.Column;
-import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
 import com.litesuits.orm.db.annotation.Unique;
-import com.litesuits.orm.db.enums.AssignType;
 
 /**
  * Created by Joe on 2017/3/17.
@@ -30,7 +28,6 @@ import com.litesuits.orm.db.enums.AssignType;
 @Table("SearchInfo")
 public class SearchInfo {
     @Column("_id")
-    @PrimaryKey(AssignType.AUTO_INCREMENT)
     private int id;
     @Unique
     @Column("key")

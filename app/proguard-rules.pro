@@ -173,32 +173,10 @@
 #     <init>(...);
 #}
 
-# The remainder of this file is identical to the non-optimized version
-# of the Proguard configuration file (except that the other file has
-# flags to turn off optimization).
--dontpreverify
 
--dontusemixedcaseclassnames
--dontskipnonpubliclibraryclasses
--verbose
-
-# 使用注解
--keepattributes *Annotation*,Signature,Exceptions,InnerClasses
-
-# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
--keepclassmembers enum * {
-    **[] $VALUES;
-    public *;
-}
-
-# 保持混淆时类的实名及行号(--------------- 调试时打开 --------------)
-#-keepattributes SourceFile,LineNumberTable
-
-# 开发者需要调用，不可以混淆
+# android-lite-orm
 -keep public class com.litesuits.orm.LiteOrm { *; }
--keep public class com.litesuits.orm.db.* { *; }
--keep public class com.litesuits.orm.db.model.** { *; }
--keep public class com.litesuits.orm.db.annotation.** { *; }
--keep public class com.litesuits.orm.db.enums.** { *; }
--keep public class com.litesuits.orm.log.* { *; }
--keep public class com.litesuits.orm.db.assit.* { *; }
+# keep anotation
+-keepclasseswithmembers class * {
+    @com.litesuits.orm.db.annotation.* <fields>;
+}
