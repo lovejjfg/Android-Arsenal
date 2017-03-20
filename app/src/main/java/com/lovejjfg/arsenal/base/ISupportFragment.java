@@ -22,6 +22,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 
 import java.util.List;
@@ -39,6 +40,9 @@ interface ISupportFragment {
 
     @Nullable
     <F extends SupportFragment> F findFragment(Class<F> className);
+
+    @Nullable
+    <F extends SupportFragment> F findFragment(SupportFragment parentFragment, Class<F> className);
 
     void loadRoot(int containerViewId, SupportFragment... root);
 

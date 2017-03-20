@@ -57,7 +57,7 @@ public class FragmentsUtil {
     public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... childs) {
         FragmentTransaction transaction = parent.getChildFragmentManager().beginTransaction();
         if (childs != null && childs.length > 0) {
-            addFragmentsToStack(parent, containerViewId, pos, transaction, false, childs);
+            addFragmentsToStack(containerViewId, pos, transaction, false, childs);
         }
     }
 
@@ -86,10 +86,10 @@ public class FragmentsUtil {
 
     public void loadRoot(int containerViewId, int pos, SupportFragment... roots) {
         FragmentTransaction transaction = manager.beginTransaction();
-        addFragmentsToStack(null, containerViewId, pos, transaction, true, roots);
+        addFragmentsToStack(containerViewId, pos, transaction, true, roots);
     }
 
-    private void addFragmentsToStack(SupportFragment parent, int containerViewId, int pos, FragmentTransaction transaction, boolean isRoot, SupportFragment[] fragments) {
+    private void addFragmentsToStack(int containerViewId, int pos, FragmentTransaction transaction, boolean isRoot, SupportFragment[] fragments) {
         if (fragments != null && fragments.length > 0) {
             if (pos >= fragments.length || pos < 0) {
                 throw new IndexOutOfBoundsException("Index: " + pos + ", Size: " + fragments.length);

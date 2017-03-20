@@ -168,6 +168,15 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
         return null;
     }
 
+    @Nullable
+    @Override
+    public <F extends SupportFragment> F findFragment(SupportFragment parentFragment, Class<F> className) {
+        if (activity != null) {
+            return activity.findFragment(parentFragment, className);
+        }
+        return null;
+    }
+
     @Override
     public void loadRoot(int containerViewId, SupportFragment... root) {
         if (activity != null) {

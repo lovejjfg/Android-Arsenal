@@ -70,8 +70,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends SupportFragm
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         mPresenter.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
 
     }
 }

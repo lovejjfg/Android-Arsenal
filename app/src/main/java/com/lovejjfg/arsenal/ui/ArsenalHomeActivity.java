@@ -31,7 +31,6 @@ import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.SearchInfo;
 import com.lovejjfg.arsenal.base.SupportActivity;
 import com.lovejjfg.arsenal.utils.JumpUtils;
-import com.lovejjfg.arsenal.utils.LiteOrmHelper;
 import com.lovejjfg.arsenal.utils.TagUtils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 

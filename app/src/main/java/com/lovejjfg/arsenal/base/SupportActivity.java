@@ -117,6 +117,13 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
         return fragmentsUtil != null ? fragmentsUtil.findFragment(className) : null;
     }
 
+    @Nullable
+    @Override
+    public <F extends SupportFragment> F findFragment(SupportFragment parentFragment, Class<F> className) {
+        return fragmentsUtil != null ? fragmentsUtil.findFragment(parentFragment, className) : null;
+    }
+
+
     @Override
     public void loadRoot(int containerViewId, SupportFragment... root) {
         if (fragmentsUtil != null) {
