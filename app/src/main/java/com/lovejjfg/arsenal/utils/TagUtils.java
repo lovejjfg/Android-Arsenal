@@ -17,6 +17,12 @@
 
 package com.lovejjfg.arsenal.utils;
 
+import com.litesuits.orm.db.assit.QueryBuilder;
+import com.lovejjfg.arsenal.api.mode.SearchInfo;
+import com.lovejjfg.arsenal.ui.ArsenalListInfoFragment;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -27,33 +33,52 @@ import java.util.Set;
 
 public class TagUtils {
 
-    private static final HashMap<String, String> hashMap = new HashMap<>();
-
-    public static void initTags(HashMap<String, String> tags) {
-        if (tags == null) {
-            return;
-        }
-        if (tags.size() == hashMap.size()) {
-            return;
-        }
-        hashMap.clear();
-        hashMap.putAll(tags);
-    }
+    private static final HashMap<String, String> HASH_MAP = new HashMap<>();
 
     public static String getTagValue(String key) {
-        if (!hashMap.isEmpty()) {
-            return hashMap.get(key);
+        if (!HASH_MAP.isEmpty()) {
+            return HASH_MAP.get(key);
         }
         return null;
     }
 
     public static String[] getTagArray() {
-        Set<String> strings = hashMap.keySet();
+        ArrayList<SearchInfo> infos = queryArrayList(SearchInfo.class);
+        if (infos != null && !infos.isEmpty()) {
+            for (SearchInfo info : infos) {
+                HASH_MAP.put(info.getKey(), info.getValue());
+            }
+        }
+        Set<String> strings = HASH_MAP.keySet();
         if (!strings.isEmpty()) {
             return strings.toArray(new String[strings.size()]);
         } else {
             return null;
         }
     }
+
+
+    public static boolean isSaveTag(int size) {
+        //noinspection unchecked
+        return LiteOrmHelper.getInstance().queryCount(new QueryBuilder(SearchInfo.class).whereEquals("type", ArsenalListInfoFragment.TYPE_SEARCH_TAG)) >= size;
+    }
+
+    public static boolean deleteSearchTag() {
+        //noinspection unchecked
+        return LiteOrmHelper.getInstance().delete(new QueryBuilder(SearchInfo.class).whereEquals("type", ArsenalListInfoFragment.TYPE_SEARCH)) > 0;
+    }
+
+    public static <T> int save(Collection<T> collection) {
+        return LiteOrmHelper.getInstance().save(collection);
+    }
+
+    public static long save(Object t) {
+        return LiteOrmHelper.getInstance().save(t);
+    }
+
+    public static <T> ArrayList<T> queryArrayList(Class<T> t) {
+        return LiteOrmHelper.getInstance().query(t);
+    }
+
 
 }

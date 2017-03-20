@@ -183,7 +183,8 @@ public class FragmentsUtil {
         for (int i = size - 1; i >= 0; i--) {
             Fragment f = fragments.get(i);
             if (f != null && f.isAdded() && !f.isHidden() && f.getUserVisibleHint()) {
-                Fragment t = getTopFragment(f.getChildFragmentManager());//递归
+                //递归
+                Fragment t = getTopFragment(f.getChildFragmentManager());
                 if (t != null) {
                     topFragments.add(t);
                 } else {

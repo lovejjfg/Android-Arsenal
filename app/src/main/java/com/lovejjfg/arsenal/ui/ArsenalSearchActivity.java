@@ -23,13 +23,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.lovejjfg.arsenal.R;
+import com.lovejjfg.arsenal.api.mode.SearchInfo;
 import com.lovejjfg.arsenal.base.SupportActivity;
 import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.arsenal.utils.TagUtils;
@@ -74,9 +74,13 @@ public class ArsenalSearchActivity extends SupportActivity implements View.OnCli
                 String[] strings = TagUtils.getTagArray();
                 if (strings != null) {
                     searchView.setSuggestions(strings, title -> {
-                        String s = TagUtils.getTagValue(title);
-                        JumpUtils.jumpToSearchList(searchView.getContext(), title, "/tag/" + s);
                         searchView.closeSearch();
+                        String s = TagUtils.getTagValue(title);
+                        if (TextUtils.isEmpty(s)) {
+                            JumpUtils.jumpToSearchList(searchView.getContext(), title);
+                        } else {
+                            JumpUtils.jumpToSearchList(searchView.getContext(), title, "/tag/" + s);
+                        }
                     });
                 }
             }
@@ -102,6 +106,8 @@ public class ArsenalSearchActivity extends SupportActivity implements View.OnCli
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.closeSearch();
+                SearchInfo searchInfo = new SearchInfo(query, ArsenalListInfoFragment.TYPE_SEARCH, null);
+                TagUtils.save(searchInfo);
                 JumpUtils.jumpToSearchList(ArsenalSearchActivity.this, query);
                 return false;
             }

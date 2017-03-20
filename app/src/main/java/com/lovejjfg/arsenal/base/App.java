@@ -21,6 +21,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.lovejjfg.arsenal.BuildConfig;
+import com.lovejjfg.arsenal.utils.LiteOrmHelper;
 import com.lovejjfg.arsenal.utils.NetWorkUtils;
 import com.lovejjfg.arsenal.utils.ToastUtil;
 import com.squareup.leakcanary.LeakCanary;
@@ -36,18 +37,23 @@ public class App extends Application {
 
     public static File CACHE_DIRECTORY;
     public static NetWorkUtils NETWORK_UTILS;
+    private static App APP;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
+        APP = this;
         LeakCanary.install(this);
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
         strategy.setAppChannel(BuildConfig.CHANNEL);
         CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY, BuildConfig.IS_DEBUG, strategy);
-
         CACHE_DIRECTORY = new File(getApplicationContext().getCacheDir(), "responses");
         NETWORK_UTILS = NetWorkUtils.getsInstance(this);
         ToastUtil.initToast(getApplicationContext());
     }
 
+    public static App getInstance() {
+        return APP;
+    }
 }

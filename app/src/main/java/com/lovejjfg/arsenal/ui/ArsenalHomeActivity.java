@@ -20,16 +20,18 @@ package com.lovejjfg.arsenal.ui;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.lovejjfg.arsenal.R;
+import com.lovejjfg.arsenal.api.mode.SearchInfo;
 import com.lovejjfg.arsenal.base.SupportActivity;
 import com.lovejjfg.arsenal.utils.JumpUtils;
+import com.lovejjfg.arsenal.utils.LiteOrmHelper;
 import com.lovejjfg.arsenal.utils.TagUtils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -62,12 +64,16 @@ public class ArsenalHomeActivity extends SupportActivity {
             @Override
             public void onSearchViewShown() {
                 String[] strings = TagUtils.getTagArray();
-                if (strings !=null) {
+                if (strings != null && strings.length > 0) {
 //                String[] stringArray = MainActivity.this.getResources().getStringArray(R.array.query_suggestions);
                     searchView.setSuggestions(strings, title -> {
                         searchView.closeSearch();
                         String s = TagUtils.getTagValue(title);
-                        JumpUtils.jumpToSearchList(searchView.getContext(),title, "/tag/" + s);
+                        if (TextUtils.isEmpty(s)) {
+                            JumpUtils.jumpToSearchList(searchView.getContext(), title);
+                        } else {
+                            JumpUtils.jumpToSearchList(searchView.getContext(), title, "/tag/" + s);
+                        }
                     });
                 }
 
@@ -93,6 +99,8 @@ public class ArsenalHomeActivity extends SupportActivity {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                SearchInfo searchInfo = new SearchInfo(query, ArsenalListInfoFragment.TYPE_SEARCH, null);
+                TagUtils.save(searchInfo);
                 searchView.closeSearch();
                 JumpUtils.jumpToSearchList(ArsenalHomeActivity.this, query);
                 return false;

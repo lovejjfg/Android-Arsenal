@@ -36,11 +36,11 @@ import retrofit2.adapter.rxjava.HttpException;
 
 public class ErrorUtil {
 
-    private static final SparseArray<String> map;
+    private static final SparseArray<String> MAP;
 
     static {
-        map = new SparseArray<>();
-        map.put(504, "Please make sure the network connection!");
+        MAP = new SparseArray<>();
+        MAP.put(504, "Please make sure the network connection!");
     }
 
 
@@ -49,7 +49,7 @@ public class ErrorUtil {
         view.showErrorView();
         if (throwable instanceof HttpException) {
             int code = ((HttpException) throwable).code();
-            String s = map.get(code);
+            String s = MAP.get(code);
             if (!TextUtils.isEmpty(s)) {
                 if (showToast) {
                     view.showToast(s);

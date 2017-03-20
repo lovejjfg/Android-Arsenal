@@ -33,8 +33,8 @@ import rx.subscriptions.CompositeSubscription;
  * Email lovejjfg@gmail.com
  */
 
-public class RxBus {
-    private static volatile RxBus mInstance;
+public final class RxBus {
+    private static volatile RxBus INSTANCE;
     private final SerializedSubject<Object, Object> mSubject;
     private HashMap<String, CompositeSubscription> mSubscriptionMap;
 
@@ -43,14 +43,14 @@ public class RxBus {
     }
 
     public static RxBus getInstance() {
-        if (mInstance == null) {
+        if (INSTANCE == null) {
             synchronized (RxBus.class) {
-                if (mInstance == null) {
-                    mInstance = new RxBus();
+                if (INSTANCE == null) {
+                    INSTANCE = new RxBus();
                 }
             }
         }
-        return mInstance;
+        return INSTANCE;
     }
 
     /**
@@ -100,6 +100,7 @@ public class RxBus {
 
     /**
      * 保存订阅后的subscription
+     *
      * @param o
      * @param subscription
      */
@@ -119,6 +120,7 @@ public class RxBus {
 
     /**
      * 取消订阅
+     *
      * @param o
      */
     public void unSubscribe(Object o) {
@@ -127,7 +129,7 @@ public class RxBus {
         }
 
         String key = o.toString();
-        if (!mSubscriptionMap.containsKey(key)){
+        if (!mSubscriptionMap.containsKey(key)) {
             return;
         }
         if (mSubscriptionMap.get(key) != null) {

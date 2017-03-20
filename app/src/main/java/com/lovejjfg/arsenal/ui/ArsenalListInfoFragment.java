@@ -22,12 +22,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
+import com.lovejjfg.arsenal.api.mode.SearchInfo;
 import com.lovejjfg.arsenal.base.BaseFragment;
 import com.lovejjfg.arsenal.ui.contract.HomeListInfoPresenter;
 import com.lovejjfg.arsenal.ui.contract.ListInfoContract;
@@ -43,6 +45,8 @@ import com.lovejjfg.powerrecycle.AdapterLoader;
 import com.lovejjfg.powerrecycle.PowerRecyclerView;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -151,8 +155,17 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
         listInfoAdapter.setTotalCount(Integer.MAX_VALUE);
         listInfoAdapter.setList(info.getInfos());
         mRecyclerView.getRecycle().scrollToPosition(0);
-        TagUtils.initTags(info.getTags());
-//        mArsenalListInfo = info;
+        if (!TagUtils.isSaveTag(info.getTags().size())) {
+            Set<Map.Entry<String, String>> entries = info.getTags().entrySet();
+            ArrayList<SearchInfo> infos = new ArrayList<>();
+            for (Map.Entry<String, String> entry : entries) {
+                infos.add(new SearchInfo(entry.getKey(), TYPE_SEARCH_TAG, entry.getValue()));
+            }
+            int save = TagUtils.save(infos);
+            Log.e("TAG", "插入成功: " + save);
+        } else {
+            Log.e("TAG", "已经是最新的！！ ");
+        }
     }
 
     @Override
