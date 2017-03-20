@@ -38,7 +38,7 @@
             android:background="?colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:title="Arsenal"
+            app:title="@string/app_name"
             />
 
     </android.support.design.widget.AppBarLayout>

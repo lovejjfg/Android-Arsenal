@@ -90,7 +90,7 @@
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways|snap|enterAlwaysCollapsed"
                 app:navigationIcon="?homeAsUpIndicator"
-                app:title="Arsenal"
+                app:title="@string/app_name"
                 app:titleMarginTop="16dp"
                 />
 
