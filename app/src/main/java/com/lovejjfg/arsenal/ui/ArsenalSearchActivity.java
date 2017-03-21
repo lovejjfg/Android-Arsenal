@@ -18,15 +18,12 @@
 package com.lovejjfg.arsenal.ui;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.transition.TransitionManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.SearchInfo;
@@ -88,15 +85,15 @@ public class ArsenalSearchActivity extends SupportActivity implements View.OnCli
             @Override
             public void onSearchViewClosed() {
                 //Do some magic
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    TransitionManager.beginDelayedTransition((ViewGroup) mToolbar.getParent());
-                }
-                mToolbar.setVisibility(View.VISIBLE);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                    TransitionManager.beginDelayedTransition((ViewGroup) mToolbar.getParent(), new Fade(Fade.IN));
+//                }
+//                mToolbar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onSearchViewAnimationStart() {
-                mToolbar.setVisibility(View.GONE);
+//                mToolbar.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -130,9 +127,24 @@ public class ArsenalSearchActivity extends SupportActivity implements View.OnCli
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
-        final MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(myActionMenuItem);
+//        final MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                if (searchView.getMenuItem() == null) {
+                    View searchMenuView = mToolbar.findViewById(R.id.action_search);
+                    searchView.setMenuItem(searchMenuView);
+                }
+                if (!searchView.isSearchOpen()) {
+                    searchView.showSearch();
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

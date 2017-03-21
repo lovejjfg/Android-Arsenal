@@ -121,8 +121,7 @@ public class ArsenalHomeActivity extends SupportActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        final MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(myActionMenuItem);
+//        final MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
         return true;
     }
 
@@ -132,6 +131,16 @@ public class ArsenalHomeActivity extends SupportActivity {
             case R.id.action_about:
                 JumpUtils.jumpToAbout(this);
                 break;
+            case R.id.action_search:
+                if (searchView.getMenuItem() == null) {
+                    View searchMenuView = mToolbar.findViewById(R.id.action_search);
+                    searchView.setMenuItem(searchMenuView);
+                }
+                if (!searchView.isSearchOpen()) {
+                    searchView.showSearch();
+                }
+                break;
+
         }
         return super.onOptionsItemSelected(item);
 

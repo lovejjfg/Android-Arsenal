@@ -18,10 +18,8 @@
 package com.lovejjfg.arsenal.base;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.lovejjfg.arsenal.BuildConfig;
-import com.lovejjfg.arsenal.utils.LiteOrmHelper;
 import com.lovejjfg.arsenal.utils.NetWorkUtils;
 import com.lovejjfg.arsenal.utils.ToastUtil;
 import com.squareup.leakcanary.LeakCanary;

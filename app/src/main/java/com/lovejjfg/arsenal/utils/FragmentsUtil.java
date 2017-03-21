@@ -54,10 +54,10 @@ public class FragmentsUtil {
 
     }
 
-    public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... childs) {
+    public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... children) {
         FragmentTransaction transaction = parent.getChildFragmentManager().beginTransaction();
-        if (childs != null && childs.length > 0) {
-            addFragmentsToStack(containerViewId, pos, transaction, false, childs);
+        if (children != null && children.length > 0) {
+            addFragmentsToStack(containerViewId, pos, transaction, false, children);
         }
     }
 

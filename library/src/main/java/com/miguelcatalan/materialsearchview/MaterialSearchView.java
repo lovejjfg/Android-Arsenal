@@ -1,20 +1,3 @@
-/*
- *  Copyright (c) 2017.  Joe
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- */
-
 package com.miguelcatalan.materialsearchview;
 
 import android.app.Activity;
@@ -37,8 +20,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -64,7 +47,7 @@ import java.util.List;
 public class MaterialSearchView extends FrameLayout implements Filter.FilterListener {
     public static final int REQUEST_VOICE = 9999;
 
-    private MenuItem mMenuItem;
+    private View mMenuItem;
     private boolean mIsSearchOpen = false;
     private int mAnimationDuration;
     private boolean mClearingFocus;
@@ -429,7 +412,10 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     public void setSuggestions(String[] suggestions, SuggestionsListCallBack callBack) {
         if (suggestions != null && suggestions.length > 0) {
             addCallBack(callBack);
-            mTintView.setVisibility(VISIBLE);
+//            mTintView.setVisibility(VISIBLE);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                ViewAnimationUtils.createCircularReveal(mTintView, mTintView.getMeasuredWidth(), 0, 100, 1000).start();
+//            }
             final SearchAdapter adapter = new SearchAdapter(mContext, suggestions, suggestionIcon, ellipsize);
             setAdapter(adapter);
 
@@ -442,7 +428,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
                 }
             });
         } else {
-            mTintView.setVisibility(GONE);
+//            mTintView.setVisibility(GONE);
         }
     }
 
@@ -468,6 +454,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     public void dismissSuggestions() {
         if (mSuggestionsListView.getVisibility() == VISIBLE) {
             mSuggestionsListView.setVisibility(GONE);
+            mTintView.setVisibility(GONE);
         }
     }
 
@@ -507,15 +494,18 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
      *
      * @param menuItem
      */
-    public void setMenuItem(MenuItem menuItem) {
+    public void setMenuItem(View menuItem) {
         this.mMenuItem = menuItem;
-        mMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                showSearch();
-                return true;
-            }
-        });
+//        mMenuItem.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showSearch();
+//            }
+//        });
+    }
+
+    public View getMenuItem() {
+        return mMenuItem;
     }
 
     /**
@@ -595,6 +585,13 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mSearchLayout.setVisibility(View.VISIBLE);
+            mTintView.setVisibility(VISIBLE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                int[] location = new int[2];
+                mMenuItem.getLocationOnScreen(location);
+                ViewAnimationUtils.createCircularReveal(mTintView, (int) (location[0] + mMenuItem.getWidth() * 0.5f),
+                        (int) (location[1] + mMenuItem.getHeight() * 0.5f), 0, 1000).start();
+            }
             AnimationUtil.reveal(mSearchTopBar, animationListener);
 
         } else {
