@@ -79,6 +79,9 @@ android {
         }
     }
     productFlavors {
+        github {
+            buildConfigField "String", "CHANNEL", '"github"'
+        }
         dev {
             buildConfigField "String", "CHANNEL", '"dev"'
         }
@@ -87,9 +90,6 @@ android {
         }
         google {
             buildConfigField "String", "CHANNEL", '"google"'
-        }
-        github {
-            buildConfigField "String", "CHANNEL", '"github"'
         }
         meizu {
             buildConfigField "String", "CHANNEL", '"meizu"'

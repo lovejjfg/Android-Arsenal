@@ -1,7 +1,24 @@
+<!--
+  ~  Copyright (c) 2017.  Joe
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  ~
+  -->
+
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -9,13 +26,19 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="AppTheme.TransparentStatusBar">
 
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:colorBackground">#fff</item>
+        <item name="android:textColor">@color/text_primary_dark</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:actionMenuTextColor">@color/colorAccent</item>
+    </style>
 
     <style name="Text">
         <item name="android:layout_width">wrap_content</item>
@@ -37,6 +60,7 @@
         <item name="android:textSize">@dimen/text_small</item>
 
     </style>
+
     <style name="Text.calendar">
         <item name="android:textColor">#666666</item>
         <item name="android:textSize">@dimen/text_small</item>
@@ -65,6 +89,7 @@
         <item name="android:textSize">@dimen/text_small</item>
         <item name="android:textColor">@color/text_primary_light</item>
     </style>
+
     <style name="Text.Content.Hint">
         <item name="android:gravity">center</item>
         <item name="android:maxLines">1</item>

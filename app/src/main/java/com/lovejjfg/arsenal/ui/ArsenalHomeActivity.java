@@ -84,12 +84,12 @@ public class ArsenalHomeActivity extends SupportActivity {
                     TransitionManager.beginDelayedTransition((ViewGroup) mToolbar.getParent());
                 }
                 //Do some magic
-                mToolbar.setVisibility(View.VISIBLE);
+//                mToolbar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onSearchViewAnimationStart() {
-                mToolbar.setVisibility(View.GONE);
+//                mToolbar.setVisibility(View.GONE);
             }
         });
 
