@@ -21,6 +21,8 @@ apply plugin: 'findbugs'
 apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 apply plugin: 'AndResGuard'
+apply plugin: 'com.google.gms.google-services'
+
 
 android {
 
@@ -94,6 +96,9 @@ android {
         meizu {
             buildConfigField "String", "CHANNEL", '"meizu"'
         }
+        meizu {
+            buildConfigField "String", "CHANNEL", '"meizu"'
+        }
     }
     compileOptions {
         targetCompatibility 1.8
@@ -110,9 +115,6 @@ dependencies {
     compile 'com.lovejjfg.powerrecycle:powerrecycle:1.0.6'
     compile 'io.reactivex:rxjava:1.1.1'
     compile 'io.reactivex:rxandroid:1.1.0'
-//    compile 'com.google.code.gson:gson:2.4'
-
-
     compile "com.android.support:appcompat-v7:${SUPPORT_V7_VERSION}"
 //    compile "com.android.support:palette-v7:${SUPPORT_V7_VERSION}"
     compile "com.android.support:design:${SUPPORT_V7_VERSION}"
@@ -132,6 +134,7 @@ dependencies {
     //bugly
     compile 'com.tencent.bugly:crashreport:latest.release'
 
+    compile 'com.google.android.gms:play-services-analytics:9.0.0'
     testCompile "org.powermock:powermock-module-junit4:1.6.2"
     testCompile "org.powermock:powermock-module-junit4-rule:1.6.2"
     testCompile "org.powermock:powermock-api-mockito:1.6.2"

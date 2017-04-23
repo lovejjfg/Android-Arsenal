@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.analytics.HitBuilders;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.SearchInfo;
 import com.lovejjfg.arsenal.base.SupportActivity;
@@ -114,6 +115,14 @@ public class ArsenalHomeActivity extends SupportActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        // Set screen name.
+        mTracker.setScreenName("HomeActivity");
+
+    }
+
+    @Override
     public int initLayoutRes() {
         return R.layout.activity_main;
     }
@@ -129,6 +138,12 @@ public class ArsenalHomeActivity extends SupportActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_about:
+                // [START custom_event]
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("About")
+                        .build());
+                // [END custom_event]
                 JumpUtils.jumpToAbout(this);
                 break;
             case R.id.action_search:
@@ -137,10 +152,15 @@ public class ArsenalHomeActivity extends SupportActivity {
                     searchView.setMenuItem(searchMenuView);
                 }
                 if (!searchView.isSearchOpen()) {
+                    // [START custom_event]
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Action")
+                            .setAction("Search")
+                            .build());
+                    // [END custom_event]
                     searchView.showSearch();
                 }
                 break;
-
         }
         return super.onOptionsItemSelected(item);
 

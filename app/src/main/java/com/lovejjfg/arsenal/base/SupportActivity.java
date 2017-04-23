@@ -30,6 +30,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 
+import com.google.android.gms.analytics.Tracker;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.utils.FragmentsUtil;
 import com.lovejjfg.arsenal.utils.KeyBoardUtil;
@@ -49,6 +50,8 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
     ProgressDialog progressDialog;
     @Nullable
     private Toolbar mToolbar;
+
+    public Tracker mTracker;
 
     @Override
     public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... children) {
@@ -72,6 +75,7 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
             getWindow().setExitTransition(new Slide(Gravity.LEFT));
         }
         super.onCreate(savedInstanceState);
+        mTracker = ((App) getApplication()).getDefaultTracker();
         progressDialog = new ProgressDialog(this);
         fragmentsUtil = new FragmentsUtil(getSupportFragmentManager());
         setContentView(initLayoutRes());

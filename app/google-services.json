@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "861646488530",
+    "project_id": "firebase-arsenal"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:861646488530:android:d03480b9a9275697",
+        "android_client_info": {
+          "package_name": "com.lovejjfg.arsenal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdmqFI2uwMP7962pp5mtInmX14_nnC81E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-97835230-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

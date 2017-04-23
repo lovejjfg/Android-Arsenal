@@ -71,7 +71,13 @@ public class ExampleUnitTest {
      */
     @Test
     public void testJsoup() throws IOException {
-        Document document = Jsoup.connect("https://android-arsenal.com").get();
+        Document document = Jsoup.connect("https://android-arsenal.com")
+                .timeout(5000)
+                .cookie("cookie", "cxxx")
+                .header("xx", "xx")
+                .userAgent("")
+                .get();
+
 //        Elements select = document.select("div.container.content");
 
         Elements select = document.select("div.project-info.clearfix");
