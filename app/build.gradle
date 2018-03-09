@@ -51,9 +51,9 @@ android {
     signingConfigs {
         release {
             storeFile file("../arsenal.jks")
-            storePassword "886520"
-            keyAlias "Arsenal"
-            keyPassword "886520"
+            storePassword gradle.password
+            keyAlias gradle.keyAlias
+            keyPassword gradle.password
         }
         debug {
             storeFile file("../debug.keystore")
