@@ -21,6 +21,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.lovejjfg.arsenal.R;
+import com.lovejjfg.arsenal.base.App;
 import com.lovejjfg.arsenal.base.ArsenalException;
 import com.lovejjfg.arsenal.base.IBaseView;
 
@@ -40,7 +42,7 @@ public class ErrorUtil {
 
     static {
         MAP = new SparseArray<>();
-        MAP.put(504, "Please make sure the network connection!");
+        MAP.put(504, App.getInstance().getString(R.string.no_internet));
     }
 
 
@@ -67,7 +69,7 @@ public class ErrorUtil {
             return;
         }
         if (throwable instanceof UnknownHostException || throwable instanceof SocketTimeoutException) {
-            view.showToast("Network connection timeout!");
+            view.showToast(R.string.time_out_hint);
         }
         Log.e("unHandle", "handleError: " + throwable.toString());
 

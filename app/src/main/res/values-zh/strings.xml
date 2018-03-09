@@ -26,5 +26,7 @@
         这不是官方的客户端 \n
  </string>
     <string name="libs_used">使用到的开源项目:</string>
+    <string name="time_out_hint">网络连接超时!</string>
+    <string name="no_internet">请确认网络连接</string>
 
 </resources>

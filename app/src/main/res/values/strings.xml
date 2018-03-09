@@ -25,4 +25,6 @@
         This is not the official client \n
  </string>
     <string name="libs_used">The open source projects used:</string>
+    <string name="no_internet">Please make sure the network connection!</string>
+    <string name="time_out_hint">Network connection timeout!</string>
 </resources>
