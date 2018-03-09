@@ -35,7 +35,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|snap"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
             app:titleEnabled="false">
 
             <RelativeLayout
@@ -88,7 +88,7 @@
                 android:gravity="top"
                 android:minHeight="?actionBarSize"
                 app:layout_collapseMode="pin"
-                app:layout_scrollFlags="scroll|enterAlways|snap|enterAlwaysCollapsed"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                 app:navigationIcon="?homeAsUpIndicator"
                 app:title="@string/app_name"
                 app:titleMarginTop="16dp"

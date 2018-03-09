@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_scrollFlags="scroll|enterAlways|snap">
+            app:layout_scrollFlags="scroll|enterAlways">
 
 
             <android.support.v7.widget.Toolbar
@@ -45,7 +45,7 @@
                 android:layout_height="?actionBarSize"
                 android:background="?colorPrimary"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:layout_scrollFlags="scroll|enterAlways"
                 app:navigationIcon="?homeAsUpIndicator"
                 app:title="Arsenal"
                 />

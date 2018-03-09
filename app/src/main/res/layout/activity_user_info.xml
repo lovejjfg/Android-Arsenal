@@ -37,7 +37,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|snap|exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|exitUntilCollapsed"
             app:titleEnabled="false">
 
             <RelativeLayout
@@ -153,7 +153,7 @@
                 android:minHeight="?actionBarSize"
                 app:collapseIcon="@mipmap/ic_launcher"
                 app:layout_collapseMode="pin"
-                app:layout_scrollFlags="scroll|enterAlways|snap|enterAlwaysCollapsed"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                 app:navigationIcon="?homeAsUpIndicator"
                 app:title="lovejjfg"
                 app:titleMarginTop="16dp"
@@ -171,7 +171,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:layout_gravity="bottom"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:layout_scrollFlags="scroll|enterAlways"
                 />
 
         </android.support.design.widget.CollapsingToolbarLayout>
