@@ -16,23 +16,23 @@
 
 package com.lovejjfg.arsenal.utils.glide;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
 
 /**
  * Created by http://stackoverflow.com/a/25806229/409481
  */
 public class CircleTransform extends BitmapTransformation {
-
-    public CircleTransform(Context context) {
-        super(context);
-    }
+    private static final String ID = CircleTransform.class.getName();
 
     private static Bitmap circleCrop(BitmapPool pool, Bitmap source) {
         if (source == null) return null;
@@ -61,12 +61,28 @@ public class CircleTransform extends BitmapTransformation {
     }
 
     @Override
-    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
         return circleCrop(pool, toTransform);
     }
 
     @Override
-    public String getId() {
-        return getClass().getName();
+    public boolean equals(Object o) {
+        return o instanceof CircleTransform;
     }
+
+    @Override
+    public int hashCode() {
+        return ID.hashCode();
+    }
+
+    @Override
+    public void updateDiskCacheKey(MessageDigest messageDigest) {
+        try {
+            byte[] bytes = ID.getBytes(STRING_CHARSET_NAME);
+            messageDigest.update(bytes);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

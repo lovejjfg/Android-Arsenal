@@ -27,7 +27,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
@@ -35,32 +34,33 @@ import com.lovejjfg.arsenal.base.SupportActivity;
 import com.lovejjfg.arsenal.base.SupportFragment;
 import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.arsenal.utils.glide.CircleTransform;
+import com.lovejjfg.readhub.utils.glide.GlideApp;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ArsenalUserInfoActivity extends SupportActivity implements View.OnClickListener {
     private static final String TAG = ArsenalUserInfoActivity.class.getSimpleName();
     public static final String USER_INFO = "UserInfo";
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolBar;
-    @Bind(R.id.iv_img)
+    @BindView(R.id.iv_img)
     ImageView mIvPortrait;
-    @Bind(R.id.tv_name)
+    @BindView(R.id.tv_name)
     TextView mTvLocation;
-    @Bind(R.id.tv_flowers)
+    @BindView(R.id.tv_flowers)
     TextView mTvFlowers;
-    @Bind(R.id.tv_flowing)
+    @BindView(R.id.tv_flowing)
     TextView mTvFlowing;
-    @Bind(R.id.tv_site)
+    @BindView(R.id.tv_site)
     TextView mTvSite;
-    @Bind(R.id.tv_repo)
+    @BindView(R.id.tv_repo)
     TextView mTvRepo;
-    @Bind(R.id.tabs)
+    @BindView(R.id.tabs)
     TabLayout mTabs;
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager mViewpager;
     private CircleTransform circleTransform;
     private ArsenalUserInfo mInfo;
@@ -69,7 +69,7 @@ public class ArsenalUserInfoActivity extends SupportActivity implements View.OnC
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         mToolBar.setNavigationOnClickListener(this);
-        circleTransform = new CircleTransform(this);
+        circleTransform = new CircleTransform();
         if (savedInstanceState == null) {
             mInfo = getIntent().getParcelableExtra(USER_INFO);
         } else {
@@ -84,7 +84,7 @@ public class ArsenalUserInfoActivity extends SupportActivity implements View.OnC
     }
 
     private void refreshUI(ArsenalUserInfo info) {
-        Glide.with(ArsenalUserInfoActivity.this)
+        GlideApp.with(ArsenalUserInfoActivity.this)
                 .load(info.getPortraitUrl())
                 .error(R.mipmap.ic_launcher)
                 .transform(circleTransform)

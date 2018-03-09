@@ -39,25 +39,27 @@ import com.lovejjfg.arsenal.base.SupportActivity;
 import com.lovejjfg.arsenal.utils.Constants;
 import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.arsenal.utils.glide.CircleTransform;
+import com.lovejjfg.readhub.utils.glide.GlideApp;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ArsenalDetailInfoActivity extends SupportActivity implements View.OnClickListener {
     public static final String INFO = "info";
-    @Bind(R.id.web_view)
+    @BindView(R.id.web_view)
     WebView mWeb;
-    @Bind(R.id.iv_img)
+    @BindView(R.id.iv_img)
     ImageView mIv;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolBar;
-    @Bind(R.id.tv_name)
+    @BindView(R.id.tv_name)
     TextView mTvName;
-    @Bind(R.id.tv_site)
+    @BindView(R.id.tv_site)
     TextView mTvSite;
-    @Bind(R.id.tv_language)
+    @BindView(R.id.tv_language)
     TextView mTvLanguage;
-    @Bind(R.id.tv_updated)
+    @BindView(R.id.tv_updated)
     TextView mTvUpdated;
     private CircleTransform mCircleTransform;
     private ArsenalDetailInfo mDetailInfo;
@@ -72,7 +74,7 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
         } else {
             mDetailInfo = savedInstanceState.getParcelable(INFO);
         }
-        mCircleTransform = new CircleTransform(this);
+        mCircleTransform = new CircleTransform();
         mWeb.setVerticalScrollBarEnabled(false);
         mWeb.setHorizontalScrollBarEnabled(false);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -107,7 +109,7 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
         mTvSite.setText(detailInfo.getLink());
         String portraitUrl = detailInfo.getPortraitUrl();
         if (!TextUtils.isEmpty(portraitUrl)) {
-            Glide.with(this)
+            GlideApp.with(this)
                     .load(portraitUrl)
                     .error(R.mipmap.ic_launcher)
                     .transform(mCircleTransform)

@@ -48,7 +48,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -70,9 +71,9 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
     public static final int TYPE_SEARCH = 1;
     public static final int TYPE_SEARCH_TAG = 2;
     public static final int TYPE_USER_DETAIL = 3;
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     PowerRecyclerView mRecyclerView;
-    @Bind(R.id.iv_error)
+    @BindView(R.id.iv_error)
     ImageView mIvError;
     private ArsenalListInfoAdapter listInfoAdapter;
     private int mType;

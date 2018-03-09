@@ -35,15 +35,15 @@ import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.arsenal.utils.TagUtils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ArsenalHomeActivity extends SupportActivity {
     private static final String TAG = ArsenalHomeActivity.class.getSimpleName();
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.search_view)
+    @BindView(R.id.search_view)
     MaterialSearchView searchView;
 
     @Override

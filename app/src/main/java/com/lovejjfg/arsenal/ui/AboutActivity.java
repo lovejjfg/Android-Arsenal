@@ -35,22 +35,24 @@ import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.arsenal.utils.glide.CircleTransform;
 import com.lovejjfg.powerrecycle.AdapterLoader;
 import com.lovejjfg.powerrecycle.PowerAdapter;
+import com.lovejjfg.readhub.utils.glide.GlideApp;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AboutActivity extends SupportActivity implements AdapterLoader.OnItemClickListener {
 
-    @Bind(R.id.tv_site)
+    @BindView(R.id.tv_site)
     TextView mTvSite;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolBar;
-    @Bind(R.id.iv_img)
+    @BindView(R.id.iv_img)
     ImageView mIv;
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     private AboutAdapter aboutAdapter;
 
@@ -64,8 +66,8 @@ public class AboutActivity extends SupportActivity implements AdapterLoader.OnIt
         mRecyclerView.setAdapter(aboutAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         aboutAdapter.setOnItemClickListener(this);
-        Glide.with(this).load(R.mipmap.ic_launcher)
-                .transform(new CircleTransform(this))
+        GlideApp.with(this).load(R.mipmap.ic_launcher)
+                .transform(new CircleTransform())
                 .into(mIv);
 
 
@@ -157,9 +159,9 @@ public class AboutActivity extends SupportActivity implements AdapterLoader.OnIt
     }
 
     static class AboutHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_name)
+        @BindView(R.id.tv_name)
         TextView mTitle;
-        @Bind(R.id.tv_des)
+        @BindView(R.id.tv_des)
         TextView mDes;
 
         public AboutHolder(View itemView) {

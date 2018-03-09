@@ -102,7 +102,7 @@ class ArsenalConverterFactory extends Converter.Factory {
         public ArsenalListInfo convert(ResponseBody value) throws IOException {
             Document parse = Jsoup.parse(value.string(), HOST);
             final Elements listElements =
-                    parse.select("div.project-info.clearfix");
+                    parse.body().select("div.pi");
             final Elements script =
                     parse.select("script");
             HashMap<String, String> hashMap = null;
@@ -237,8 +237,7 @@ class ArsenalConverterFactory extends Converter.Factory {
                 ArsenalDetailInfo info = new ArsenalDetailInfo();
 
                 Element h1 = document.select("h1").first();
-                Element ssa = h1.select("a#favoriteButton").first();
-                Element element = ssa.nextElementSibling();
+                Element element = h1.select("a").first();
                 String title = element.text();
                 String href = element.attr("href");
                 info.setTitle(title);

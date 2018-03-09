@@ -17,18 +17,19 @@
 
 package com.lovejjfg.arsenal.utils.glide;
 
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 /**
  * A Glide {@see ViewTarget} for {@link ImageView}s. It applies a badge for animated
  * images, can prevent GIFs from auto-playing & applies a palette generated ripple.
  */
-public class ImageTarget extends GlideDrawableImageViewTarget {
+public class ImageTarget extends DrawableImageViewTarget {
 
 
     private final float density;
@@ -39,8 +40,7 @@ public class ImageTarget extends GlideDrawableImageViewTarget {
     }
 
     @Override
-    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable>
-            animation) {
+    public void onResourceReady(Drawable resource, @Nullable Transition<? super Drawable> transition) {
         ImageView badgedImageView = getView();
         int intrinsicWidth = resource.getIntrinsicWidth();
         int intrinsicHeight = resource.getIntrinsicHeight();
@@ -70,7 +70,7 @@ public class ImageTarget extends GlideDrawableImageViewTarget {
             layoutParams.width = intrinsicWidth;
         }
         badgedImageView.setLayoutParams(layoutParams);
-        super.onResourceReady(resource, animation);
+        super.onResourceReady(resource, transition);
     }
 
 }

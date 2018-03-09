@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
@@ -34,8 +33,9 @@ import com.lovejjfg.arsenal.ui.contract.ListInfoContract;
 import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.arsenal.utils.glide.ImageTarget;
 import com.lovejjfg.powerrecycle.PowerAdapter;
+import com.lovejjfg.readhub.utils.glide.GlideApp;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInfo> {
@@ -65,25 +65,25 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
     }
 
     static final class ArsenalListInfoHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_name)
+        @BindView(R.id.tv_name)
         TextView title;
-        @Bind(R.id.tv_tag)
+        @BindView(R.id.tv_tag)
         TextView tag;
-        @Bind(R.id.tv_free)
+        @BindView(R.id.tv_free)
         TextView badgeFree;
-        @Bind(R.id.tv_new)
+        @BindView(R.id.tv_new)
         TextView badgeNew;
-        @Bind(R.id.tv_des)
+        @BindView(R.id.tv_des)
         TextView desc;
-        @Bind(R.id.iv_img)
+        @BindView(R.id.iv_img)
         ImageView img;
-        @Bind(R.id.ll_container)
+        @BindView(R.id.ll_container)
         LinearLayout mContainer;
-        @Bind(R.id.tv_date)
+        @BindView(R.id.tv_date)
         TextView registeredDate;
-        @Bind(R.id.iv_android)
+        @BindView(R.id.iv_android)
         ImageView ivAndroid;
-        @Bind(R.id.tv_user)
+        @BindView(R.id.tv_user)
         TextView tvUser;
         private final ListInfoContract.Presenter mPresenter;
         private ArsenalListInfo.ListInfo mListInfo;
@@ -106,9 +106,9 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
             initView(desc, infoDesc);
             if (!TextUtils.isEmpty(info.getImgUrl())) {
                 img.setVisibility(View.VISIBLE);
-                Glide.with(img.getContext())
+                GlideApp.with(img.getContext())
                         .load(info.getImgUrl())
-                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                         .into(mTarget);
             } else {
                 img.setVisibility(View.GONE);

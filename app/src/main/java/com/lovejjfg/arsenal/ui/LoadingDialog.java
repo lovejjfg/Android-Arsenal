@@ -27,7 +27,7 @@ import android.view.ViewGroup;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.ui.widget.JumpBall;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
 
 public class LoadingDialog extends DialogFragment implements JumpBall.onDismissListener {
 
-    @Bind(R.id.jump_ball)
+    @BindView(R.id.jump_ball)
     JumpBall mJumpBall;
     private DismissListener dismissListener;
 

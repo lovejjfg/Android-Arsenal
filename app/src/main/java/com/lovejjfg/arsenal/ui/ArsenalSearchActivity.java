@@ -34,14 +34,15 @@ import com.lovejjfg.arsenal.utils.rxbus.RxBus;
 import com.lovejjfg.arsenal.utils.rxbus.SearchEvent;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ArsenalSearchActivity extends SupportActivity implements View.OnClickListener {
     private static final String TAG = ArsenalSearchActivity.class.getSimpleName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.search_view)
+    @BindView(R.id.search_view)
     MaterialSearchView searchView;
 
     @Override
