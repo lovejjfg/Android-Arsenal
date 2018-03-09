@@ -48,7 +48,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
@@ -109,6 +108,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
         String key = getArguments().getString(KEY);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         listInfoAdapter = new ArsenalListInfoAdapter(mPresenter);
+        listInfoAdapter.setTotalCount(Integer.MAX_VALUE);
         mRecyclerView.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         mRecyclerView.setAdapter(listInfoAdapter);
         mRecyclerView.setOnItemClickListener(this);
@@ -153,7 +153,6 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
     @Override
     public void onRefresh(ArsenalListInfo info) {
         mIvError.setVisibility(View.GONE);
-        listInfoAdapter.setTotalCount(Integer.MAX_VALUE);
         listInfoAdapter.setList(info.getInfos());
         mRecyclerView.getRecycle().scrollToPosition(0);
         if (!TagUtils.isSaveTag(info.getTags().size())) {
@@ -251,6 +250,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        mPresenter.onSaveInstanceState(outState);
         outState.putParcelableArrayList(ARSENAL_LIST_INFO, (ArrayList<ArsenalListInfo.ListInfo>) listInfoAdapter.getList());
         super.onSaveInstanceState(outState);
     }
