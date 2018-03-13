@@ -17,7 +17,6 @@
 
 package com.lovejjfg.arsenal.base;
 
-import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -32,6 +31,7 @@ import android.view.Window;
 
 import com.google.android.gms.analytics.Tracker;
 import com.lovejjfg.arsenal.R;
+import com.lovejjfg.arsenal.ui.LoadingDialog;
 import com.lovejjfg.arsenal.utils.FragmentsUtil;
 import com.lovejjfg.arsenal.utils.KeyBoardUtil;
 import com.lovejjfg.arsenal.utils.ToastUtil;
@@ -47,7 +47,7 @@ import java.util.List;
 public abstract class SupportActivity extends AppCompatActivity implements ISupportFragment, ISupportView {
     @Nullable
     private FragmentsUtil fragmentsUtil;
-    ProgressDialog progressDialog;
+    LoadingDialog progressDialog;
     @Nullable
     private Toolbar mToolbar;
 
@@ -76,7 +76,7 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
         }
         super.onCreate(savedInstanceState);
         mTracker = ((App) getApplication()).getDefaultTracker();
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new LoadingDialog();
         fragmentsUtil = new FragmentsUtil(getSupportFragmentManager());
         setContentView(initLayoutRes());
         try {
@@ -179,12 +179,23 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Override
     public void showLoadingDialog(String msg) {
-        progressDialog.show();
+        try {
+            if (progressDialog.isAdded() || progressDialog.isVisible()) {
+                closeLoadingDialog();
+            }
+            progressDialog.show(getFragmentManager(), "loading");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void closeLoadingDialog() {
-        progressDialog.dismiss();
+        try {
+            progressDialog.dismissAllowingStateLoss();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -25,10 +25,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lovejjfg.arsenal.R;
-import com.lovejjfg.arsenal.ui.widget.JumpBall;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 /**
@@ -36,11 +32,11 @@ import butterknife.ButterKnife;
  * Email lovejjfg@gmail.com
  */
 
-public class LoadingDialog extends DialogFragment implements JumpBall.onDismissListener {
+public class LoadingDialog extends DialogFragment {
 
-    @BindView(R.id.jump_ball)
-    JumpBall mJumpBall;
-    private DismissListener dismissListener;
+//    @BindView(R.id.jump_ball)
+//    JumpBall mJumpBall;
+//    private DismissListener dismissListener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,9 +54,9 @@ public class LoadingDialog extends DialogFragment implements JumpBall.onDismissL
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
-        mJumpBall.setDismissListener(this);
-        mJumpBall.start();
+//        ButterKnife.bind(this, view);
+//        mJumpBall.setDismissListener(this);
+//        mJumpBall.start();
     }
 
     @Override
@@ -73,18 +69,6 @@ public class LoadingDialog extends DialogFragment implements JumpBall.onDismissL
 //        mJumpBall.pause();
     }
 
-    public void finish(DismissListener listener) {
-        dismissListener = listener;
-        mJumpBall.finish();
-    }
-
-    @Override
-    public void onDismiss() {
-        if (dismissListener != null) {
-            dismissListener.onDismissed();
-        }
-        dismiss();
-    }
 
     interface DismissListener {
         void onDismissed();
