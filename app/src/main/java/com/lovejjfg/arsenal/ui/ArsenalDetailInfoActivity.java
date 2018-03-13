@@ -91,7 +91,17 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
         webSettings.setBlockNetworkImage(false);
         webSettings.setDisplayZoomControls(false);
 //        mWeb.setWebViewClient(new WebViewClient());
-        mWeb.setWebChromeClient(new WebChromeClient());
+        mWeb.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress != 100) {
+                    showLoadingDialog("");
+                } else {
+                    closeLoadingDialog();
+                }
+            }
+        });
         mToolBar.setNavigationOnClickListener(this);
 
         initViews(mDetailInfo);

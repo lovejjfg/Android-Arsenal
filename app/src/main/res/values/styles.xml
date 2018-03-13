@@ -98,10 +98,12 @@
     </style>
 
     <style name="AppTheme.AppCompat.Dialog.Alert" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowMinWidthMinor">100%</item>
         <item name="android:windowMinWidthMajor">100%</item>
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="Text_Tag">
