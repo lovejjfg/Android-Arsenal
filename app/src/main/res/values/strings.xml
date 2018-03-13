@@ -16,7 +16,7 @@
   -->
 
 <resources>
-    <string name="app_name">Android Arsenal</string>
+    <string name="app_name">Arsenal</string>
     <string name="title_activity_user_info">UserInfoActivity</string>
     <string name="search_tag_or_name">Search Tag or Name</string>
     <string name="about">About</string>
