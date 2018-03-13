@@ -48,7 +48,7 @@
             android:label="@string/title_activity_user_info"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.TransparentStatusBar">
+            android:theme="@style/AppTheme.TransparentStatusBar.UserInfo">
         </activity>
         <activity
             android:name=".ui.ArsenalSearchActivity"
@@ -56,7 +56,8 @@
         </activity>
         <activity
             android:name=".ui.ArsenalDetailInfoActivity"
-            android:launchMode="singleTask">
+            android:theme="@style/AppTheme.DetailInfo"
+           >
         </activity>
         <activity android:name=".ui.AboutActivity">
         </activity>

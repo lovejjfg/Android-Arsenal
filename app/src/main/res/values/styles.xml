@@ -25,6 +25,15 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowSharedElementsUseOverlay">false</item>
+    </style>
+
+    <style name="AppTheme.DetailInfo">
+        <item name="android:windowAllowEnterTransitionOverlap">false</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/detail_shared_enter</item>
+        <item name="android:windowSharedElementReturnTransition">@transition/detail_shared_return</item>
     </style>
 
     <style name="AppTheme.TransparentStatusBar">

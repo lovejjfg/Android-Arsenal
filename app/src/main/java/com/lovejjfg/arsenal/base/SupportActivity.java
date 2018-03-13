@@ -69,11 +69,6 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-            getWindow().setEnterTransition(new Slide(Gravity.RIGHT));
-            getWindow().setExitTransition(new Slide(Gravity.LEFT));
-        }
         super.onCreate(savedInstanceState);
         mTracker = ((App) getApplication()).getDefaultTracker();
         progressDialog = new LoadingDialog();

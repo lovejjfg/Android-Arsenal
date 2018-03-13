@@ -6,4 +6,11 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="AppTheme.TransparentStatusBar.UserInfo">
+        <item name="android:windowAllowEnterTransitionOverlap">false</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/user_shared_enter</item>
+        <item name="android:windowSharedElementReturnTransition">@transition/detail_shared_return</item>
+
+    </style>
 </resources>

@@ -20,7 +20,6 @@ package com.lovejjfg.arsenal.ui.contract;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.lovejjfg.arsenal.api.DataManager;
@@ -57,7 +56,7 @@ public abstract class BaseListInfoPresenter extends BasePresenterImpl<ListInfoCo
     public void onItemClick(View itemView, ArsenalListInfo.ListInfo info) {
         mView.showLoadingDialog(null);
         DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalDetailInfo(info.getListDetailUrl()), data -> {
-            JumpUtils.jumpToDetail(mView.getContext(), data);
+            JumpUtils.jumpToDetail(mView.getContext(), data, itemView);
             mView.closeLoadingDialog();
         }, this);
     }
