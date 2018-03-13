@@ -18,12 +18,16 @@
 package com.lovejjfg.arsenal.utils;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.util.Pair;
+import android.view.View;
 
+import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalDetailInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
 import com.lovejjfg.arsenal.ui.AboutActivity;
@@ -37,11 +41,15 @@ import com.lovejjfg.arsenal.ui.ArsenalUserInfoActivity;
  * Email lovejjfg@gmail.com
  */
 public class JumpUtils {
-    public static void jumpToUserDetail(Context context, ArsenalUserInfo info) {
+    public static void jumpToUserDetail(Context context, ArsenalUserInfo info, View mView) {
         Intent intent = new Intent(context, ArsenalUserInfoActivity.class);
         intent.putExtra(ArsenalUserInfoActivity.USER_INFO, info);
+        //            ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context), iv, "img");
         if (context instanceof Activity) {
-            ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context));
+            ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(((Activity) context),
+                    Pair.create(((View)mView.getParent()), context.getString(R.string.name_app_bar)),
+                    Pair.create(((View)mView.getParent()), context.getString(R.string.container))
+            );
             ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
         } else {
             context.startActivity(intent);
@@ -74,12 +82,16 @@ public class JumpUtils {
         }
     }
 
-    public static void jumpToDetail(Context context, ArsenalDetailInfo detailUrl) {
+    public static void jumpToDetail(Context context, ArsenalDetailInfo detailUrl, View mView) {
         Intent intent = new Intent(context, ArsenalDetailInfoActivity.class);
         intent.putExtra(ArsenalDetailInfoActivity.INFO, detailUrl);
         if (context instanceof Activity) {
-            ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context));
-            ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
+            ActivityOptions options =
+                    ActivityOptions.makeSceneTransitionAnimation(((Activity) context),
+                            Pair.create(mView, context.getString(R.string.container)),
+                            Pair.create(mView, context.getString(R.string.name_app_bar))
+                    );
+            context.startActivity(intent, options.toBundle());
         } else {
             context.startActivity(intent);
         }

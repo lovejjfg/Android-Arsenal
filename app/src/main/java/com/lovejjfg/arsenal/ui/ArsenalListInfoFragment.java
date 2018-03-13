@@ -175,7 +175,7 @@ public class ArsenalListInfoFragment extends BaseFragment<ListInfoContract.Prese
 
     @Override
     public void jumpToTarget(ArsenalUserInfo userInfo) {
-        JumpUtils.jumpToUserDetail(getActivity(), userInfo);
+        JumpUtils.jumpToUserDetail(getActivity(), userInfo, null);
     }
 
     @Override

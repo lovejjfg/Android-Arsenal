@@ -17,22 +17,26 @@
   -->
 
 <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:transitionName="@string/container"
     >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
+        android:id="@+id/app_bar"
         android:layout_height="@dimen/detail_info_height"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:transitionName="@string/name_app_bar"
+        app:contentScrim="?attr/colorPrimary">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
             app:titleEnabled="false">
 
@@ -47,24 +51,26 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="?actionBarSize"
                     android:scaleType="centerCrop"
-                    tools:background="@mipmap/ic_launcher"
-                    app:layout_collapseMode="parallax"/>
+                    app:layout_collapseMode="parallax"
+                    tools:background="@mipmap/ic_launcher"/>
+
                 <TextView
                     android:id="@+id/tv_name"
                     style="@style/Text.Content"
                     android:layout_below="@id/iv_img"
                     android:layout_centerHorizontal="true"
-                    android:paddingTop="@dimen/normal_margin_padding"
                     android:paddingBottom="@dimen/normal_margin_padding"
+                    android:paddingTop="@dimen/normal_margin_padding"
                     tools:text="Joe"/>
+
                 <TextView
                     android:id="@+id/tv_site"
                     style="@style/Text.Content"
                     android:layout_below="@id/tv_name"
                     android:layout_centerHorizontal="true"
                     android:background="?selectableItemBackground"
-                    android:paddingTop="@dimen/normal_margin_padding"
                     android:paddingBottom="@dimen/normal_margin_padding"
+                    android:paddingTop="@dimen/normal_margin_padding"
                     tools:text="lovejjfg.giyhub.com"/>
 
 
@@ -103,8 +109,8 @@
 
                         <TextView
                             style="@style/Text.Content.Hint"
-                            android:text="Updated "
                             android:gravity="right"
+                            android:text="Updated "
                             />
 
                         <TextView
@@ -126,6 +132,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
+                android:transitionName="@string/title"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:navigationIcon="?homeAsUpIndicator"

@@ -31,7 +31,6 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.DataManager;
 import com.lovejjfg.arsenal.api.mode.ArsenalDetailInfo;
@@ -40,7 +39,6 @@ import com.lovejjfg.arsenal.utils.Constants;
 import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.arsenal.utils.glide.CircleTransform;
 import com.lovejjfg.readhub.utils.glide.GlideApp;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,7 +89,7 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
         webSettings.setBlockNetworkImage(false);
         webSettings.setDisplayZoomControls(false);
 //        mWeb.setWebViewClient(new WebViewClient());
-        mWeb.setWebChromeClient(new WebChromeClient(){
+        mWeb.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
@@ -126,7 +124,7 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
                     .into(mIv);
             mIv.setOnClickListener(v ->
                     DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalUserInfo(detailInfo.getOwnerurl()),
-                            info -> JumpUtils.jumpToUserDetail(this, info), throwable -> showToast(throwable.getMessage())));
+                            info -> JumpUtils.jumpToUserDetail(this, info, v), throwable -> showToast(throwable.getMessage())));
         } else {
             mIv.setOnClickListener(null);
         }
