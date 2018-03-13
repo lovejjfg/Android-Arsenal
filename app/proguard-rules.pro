@@ -73,9 +73,10 @@
 }
 
 # okhttp
--dontwarn com.squareup.okhttp3.**
--keep class com.squareup.okhttp3.* { *;}
 -dontwarn okio.**
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+
 
 #retrofit
 # Platform calls Class.forName on types which do not exist on Android to determine platform.
@@ -90,7 +91,7 @@
 -keepclasseswithmembers class * {
     @retrofit2.http.* <methods>;
 }
-
+-dontwarn javax.annotation.**
 
 # RxJava
 -keep class rx.* { *; }
@@ -105,13 +106,13 @@
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
-
 # lambda
 -dontwarn java.lang.invoke.*
+-dontwarn **$$Lambda$*
 
-#-keepattributes InnerClasses
-#-dontwarn InnerClasses
-#-dontoptimize
+-keepattributes InnerClasses
+-dontwarn InnerClasses
+-dontwarn InnerClasses$*
 
 # WeChat
 -dontwarn com.tencent.**
@@ -119,7 +120,7 @@
 #bugly
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
-
+-keep class android.support.**{*;}
 #alipay
 -dontwarn com.alipay.**
 -keep class com.alipay.** { *; }
@@ -129,17 +130,6 @@
 -keep class com.lovejjfg.sview.utils.ShakeHelper
 
 
-##EventBus
-#-keepattributes *Annotation*
-#-keepclassmembers class ** {
-#    @org.greenrobot.eventbus.Subscribe <methods>;
-#}
-#-keep enum org.greenrobot.eventbus.ThreadMode { *; }
-#
-## Only required if you use AsyncExecutor
-#-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
-#    <init>(java.lang.Throwable);
-#}
 
 
 # Glide specific rules #
@@ -180,3 +170,14 @@
 -keepclasseswithmembers class * {
     @com.litesuits.orm.db.annotation.* <fields>;
 }
+
+-assumenosideeffects class android.util.Log {
+    public static *** i(...);
+    public static *** v(...);
+    public static *** println(...);
+    public static *** w(...);
+    public static *** wtf(...);
+}
+
+
+
