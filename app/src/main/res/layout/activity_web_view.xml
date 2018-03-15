@@ -32,11 +32,12 @@
         android:layout_height="@dimen/detail_info_height"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:transitionName="@string/name_app_bar"
-        app:contentScrim="?attr/colorPrimary">
+       >
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
             app:titleEnabled="false">
 
