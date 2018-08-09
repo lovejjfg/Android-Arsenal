@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lovejjfg.readhub.utils.glide
+package com.lovejjfg.arsenal.utils.glide
 
 import android.content.Context
 import com.bumptech.glide.GlideBuilder
@@ -23,14 +23,13 @@ import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
 
-
 /**
  * Created by joe on 2017/9/29.
  * Email: lovejjfg@gmail.com
  */
 @GlideModule
 class GlideMode : AppGlideModule() {
-    override fun applyOptions(context: Context?, builder: GlideBuilder?) {
+    override fun applyOptions(context: Context, builder: GlideBuilder) {
         val defaultOptions = RequestOptions()
         defaultOptions.format(DecodeFormat.PREFER_ARGB_8888)
         builder?.setDefaultRequestOptions(defaultOptions)
@@ -39,5 +38,4 @@ class GlideMode : AppGlideModule() {
     override fun isManifestParsingEnabled(): Boolean {
         return false
     }
-
 }

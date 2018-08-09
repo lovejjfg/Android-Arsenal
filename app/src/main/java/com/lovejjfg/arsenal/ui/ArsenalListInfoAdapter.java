@@ -25,18 +25,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.ui.contract.ListInfoContract;
 import com.lovejjfg.arsenal.utils.JumpUtils;
+import com.lovejjfg.arsenal.utils.glide.GlideApp;
 import com.lovejjfg.arsenal.utils.glide.ImageTarget;
 import com.lovejjfg.powerrecycle.PowerAdapter;
-import com.lovejjfg.readhub.utils.glide.GlideApp;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInfo> {
 
@@ -107,9 +105,9 @@ public class ArsenalListInfoAdapter extends PowerAdapter<ArsenalListInfo.ListInf
             if (!TextUtils.isEmpty(info.getImgUrl())) {
                 img.setVisibility(View.VISIBLE);
                 GlideApp.with(img.getContext())
-                        .load(info.getImgUrl())
-                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                        .into(mTarget);
+                    .load(info.getImgUrl())
+                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    .into(mTarget);
             } else {
                 img.setVisibility(View.GONE);
             }

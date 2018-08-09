@@ -33,9 +33,9 @@ import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.Library;
 import com.lovejjfg.arsenal.base.SupportActivity;
 import com.lovejjfg.arsenal.utils.JumpUtils;
+import com.lovejjfg.arsenal.utils.glide.GlideApp;
 import com.lovejjfg.powerrecycle.AdapterLoader;
 import com.lovejjfg.powerrecycle.PowerAdapter;
-import com.lovejjfg.readhub.utils.glide.GlideApp;
 import java.util.ArrayList;
 
 public class AboutActivity extends SupportActivity implements AdapterLoader.OnItemClickListener {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lovejjfg.readhub.utils.glide
+package com.lovejjfg.arsenal.utils.glide
 
 import android.widget.ImageView
 
@@ -25,10 +25,12 @@ import android.widget.ImageView
 object GlideUtils {
     fun into(url: String?, iv: ImageView?) {
         try {
-            GlideApp.with(iv?.context)
+            iv?.let {
+                GlideApp.with(iv.context)
                     .load(url)
                     .centerCrop()
                     .into(iv)
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }

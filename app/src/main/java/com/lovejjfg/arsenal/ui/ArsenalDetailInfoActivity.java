@@ -39,7 +39,7 @@ import com.lovejjfg.arsenal.base.SupportActivity;
 import com.lovejjfg.arsenal.utils.Constants;
 import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.arsenal.utils.glide.CircleTransform;
-import com.lovejjfg.readhub.utils.glide.GlideApp;
+import com.lovejjfg.arsenal.utils.glide.GlideApp;
 
 public class ArsenalDetailInfoActivity extends SupportActivity implements View.OnClickListener {
     public static final String INFO = "info";
