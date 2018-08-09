@@ -26,7 +26,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.ArsenalListInfo;
 import com.lovejjfg.arsenal.api.mode.ArsenalUserInfo;
@@ -35,14 +36,9 @@ import com.lovejjfg.arsenal.base.SupportFragment;
 import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.arsenal.utils.glide.CircleTransform;
 import com.lovejjfg.readhub.utils.glide.GlideApp;
-
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class ArsenalUserInfoActivity extends SupportActivity implements View.OnClickListener {
-    private static final String TAG = ArsenalUserInfoActivity.class.getSimpleName();
     public static final String USER_INFO = "UserInfo";
     @BindView(R.id.toolbar)
     Toolbar mToolBar;
@@ -80,15 +76,14 @@ public class ArsenalUserInfoActivity extends SupportActivity implements View.OnC
         } else {
             refreshUI(mInfo);
         }
-
     }
 
     private void refreshUI(ArsenalUserInfo info) {
         GlideApp.with(ArsenalUserInfoActivity.this)
-                .load(info.getPortraitUrl())
-                .error(R.mipmap.ic_launcher)
-                .transform(circleTransform)
-                .into(mIvPortrait);
+            .load(info.getPortraitUrl())
+            .error(R.mipmap.ic_launcher)
+            .transform(circleTransform)
+            .into(mIvPortrait);
         mToolBar.setTitle(info.getUserName());
         mTvFlowers.setText(info.getFollowers());
         mTvFlowing.setText(info.getFollowing());
@@ -124,7 +119,6 @@ public class ArsenalUserInfoActivity extends SupportActivity implements View.OnC
         mViewpager.setAdapter(adapter);
 
         mTabs.setupWithViewPager(mViewpager);
-
     }
 
     @Override

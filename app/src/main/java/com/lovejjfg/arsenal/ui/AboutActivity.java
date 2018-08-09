@@ -26,23 +26,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.mode.Library;
 import com.lovejjfg.arsenal.base.SupportActivity;
 import com.lovejjfg.arsenal.utils.JumpUtils;
-import com.lovejjfg.arsenal.utils.glide.CircleTransform;
 import com.lovejjfg.powerrecycle.AdapterLoader;
 import com.lovejjfg.powerrecycle.PowerAdapter;
 import com.lovejjfg.readhub.utils.glide.GlideApp;
-
 import java.util.ArrayList;
-
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class AboutActivity extends SupportActivity implements AdapterLoader.OnItemClickListener {
 
@@ -66,16 +60,17 @@ public class AboutActivity extends SupportActivity implements AdapterLoader.OnIt
         mRecyclerView.setAdapter(aboutAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         aboutAdapter.setOnItemClickListener(this);
-        GlideApp.with(this).load(R.mipmap.ic_launcher)
-                .transform(new CircleTransform())
-                .into(mIv);
+        GlideApp.with(this)
+            .load(R.mipmap.ic_launcher)
+            .centerCrop()
+            .into(mIv);
 
-
-//        String s = "<h2>Android Arsenal</h2><br><p>It get data from <a href=www.baidu.com>Android Arsenal</a>It is in no way an  official client for these services nor endorsed by them.</p>";
+//        String s = "<h2>Android Arsenal</h2><br><p>It get data from <a href=www.baidu.com>Android Arsenal</a>It is
+// in no way an  official client for these services nor endorsed by them.</p>";
 //        mTvSite.setText(Html.fromHtml(s));
     }
 
-    @OnClick({R.id.tv_site, R.id.iv_img, R.id.tv_about})
+    @OnClick({ R.id.tv_site, R.id.iv_img, R.id.tv_about })
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_site:
@@ -91,47 +86,47 @@ public class AboutActivity extends SupportActivity implements AdapterLoader.OnIt
     private void initData() {
         ArrayList<Library> libraries = new ArrayList<>();
         libraries.add(new Library("AndResGuard",
-                "proguard resource for Android by wechat team.",
-                "https://github.com/shwenzhang/AndResGuard"));
+            "proguard resource for Android by wechat team.",
+            "https://github.com/shwenzhang/AndResGuard"));
         libraries.add(new Library("Android support libraries",
-                "The Android support libraries offer a number of features that are not built into the framework.",
-                "https://developer.android.com/topic/libraries/support-library"));
+            "The Android support libraries offer a number of features that are not built into the framework.",
+            "https://developer.android.com/topic/libraries/support-library"));
         libraries.add(new Library("ButterKnife",
-                "Bind Android views and callbacks to fields and methods.",
-                "http://jakewharton.github.io/butterknife/"));
+            "Bind Android views and callbacks to fields and methods.",
+            "http://jakewharton.github.io/butterknife/"));
         libraries.add(new Library("Glide",
-                "An image loading and caching library for Android focused on smooth scrolling.",
-                "https://github.com/bumptech/glide"));
+            "An image loading and caching library for Android focused on smooth scrolling.",
+            "https://github.com/bumptech/glide"));
         libraries.add(new Library("gradle-retrolambda",
-                "A gradle plugin for getting java lambda support in java 6, 7 and android.",
-                "https://github.com/evant/gradle-retrolambda"));
+            "A gradle plugin for getting java lambda support in java 6, 7 and android.",
+            "https://github.com/evant/gradle-retrolambda"));
         libraries.add(new Library("JSoup",
-                "Java HTML Parser, with best of DOM, CSS, and jquery.",
-                "https://github.com/jhy/jsoup/"));
+            "Java HTML Parser, with best of DOM, CSS, and jquery.",
+            "https://github.com/jhy/jsoup/"));
         libraries.add(new Library("leakcanary",
-                "A memory leak detection library for Android and Java.",
-                "https://github.com/square/leakcanary"));
+            "A memory leak detection library for Android and Java.",
+            "https://github.com/square/leakcanary"));
         libraries.add(new Library("MaterialSearchView",
-                "Cute library to implement SearchView in a Material Design Approach .",
-                "http://miguelcatalan.info/2015/09/23/MaterialSearchView/"));
+            "Cute library to implement SearchView in a Material Design Approach .",
+            "http://miguelcatalan.info/2015/09/23/MaterialSearchView/"));
         libraries.add(new Library("OkHttp",
-                "An HTTP & HTTP/2 client for Android and Java applications.",
-                "http://square.github.io/okhttp/"));
+            "An HTTP & HTTP/2 client for Android and Java applications.",
+            "http://square.github.io/okhttp/"));
         libraries.add(new Library("PowerRecyclerView",
-                "Easy for RecyclerView to pull refresh and load more.",
-                "https://github.com/lovejjfg/PowerRecyclerView"));
+            "Easy for RecyclerView to pull refresh and load more.",
+            "https://github.com/lovejjfg/PowerRecyclerView"));
         libraries.add(new Library("Retrofit",
-                "A type-safe HTTP client for Android and Java.",
-                "http://square.github.io/retrofit/"));
+            "A type-safe HTTP client for Android and Java.",
+            "http://square.github.io/retrofit/"));
         libraries.add(new Library("RxAndroid",
-                "RxJava bindings for Android.",
-                "https://github.com/ReactiveX/RxAndroid"));
+            "RxJava bindings for Android.",
+            "https://github.com/ReactiveX/RxAndroid"));
         libraries.add(new Library("RxJava",
-                "RxJava – Reactive Extensions for the JVM – a library for composing asynchronous and event-based programs using observable sequences for the Java VM.",
-                "https://github.com/ReactiveX/RxJava"));
+            "RxJava – Reactive Extensions for the JVM – a library for composing asynchronous and event-based programs"
+                + " using observable sequences for the Java VM.",
+            "https://github.com/ReactiveX/RxJava"));
 
         aboutAdapter.setList(libraries);
-
     }
 
     @Override
@@ -148,13 +143,13 @@ public class AboutActivity extends SupportActivity implements AdapterLoader.OnIt
 
         @Override
         public RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType) {
-            return new AboutHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_about_info, parent, false));
+            return new AboutHolder(
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_about_info, parent, false));
         }
 
         @Override
         public void onViewHolderBind(RecyclerView.ViewHolder holder, int position) {
             ((AboutHolder) holder).onBind(list.get(position));
-
         }
     }
 
@@ -174,5 +169,4 @@ public class AboutActivity extends SupportActivity implements AdapterLoader.OnIt
             mDes.setText(library.getDes());
         }
     }
-
 }

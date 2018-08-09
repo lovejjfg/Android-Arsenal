@@ -24,20 +24,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Slide;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-
 import com.google.android.gms.analytics.Tracker;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.ui.LoadingDialog;
 import com.lovejjfg.arsenal.utils.FragmentsUtil;
 import com.lovejjfg.arsenal.utils.KeyBoardUtil;
 import com.lovejjfg.arsenal.utils.ToastUtil;
-
+import com.lovejjfg.shake.Shaker;
+import com.lovejjfg.shake.ShakerHelper;
 import java.util.List;
-
 
 /**
  * Created by Joe on 2016/11/13.
@@ -52,9 +48,11 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
     private Toolbar mToolbar;
 
     public Tracker mTracker;
+    private Shaker shaker;
 
     @Override
-    public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... children) {
+    public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos,
+        SupportFragment... children) {
         if (fragmentsUtil != null) {
             fragmentsUtil.addToParent(containerViewId, parent, pos, children);
         }
@@ -74,12 +72,12 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
         progressDialog = new LoadingDialog();
         fragmentsUtil = new FragmentsUtil(getSupportFragmentManager());
         setContentView(initLayoutRes());
+        shaker = ShakerHelper.instance(this);
         try {
-            mToolbar = (Toolbar) findViewById(R.id.toolbar);
+            mToolbar = findViewById(R.id.toolbar);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -92,6 +90,17 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
         super.onStart();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        shaker.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        shaker.onResume();
+    }
 
     public FragmentsUtil getFragmentsUtil() {
         return fragmentsUtil;
@@ -121,7 +130,6 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
     public <F extends SupportFragment> F findFragment(SupportFragment parentFragment, Class<F> className) {
         return fragmentsUtil != null ? fragmentsUtil.findFragment(parentFragment, className) : null;
     }
-
 
     @Override
     public void loadRoot(int containerViewId, SupportFragment... root) {
@@ -153,13 +161,11 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
         }
     }
 
-
     @Override
     public void onBackPressed() {
         if (!finishInner()) {
             handleFinish();
         }
-
     }
 
     @Override
@@ -207,7 +213,6 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
     public void closeKeyBoard() {
         KeyBoardUtil.closeKeyBoard(this);
     }
-
 
     @Override
     public boolean finishInner() {

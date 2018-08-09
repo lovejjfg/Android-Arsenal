@@ -19,7 +19,6 @@ package com.lovejjfg.arsenal.base;
 
 import android.app.Application;
 import android.util.Log;
-
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.lovejjfg.arsenal.BuildConfig;
@@ -28,7 +27,6 @@ import com.lovejjfg.arsenal.utils.NetWorkUtils;
 import com.lovejjfg.arsenal.utils.ToastUtil;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
-
 import java.io.File;
 
 /**

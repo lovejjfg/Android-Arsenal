@@ -30,7 +30,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.api.DataManager;
 import com.lovejjfg.arsenal.api.mode.ArsenalDetailInfo;
@@ -39,9 +40,6 @@ import com.lovejjfg.arsenal.utils.Constants;
 import com.lovejjfg.arsenal.utils.JumpUtils;
 import com.lovejjfg.arsenal.utils.glide.CircleTransform;
 import com.lovejjfg.readhub.utils.glide.GlideApp;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class ArsenalDetailInfoActivity extends SupportActivity implements View.OnClickListener {
     public static final String INFO = "info";
@@ -118,26 +116,25 @@ public class ArsenalDetailInfoActivity extends SupportActivity implements View.O
         String portraitUrl = detailInfo.getPortraitUrl();
         if (!TextUtils.isEmpty(portraitUrl)) {
             GlideApp.with(this)
-                    .load(portraitUrl)
-                    .error(R.mipmap.ic_launcher)
-                    .transform(mCircleTransform)
-                    .into(mIv);
+                .load(portraitUrl)
+                .error(R.mipmap.ic_launcher)
+                .transform(mCircleTransform)
+                .into(mIv);
             mIv.setOnClickListener(v ->
-                    DataManager.handleNormalService(DataManager.getArsenalApi().getArsenalUserInfo(detailInfo.getOwnerurl()),
-                            info -> JumpUtils.jumpToUserDetail(this, info, v), throwable -> showToast(throwable.getMessage())));
+                DataManager.handleNormalService(
+                    DataManager.getArsenalApi().getArsenalUserInfo(detailInfo.getOwnerurl()),
+                    info -> JumpUtils.jumpToUserDetail(this, info, v), throwable -> showToast(throwable.getMessage())));
         } else {
             mIv.setOnClickListener(null);
         }
         mWeb.loadDataWithBaseURL(Constants.BASE_URL, detailInfo.getDesc(),
-                Constants.MIME_TYPE, Constants.ENCODING, Constants.FAIL_URL);
+            Constants.MIME_TYPE, Constants.ENCODING, Constants.FAIL_URL);
         CharSequence text = mTvSite.getText();
         if (!TextUtils.equals("N/A", text)) {
             mTvSite.setOnClickListener(this);
         } else {
             mTvSite.setOnClickListener(null);
         }
-
-
     }
 
     @Override
