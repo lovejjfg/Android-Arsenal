@@ -23,14 +23,18 @@ import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.BounceInterpolator
 import com.lovejjfg.arsenal.R
 import com.lovejjfg.arsenal.api.mode.SearchInfo
 import com.lovejjfg.arsenal.base.SupportActivity
+import com.lovejjfg.arsenal.utils.FirebaseUtils
 import com.lovejjfg.arsenal.utils.JumpUtils
 import com.lovejjfg.arsenal.utils.TagUtils
 import com.lovejjfg.arsenal.utils.rxbus.RxBus
 import com.lovejjfg.arsenal.utils.rxbus.SearchEvent
+import com.lovejjfg.arsenal.utils.transationHint
 import com.miguelcatalan.materialsearchview.MaterialSearchView
+import kotlinx.android.synthetic.main.activity_tag_search.activity_tag_search
 import kotlinx.android.synthetic.main.activity_tag_search.search_view
 
 class ArsenalSearchActivity : SupportActivity(), View.OnClickListener {
@@ -66,12 +70,14 @@ class ArsenalSearchActivity : SupportActivity(), View.OnClickListener {
                 val strings = TagUtils.tagArray
                 if (strings != null) {
                     searchView.setSuggestions(strings) { title ->
-                        searchView.closeSearch()
-                        val s = TagUtils.getTagValue(title)
-                        if (TextUtils.isEmpty(s)) {
-                            JumpUtils.jumpToSearchList(searchView.context, title)
-                        } else {
-                            JumpUtils.jumpToSearchList(searchView.context, title, "/tag/" + s!!)
+                        if (searchView.isSearchOpen) {
+                            searchView.closeSearch()
+                            val s = TagUtils.getTagValue(title)
+                            if (TextUtils.isEmpty(s)) {
+                                JumpUtils.jumpToSearchList(searchView.context, title)
+                            } else {
+                                JumpUtils.jumpToSearchList(searchView.context, title, "/tag/" + s!!)
+                            }
                         }
                     }
                 }
@@ -146,14 +152,22 @@ class ArsenalSearchActivity : SupportActivity(), View.OnClickListener {
     }
 
     override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
         val currentTag = intent.getStringExtra(ArsenalListInfoFragment.KEY)
         val currentTagName = intent.getStringExtra(ArsenalListInfoFragment.TAG_NAME)
         val type = intent.getIntExtra(
             ArsenalListInfoFragment.TYPE_NAME,
             ArsenalListInfoFragment.TYPE_SEARCH_TAG
         )
-        supportActionBar?.title = if (TextUtils.isEmpty(currentTagName)) currentTag else currentTagName
-        RxBus.getInstance().post(SearchEvent(currentTag, currentTagName, type))
-        super.onNewIntent(intent)
+        val title = supportActionBar?.title
+        println("title:$title;;currentTag: $currentTag || currentTagName: $currentTagName")
+        if (title == currentTag || title == currentTagName) {
+            activity_tag_search.transationHint()
+        } else {
+            val t = if (TextUtils.isEmpty(currentTagName)) currentTag else currentTagName
+            supportActionBar?.title = t
+            RxBus.getInstance().post(SearchEvent(currentTag, currentTagName, type))
+            FirebaseUtils.logSearchEvent(this@ArsenalSearchActivity,t)
+        }
     }
 }

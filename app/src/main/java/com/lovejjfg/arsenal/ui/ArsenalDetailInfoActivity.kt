@@ -36,6 +36,8 @@ import com.lovejjfg.arsenal.utils.Constants
 import com.lovejjfg.arsenal.utils.JumpUtils
 import com.lovejjfg.arsenal.utils.glide.CircleTransform
 import com.lovejjfg.arsenal.utils.glide.GlideApp
+import com.lovejjfg.arsenal.utils.transationHint
+import kotlinx.android.synthetic.main.activity_web_view.container
 import kotlinx.android.synthetic.main.activity_web_view.iv_img
 import kotlinx.android.synthetic.main.activity_web_view.tv_language
 import kotlinx.android.synthetic.main.activity_web_view.tv_name
@@ -122,9 +124,14 @@ class ArsenalDetailInfoActivity : SupportActivity(), View.OnClickListener {
                 .into(mIv)
             mIv.setOnClickListener { v ->
                 DataManager.handleNormalService<ArsenalUserInfo>(
-                    DataManager.getArsenalApi().getArsenalUserInfo(detailInfo.ownerurl),
-                    { info -> JumpUtils.jumpToUserDetail(this, info, v) },
-                    { throwable -> showToast(throwable?.message) })
+                    DataManager.getArsenalApi().getArsenalUserInfo(detailInfo.ownerurl),{showLoadingDialog()},
+                    { info ->
+                        closeLoadingDialog()
+                        JumpUtils.jumpToUserDetail(this, info, v) },
+
+                    { throwable ->
+                        closeLoadingDialog()
+                        showToast(throwable?.message) })
             }
         } else {
             mIv.setOnClickListener(null)
@@ -190,6 +197,7 @@ class ArsenalDetailInfoActivity : SupportActivity(), View.OnClickListener {
     override fun onNewIntent(intent: Intent) {
         val detailInfo = intent.getParcelableExtra<ArsenalDetailInfo>(INFO)
         if (detailInfo == mDetailInfo) {
+            container.transationHint()
             return
         }
         mDetailInfo = detailInfo
@@ -203,6 +211,6 @@ class ArsenalDetailInfoActivity : SupportActivity(), View.OnClickListener {
     }
 
     companion object {
-        val INFO = "info"
+       const val INFO = "info"
     }
 }

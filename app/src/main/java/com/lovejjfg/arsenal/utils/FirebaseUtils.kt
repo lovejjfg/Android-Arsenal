@@ -49,4 +49,24 @@ object FirebaseUtils {
         } catch (e: Exception) {
         }
     }
+
+
+    fun logEggCenter(context: Context) {
+        logEvent(context, "彩蛋", Pair("type", "center"))
+    }
+    fun logEggAbout(context: Context) {
+        logEvent(context, "彩蛋", Pair("type", "About"))
+    }
+
+    fun logEggText(context: Context, text: String) {
+        logEvent(context, "彩蛋", Pair("type", "text"), Pair("name", text))
+    }
+
+    fun logEggRandom(context: Context) {
+        logEvent(context, "彩蛋", Pair("type", "random"))
+    }
+
+    fun logSwipbackEvent(context: Context) {
+        logEvent(context, "滑动关闭", Pair("activity", context::class.java.simpleName))
+    }
 }

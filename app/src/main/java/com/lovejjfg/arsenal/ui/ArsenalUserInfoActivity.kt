@@ -32,6 +32,8 @@ import com.lovejjfg.arsenal.base.SupportFragment
 import com.lovejjfg.arsenal.utils.JumpUtils
 import com.lovejjfg.arsenal.utils.glide.CircleTransform
 import com.lovejjfg.arsenal.utils.glide.GlideApp
+import com.lovejjfg.arsenal.utils.transationHint
+import kotlinx.android.synthetic.main.activity_user_info.container
 import kotlinx.android.synthetic.main.activity_user_info.iv_img
 import kotlinx.android.synthetic.main.activity_user_info.tabs
 import kotlinx.android.synthetic.main.activity_user_info.tv_flowers
@@ -116,7 +118,7 @@ class ArsenalUserInfoActivity : SupportActivity(), View.OnClickListener {
             ArsenalListInfoFragment.TYPE_NAME,
             ArsenalListInfoFragment.TYPE_USER_DETAIL
         )
-        val fragments = ArrayList<SupportFragment>()
+        val fragments = ArrayList<SupportFragment>(2)
         val ownProFragment = ArsenalListInfoFragment()
         ownProFragment.arguments = ownProject
         val contributionFragment = ArsenalListInfoFragment()
@@ -149,6 +151,7 @@ class ArsenalUserInfoActivity : SupportActivity(), View.OnClickListener {
     override fun onNewIntent(intent: Intent) {
         val info = intent.getParcelableExtra<ArsenalUserInfo>(USER_INFO)
         if (mInfo == info) {
+            container.transationHint()
             return
         }
         mInfo = info

@@ -25,7 +25,6 @@ package com.lovejjfg.arsenal.ui.contract
 class UserDetailListInfoPresenter(view: ListInfoContract.View) : BaseListInfoPresenter(view) {
 
     override fun onRefresh() {
-        mView.showLoadingDialog()
     }
 
     override fun onLoadMore() {
@@ -34,5 +33,6 @@ class UserDetailListInfoPresenter(view: ListInfoContract.View) : BaseListInfoPre
     override fun onViewPrepared() {
         mView.setPullRefreshEnable(false)
         mView.atEnd()
+        mView.closeLoadingDialog()
     }
 }

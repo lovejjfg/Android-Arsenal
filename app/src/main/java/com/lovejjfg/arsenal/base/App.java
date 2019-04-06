@@ -21,6 +21,7 @@ import android.app.Application;
 import android.util.Log;
 import com.lovejjfg.arsenal.utils.NetWorkUtils;
 import com.lovejjfg.arsenal.utils.ToastUtil;
+import com.lovejjfg.shake.ShakerHelper;
 import com.squareup.leakcanary.LeakCanary;
 import java.io.File;
 
@@ -42,6 +43,7 @@ public class App extends Application {
         CACHE_DIRECTORY = new File(getApplicationContext().getCacheDir(), "responses");
         NETWORK_UTILS = NetWorkUtils.getsInstance(this);
         ToastUtil.initToast(getApplicationContext());
+        ShakerHelper.init(this);
         Log.e("TAG", "APP:onCreate初始化。。。 ");
     }
 

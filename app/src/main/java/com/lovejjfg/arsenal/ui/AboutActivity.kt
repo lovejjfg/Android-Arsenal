@@ -17,7 +17,10 @@
 
 package com.lovejjfg.arsenal.ui
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
+import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -30,6 +33,8 @@ import android.widget.TextView
 import com.lovejjfg.arsenal.R
 import com.lovejjfg.arsenal.api.mode.Library
 import com.lovejjfg.arsenal.base.SupportActivity
+import com.lovejjfg.arsenal.utils.EggsHelper
+import com.lovejjfg.arsenal.utils.FirebaseUtils
 import com.lovejjfg.arsenal.utils.JumpUtils
 import com.lovejjfg.arsenal.utils.glide.GlideApp
 import com.lovejjfg.powerrecycle.AdapterLoader
@@ -49,6 +54,8 @@ class AboutActivity : SupportActivity(), AdapterLoader.OnItemClickListener<Libra
     lateinit var mIv: ImageView
     lateinit var mRecyclerView: RecyclerView
     private lateinit var aboutAdapter: AboutAdapter
+    private var takeRestCount = 0
+    private var maxRestCount = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,13 +65,43 @@ class AboutActivity : SupportActivity(), AdapterLoader.OnItemClickListener<Libra
         aboutAdapter = AboutAdapter()
         initData()
         toolbar?.setNavigationOnClickListener { v -> onBackPressed() }
-        mRecyclerView.adapter = aboutAdapter
         mRecyclerView.layoutManager = LinearLayoutManager(this)
+        mRecyclerView.adapter = aboutAdapter
         aboutAdapter.setOnItemClickListener(this)
         GlideApp.with(this)
-            .load(R.mipmap.ic_launcher)
+            .load(R.mipmap.ic_launcher_round)
             .centerCrop()
             .into(mIv)
+        mIv.setOnClickListener {
+            if (mIv.rotation != 3600f * maxRestCount) {
+                mIv.animate()
+                    .rotation(mIv.rotation + 3600f)
+                    .setDuration(2000)
+                    .setInterpolator(FastOutSlowInInterpolator())
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            mIv.isEnabled = true
+                        }
+
+                        override fun onAnimationStart(animation: Animator?) {
+                            mIv.isEnabled = false
+                        }
+                    })
+                    .start()
+                FirebaseUtils.logEggAbout(this@AboutActivity)
+            } else {
+                if (!EggsHelper.showCenterScaleView(this)) {
+                    return@setOnClickListener
+                }
+                takeRestCount++
+                if (takeRestCount >= maxRestCount) {
+                    maxRestCount++
+                    takeRestCount = 0
+                    mIv.rotation = 0f
+                }
+                FirebaseUtils.logEggAbout(this@AboutActivity)
+            }
+        }
         tv_site.setOnClickListener(this)
         iv_img.setOnClickListener(this)
         tv_about.setOnClickListener(this)

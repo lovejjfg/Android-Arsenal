@@ -20,6 +20,7 @@ package com.lovejjfg.arsenal.api.mode;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import android.support.annotation.Nullable;
 import java.util.ArrayList;
 
 /**
@@ -191,4 +192,13 @@ public class ArsenalUserInfo implements Parcelable {
             return new ArsenalUserInfo[size];
         }
     };
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        try {
+            return obj instanceof ArsenalUserInfo && this.portraitUrl.equals(((ArsenalUserInfo) obj).portraitUrl);
+        } catch (Exception e) {
+            return super.equals(obj);
+        }
+    }
 }

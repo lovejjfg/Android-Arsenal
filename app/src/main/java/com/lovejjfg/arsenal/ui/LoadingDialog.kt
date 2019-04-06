@@ -96,9 +96,7 @@ class LoadingDialog : DialogFragment() {
     override fun dismissAllowingStateLoss() {
         if (activity != null) {
             activity?.runOnUiThread {
-                if (isAdded) {
-                    super.dismissAllowingStateLoss()
-                }
+                super.dismissAllowingStateLoss()
             }
         } else {
             super.dismissAllowingStateLoss()

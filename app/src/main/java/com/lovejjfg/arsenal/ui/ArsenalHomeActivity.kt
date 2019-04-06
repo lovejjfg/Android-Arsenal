@@ -19,18 +19,24 @@ package com.lovejjfg.arsenal.ui
 
 import android.os.Build
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.transition.TransitionManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import com.lovejjfg.arsenal.R
 import com.lovejjfg.arsenal.api.mode.SearchInfo
 import com.lovejjfg.arsenal.base.SupportActivity
+import com.lovejjfg.arsenal.utils.EggsHelper
 import com.lovejjfg.arsenal.utils.JumpUtils
 import com.lovejjfg.arsenal.utils.TagUtils
+import com.lovejjfg.arsenal.utils.UIUtils
+import com.lovejjfg.arsenal.utils.rxbus.RxBus
 import com.miguelcatalan.materialsearchview.MaterialSearchView
+import kotlinx.android.synthetic.main.activity_main.main_container
 import kotlinx.android.synthetic.main.activity_main.search_view
 
 class ArsenalHomeActivity : SupportActivity() {
@@ -42,6 +48,16 @@ class ArsenalHomeActivity : SupportActivity() {
         super.onCreate(savedInstanceState)
         searchView = search_view
         setSupportActionBar(toolbar)
+        toolbar?.setOnClickListener {
+            if (UIUtils.thirdClick()) {
+                EggsHelper.showRandomEgg(this)
+            } else if (UIUtils.doubleClick()) {
+                try {
+                    ((main_container[0] as ViewGroup)[0] as RecyclerView).layoutManager?.scrollToPosition(0)
+                } catch (e: Exception) {
+                }
+            }
+        }
 
         if (savedInstanceState == null) {
             val listInfoFragment = ArsenalListInfoFragment()

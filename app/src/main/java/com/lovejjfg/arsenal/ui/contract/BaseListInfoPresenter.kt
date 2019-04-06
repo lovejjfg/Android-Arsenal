@@ -93,7 +93,7 @@ abstract class BaseListInfoPresenter constructor(view: ListInfoContract.View) :
     }
 
     companion object {
-        private val CURRENT_KEY = "currentKey"
-        private val HAS_MORE = "hasMore"
+        private const val CURRENT_KEY = "currentKey"
+        private const val HAS_MORE = "hasMore"
     }
 }

@@ -16,7 +16,7 @@
   ~
   -->
 
-<android.support.design.widget.CoordinatorLayout
+<com.lovejjfg.arsenal.ui.widget.SwipeCoordinatorLayout
     android:id="@+id/container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -171,7 +171,7 @@
         </WebView>
 
     </android.support.v4.widget.NestedScrollView>
-</android.support.design.widget.CoordinatorLayout>
+</com.lovejjfg.arsenal.ui.widget.SwipeCoordinatorLayout>
 
 
 
