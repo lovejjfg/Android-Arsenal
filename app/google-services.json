@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "861646488530",
-    "project_id": "firebase-arsenal"
+    "firebase_url": "https://fir-arsenal-86e82.firebaseio.com",
+    "project_id": "firebase-arsenal",
+    "storage_bucket": "firebase-arsenal.appspot.com"
   },
   "client": [
     {
@@ -18,18 +20,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 2,
-          "analytics_property": {
-            "tracking_id": "UA-97835230-1"
-          }
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 1
+          "other_platform_oauth_client": [
+            {
+              "client_id": "861646488530-b22dmd3iabqdn615426auiv6ncd088v8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

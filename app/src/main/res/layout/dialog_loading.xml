@@ -17,19 +17,18 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:layout_gravity="center"
-             android:clipChildren="false"
-             android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:clipChildren="false">
 
     <ProgressBar
         android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:indeterminate="true"
         android:indeterminateTint="@color/colorPrimary"
-        android:indeterminateTintMode="src_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:indeterminateTintMode="src_in"/>
 
 </FrameLayout>

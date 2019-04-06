@@ -16,13 +16,10 @@
  */
 
 apply plugin: 'com.android.application'
-apply plugin: 'findbugs'
-apply plugin: 'pmd'
-apply plugin: 'checkstyle'
-apply plugin: 'AndResGuard'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+
 
 
 android {
@@ -31,7 +28,7 @@ android {
     buildToolsVersion BUILD_TOOLS_VERSION as String
 
     defaultConfig {
-        applicationId "com.lovejjfg.arsenal"
+        applicationId APP_ID
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion TARGET_SDK_VERSION
         versionCode project.gitCommitCount
@@ -45,7 +42,7 @@ android {
     }
     lintOptions {
         abortOnError false
-//        disable "ResourceType"
+        //        disable "ResourceType"
     }
 
     signingConfigs {
@@ -54,12 +51,6 @@ android {
             storePassword gradle.password
             keyAlias gradle.keyAlias
             keyPassword gradle.password
-        }
-        debug {
-            storeFile file("../debug.keystore")
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
         }
     }
 
@@ -73,38 +64,21 @@ android {
             buildConfigField "boolean", "IS_DEBUG", "false"
         }
         debug {
-//            applicationIdSuffix ".debug"
+            //            applicationIdSuffix ".debug"
             shrinkResources false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             buildConfigField "boolean", "IS_DEBUG", "true"
-        }
-    }
-    flavorDimensions project.gitTag
-    productFlavors {
-        github {
-            buildConfigField "String", "CHANNEL", '"github"'
-        }
-        dev {
-            buildConfigField "String", "CHANNEL", '"dev"'
-        }
-        xiaomi {
-            buildConfigField "String", "CHANNEL", '"xiaomi"'
-        }
-        google {
-            buildConfigField "String", "CHANNEL", '"google"'
-        }
-        meizu {
-            buildConfigField "String", "CHANNEL", '"meizu"'
-        }
-        meizu {
-            buildConfigField "String", "CHANNEL", '"meizu"'
         }
     }
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
+    }
+
+    androidExtensions {
+        experimental = true
     }
 }
 
@@ -113,7 +87,7 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.lovejjfg.powerrecycle:powerrecycle:1.0.6'
+    implementation 'com.lovejjfg.powerrecycle:powerrecycle:2.0.0-beta2'
     implementation 'io.reactivex:rxjava:1.3.0'
     implementation 'io.reactivex:rxandroid:1.1.0'
     implementation "com.android.support:appcompat-v7:${SUPPORT_V7_VERSION}"
@@ -122,12 +96,10 @@ dependencies {
     implementation "com.android.support:cardview-v7:${SUPPORT_V7_VERSION}"
 
 
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
-    kapt 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    kapt 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-//    implementation 'com.squareup.retrofit2:converter-gson:2.0.0'
+    //    implementation 'com.squareup.retrofit2:converter-gson:2.0.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
 
     implementation 'org.jsoup:jsoup:1.10.3'
@@ -135,10 +107,7 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-    //bugly
-    implementation 'com.tencent.bugly:crashreport:latest.release'
 
-    implementation 'com.google.android.gms:play-services-analytics:11.8.0'
     androidTestImplementation "org.powermock:powermock-module-junit4:1.6.5"
     androidTestImplementation "org.powermock:powermock-module-junit4-rule:1.6.5"
     androidTestImplementation "org.powermock:powermock-api-mockito:1.6.5"
@@ -147,104 +116,9 @@ dependencies {
 
     implementation project(':library')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    debugImplementation 'com.lovejjfg:shake:0.0.4'
-    releaseImplementation 'com.lovejjfg:shake-no-op:0.0.4'
-
+    debugImplementation 'com.lovejjfg:shake:0.1.1'
+    releaseImplementation 'com.lovejjfg:shake-no-op:0.1.1'
+    implementation "com.google.firebase:firebase-core:16.0.8"
+    implementation 'androidx.core:core-ktx:0.3'
 }
-
-// gradlew resguardRelease
-andResGuard {
-    mappingFile = file("./resource_mapping.txt")
-    use7zip = true
-    useSign = true
-    keepRoot = false
-    // add <yourpackagename>.R.drawable.icon into whitelist.
-    // because the launcher will get the icon with his name
-    whiteList = [
-            "R.mipmap.ic_launcher",
-            //https://docs.fabric.io/android/crashlytics/build-tools.html
-            "R.string.com.crashlytics.*"
-    ]
-    compressFilePattern = [
-            "*.png",
-            "*.jpg",
-            "*.jpeg",
-            "*.gif",
-            "resources.arsc"
-    ]
-    sevenzip {
-        artifact = "com.tencent.mm:SevenZip:${res_guard_version}"
-//        path = "/usr/local/bin/7za"
-//        path = "E:/android-sdk-windows/build-tools/24.0.0"
-    }
-}
-
-afterEvaluate {
-    task checkstyle(type: Checkstyle) {
-        configFile file("${project.rootDir}/checkstyle.xml")
-        source 'src'
-        include '**/*.java'
-        exclude '**/gen/**'
-        classpath = files()
-    }
-    checkstyle {
-        toolVersion = '7.3'
-        configFile = rootProject.file('checkstyle.xml')
-        configProperties.checkStyleConfigDir = rootProject.rootDir
-    }
-
-    check.dependsOn('checkstyle')
-
-    findbugs {
-        toolVersion = '3.0.1'
-    }
-    task findbugs(type: FindBugs) {
-
-        description 'Run findbugs'
-        group 'verification'
-
-        classes = fileTree('build/intermediates/classes/debug/')
-        source = fileTree('src/main/java')
-        classpath = project.configurations.compile
-
-        effort = 'max'
-
-        excludeFilter = file("findbugs-exclude.xml")
-
-        reports {
-            xml.enabled = false
-            html.enabled = true
-        }
-    }
-
-    check.dependsOn('findbugs')
-
-    pmd {
-        toolVersion '5.4.0'
-    }
-
-    task pmd(type: Pmd) {
-//        targetJdk = TargetJdk.VERSION_1_7
-
-        description 'Run pmd'
-        group 'verification'
-
-        // If ruleSets is not empty, it seems to contain some
-        // defaults which override rules in the ruleset file...
-        ruleSets = []
-        ruleSetFiles = files('pmd-ruleset.xml')
-        source = fileTree('src/main/java')
-
-        reports {
-            xml.enabled = false
-            html.enabled = true
-        }
-    }
-
-    check.dependsOn('pmd')
-    apply plugin: 'com.google.gms.google-services'
-
-}
-repositories {
-    mavenCentral()
-}
+apply plugin: 'com.google.gms.google-services'

@@ -74,7 +74,6 @@
         android:textColorHint="@color/text_primary_light"
         app:searchBackIcon="@drawable/ic_arrow_back_24dp"
         app:searchBackground="?colorPrimary"
-        app:searchCloseIcon="@drawable/ic_close_24dp"
-        />
+        app:searchCloseIcon="@drawable/ic_close_24dp"/>
 </FrameLayout>
 

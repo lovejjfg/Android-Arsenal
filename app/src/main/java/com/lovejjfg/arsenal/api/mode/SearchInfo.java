@@ -20,6 +20,7 @@ package com.lovejjfg.arsenal.api.mode;
 import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.Table;
 import com.litesuits.orm.db.annotation.Unique;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by Joe on 2017/3/17.
@@ -57,6 +58,7 @@ public class SearchInfo {
         this.type = type;
     }
 
+    @Nullable
     public String getValue() {
         return value;
     }

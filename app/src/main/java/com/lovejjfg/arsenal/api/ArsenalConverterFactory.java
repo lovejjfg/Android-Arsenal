@@ -323,8 +323,6 @@ class ArsenalConverterFactory extends Converter.Factory {
                 userName = getText(element.select("a[href]"));
                 userInfoUrl = element.select("a").first().attr("href");
                 portraitUrl = element.select("img").attr("src");
-//                portraitUrl = attr.substring(0, attr.lastIndexOf("?"));
-
                 email = element.select("a.email").text();
                 site = element.select("dt:contains(Site) + dd").text();
 

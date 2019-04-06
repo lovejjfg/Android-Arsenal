@@ -16,30 +16,20 @@
   ~
   -->
 
-<FrameLayout
+
+<android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refreshHeader"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.lovejjfg.powerrecycle.PowerRecyclerView
-        android:id="@+id/recycler_view"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/refreshList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="com.lovejjfg.arsenal.ui.ArsenalHomeActivity">
+        tools:context="com.lovejjfg.arsenal.ui.ArsenalHomeActivity"/>
 
-    </com.lovejjfg.powerrecycle.PowerRecyclerView>
-
-    <ImageView
-        android:id="@+id/iv_error"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:background="@mipmap/ic_empty"
-        android:scaleType="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </ImageView>
-</FrameLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
 

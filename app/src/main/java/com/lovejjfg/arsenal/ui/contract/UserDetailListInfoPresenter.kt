@@ -15,16 +15,24 @@
  *
  */
 
-package com.lovejjfg.arsenal.base;
+package com.lovejjfg.arsenal.ui.contract
 
-import android.content.Context;
+/**
+ * Created by Joe on 2017/3/9.
+ * Email lovejjfg@gmail.com
+ */
 
-public interface IBaseView<P extends BasePresenter> extends ISupportView {
-    P initPresenter();
+class UserDetailListInfoPresenter(view: ListInfoContract.View) : BaseListInfoPresenter(view) {
 
-    Context getContext();
+    override fun onRefresh() {
+        mView.showLoadingDialog()
+    }
 
-    void showErrorView();
+    override fun onLoadMore() {
+    }
 
-    void showEmptyView();
+    override fun onViewPrepared() {
+        mView.setPullRefreshEnable(false)
+        mView.atEnd()
+    }
 }

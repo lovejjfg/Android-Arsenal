@@ -20,15 +20,12 @@ package com.lovejjfg.arsenal.utils;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
-
 import com.lovejjfg.arsenal.R;
 import com.lovejjfg.arsenal.base.App;
 import com.lovejjfg.arsenal.base.ArsenalException;
 import com.lovejjfg.arsenal.base.IBaseView;
-
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-
 import retrofit2.adapter.rxjava.HttpException;
 
 /**
@@ -45,10 +42,9 @@ public class ErrorUtil {
         MAP.put(504, App.getInstance().getString(R.string.no_internet));
     }
 
-
     public static void handleError(IBaseView view, Throwable throwable, boolean showToast, boolean showDialog) {
         Log.e("ErrorUtil", "handleError: ", throwable);
-        view.showErrorView();
+        //view.showErrorView();
         if (throwable instanceof HttpException) {
             int code = ((HttpException) throwable).code();
             String s = MAP.get(code);
@@ -72,6 +68,5 @@ public class ErrorUtil {
             view.showToast(R.string.time_out_hint);
         }
         Log.e("unHandle", "handleError: " + throwable.toString());
-
     }
 }

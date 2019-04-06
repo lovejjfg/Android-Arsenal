@@ -15,48 +15,47 @@
  *
  */
 
-package com.lovejjfg.arsenal.base;
+package com.lovejjfg.arsenal.base
 
-import android.support.annotation.LayoutRes;
-import android.support.annotation.StringRes;
-import android.view.View;
-
+import android.support.annotation.LayoutRes
+import android.support.annotation.StringRes
+import android.view.View
 
 /**
  * Created by Joe on 2016/11/13.
  * Email lovejjfg@gmail.com
  */
 
-public interface ISupportView {
-    void showToast(String toast);
+interface ISupportView {
+    fun showToast(toast: String?)
 
-    void showToast(@StringRes int stringId);
+    fun showToast(@StringRes stringId: Int)
 
     //显示dialog
-    void showLoadingDialog(String msg);
+    fun showLoadingDialog(msg: String? = null)
 
-    void closeLoadingDialog();
+    fun closeLoadingDialog()
 
-    void openKeyBoard();
+    fun openKeyBoard()
 
-    void openKeyBoard(View focusView);
+    fun openKeyBoard(focusView: View)
 
-    void closeKeyBoard();
+    fun closeKeyBoard()
 
-    boolean finishInner();
+    fun finishInner(): Boolean
 
     /**
      * If you want Fragment to handle the back event ,you should override this method and return true.
      *
      * @return true: pop the current Fragment ,false otherwise.
      */
-    boolean handleFinish();
+    fun handleFinish(): Boolean
 
     @LayoutRes
-    int initLayoutRes();
+    fun initLayoutRes(): Int
 
-//    void saveToSharedPrefs(String key, Object value);
-//
-//    Object getSharedPrefs(String key, Object defaultValue);
+    //    void saveToSharedPrefs(String key, Object value);
+    //
+    //    Object getSharedPrefs(String key, Object defaultValue);
 
 }

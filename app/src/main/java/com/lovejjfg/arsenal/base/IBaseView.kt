@@ -15,35 +15,16 @@
  *
  */
 
-package com.lovejjfg.arsenal.ui.contract;
+package com.lovejjfg.arsenal.base
 
-import android.support.annotation.Nullable;
+import android.content.Context
 
-/**
- * Created by Joe on 2017/3/9.
- * Email lovejjfg@gmail.com
- */
+interface IBaseView<P : BasePresenter> : ISupportView {
 
-public class UserDetailListInfoPresenter extends BaseListInfoPresenter {
+    val context: Context?
+    fun initPresenter(): P
 
+    fun showErrorView()
 
-    public UserDetailListInfoPresenter(@Nullable ListInfoContract.View view) {
-        super(view);
-    }
-
-    @Override
-    public void onRefresh() {
-        mView.showErrorView();
-    }
-
-    @Override
-    public void onLoadMore() {
-
-    }
-
-    @Override
-    public void onViewPrepared() {
-        mView.setPullRefreshEnable(false);
-        mView.atEnd();
-    }
+    fun showEmptyView()
 }
