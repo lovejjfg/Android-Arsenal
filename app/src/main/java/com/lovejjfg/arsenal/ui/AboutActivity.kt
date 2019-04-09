@@ -103,7 +103,6 @@ class AboutActivity : SupportActivity(), AdapterLoader.OnItemClickListener<Libra
             }
         }
         tv_site.setOnClickListener(this)
-        iv_img.setOnClickListener(this)
         tv_about.setOnClickListener(this)
     }
 
