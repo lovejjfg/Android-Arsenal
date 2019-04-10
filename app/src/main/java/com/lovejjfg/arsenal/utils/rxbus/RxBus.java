@@ -18,7 +18,6 @@
 package com.lovejjfg.arsenal.utils.rxbus;
 
 import java.util.HashMap;
-
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -55,8 +54,6 @@ public final class RxBus {
 
     /**
      * 发送事件
-     *
-     * @param o
      */
     public void post(Object o) {
         mSubject.onNext(o);
@@ -64,10 +61,6 @@ public final class RxBus {
 
     /**
      * 返回指定类型的Observable实例
-     *
-     * @param type
-     * @param <T>
-     * @return
      */
     public <T> Observable<T> toObservable(final Class<T> type) {
         return mSubject.ofType(type);
@@ -75,8 +68,6 @@ public final class RxBus {
 
     /**
      * 是否已有观察者订阅
-     *
-     * @return
      */
     public boolean hasObservers() {
         return mSubject.hasObservers();
@@ -84,25 +75,16 @@ public final class RxBus {
 
     /**
      * 一个默认的订阅方法
-     *
-     * @param type
-     * @param next
-     * @param error
-     * @param <T>
-     * @return
      */
     public <T> Subscription doSubscribe(Class<T> type, Action1<T> next, Action1<Throwable> error) {
         return toObservable(type)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(next, error);
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(next, error);
     }
 
     /**
      * 保存订阅后的subscription
-     *
-     * @param o
-     * @param subscription
      */
     public void addSubscription(Object o, Subscription subscription) {
         if (mSubscriptionMap == null) {
@@ -120,8 +102,6 @@ public final class RxBus {
 
     /**
      * 取消订阅
-     *
-     * @param o
      */
     public void unSubscribe(Object o) {
         if (mSubscriptionMap == null) {

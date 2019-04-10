@@ -68,14 +68,23 @@
     @butterknife.* <fields>;
 }
 
--keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
+-dontwarn sun.misc.**
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+ long producerIndex;
+ long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+ rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+ rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 
 # okhttp
+-dontwarn okhttp3.**
 -dontwarn okio.**
--dontwarn javax.annotation.Nullable
--dontwarn javax.annotation.ParametersAreNonnullByDefault
+-dontwarn javax.annotation.**
+-dontwarn org.conscrypt.**
 
 
 #retrofit
@@ -83,29 +92,26 @@
 -dontnote retrofit2.Platform
 # Platform used when running on Java 8 VMs. Will not be used at runtime.
 -dontwarn retrofit2.Platform$Java8
+#-dontwarn retrofit2.OkHttpCall
 # Retain generic type information for use by reflection by converters and adapters.
 -keepattributes Signature
 # Retain declared checked exceptions for use by a Proxy instance.
 -keepattributes Exceptions
+
+-dontwarn javax.annotation.**
 # keep anotation
 -keepclasseswithmembers class * {
     @retrofit2.http.* <methods>;
 }
 -dontwarn javax.annotation.**
 
-# RxJava
--keep class rx.* { *; }
--dontwarn rx.internal.**
--keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-    long producerIndex;
-    long consumerIndex;
-}
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode producerNode;
-}
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode consumerNode;
-}
+# lambda
+-dontwarn java.lang.invoke.*
+-dontwarn **$$Lambda$*
+
+-keepattributes InnerClasses
+-dontwarn InnerClasses
+-dontwarn InnerClasses$*
 # lambda
 -dontwarn java.lang.invoke.*
 -dontwarn **$$Lambda$*
